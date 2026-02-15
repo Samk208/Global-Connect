@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<ruleset name="GlobalConnect">
+	<description>Custom ruleset for Global Connect WordPress Project</description>
+
+	<!-- What to scan -->
+	<file>./app/public/wp-content/themes/globalconnect-child</file>
+	<exclude-pattern>*/vendor/*</exclude-pattern>
+	<exclude-pattern>*/node_modules/*</exclude-pattern>
+	<exclude-pattern>*/.git/*</exclude-pattern>
+
+	<!-- How to scan -->
+	<!-- Usage instructions: https://github.com/squizlabs/PHP_CodeSniffer/wiki/Usage -->
+	<arg value="p"/> <!-- Show progress -->
+	<arg name="colors"/> <!-- Show results in color -->
+	<arg name="extensions" value="php"/> <!-- Only scan php files -->
+	<arg name="parallel" value="8"/> <!-- Run in parallel -->
+
+	<!-- Rules: WordPress Coding Standards -->
+	<!-- https://github.com/WordPress/WordPress-Coding-Standards -->
+	<!-- We leverage WordPress-Extra which includes Core and some best practices -->
+	<rule ref="WordPress-Extra">
+		<!-- Allow short array syntax [] instead of array() -->
+		<exclude name="Generic.Arrays.DisallowShortArraySyntax"/>
+		<!-- We might want to allow some things like loose comparison if needed, but best to keep strict -->
+	</rule>
+
+	<rule ref="WordPress.Security.EscapeOutput"/>
+	<rule ref="WordPress.Security.ValidatedSanitizedInput"/>
+
+	<!-- Check for cross-version compatibility -->
+	<config name="testVersion" value="8.0-"/>
+</ruleset>

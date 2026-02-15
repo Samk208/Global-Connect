@@ -1,0 +1,111 @@
+name: Global Connect Quality & Security Checks
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  # 1. PHP Code Quality (WordPress Standards)
+  php-quality:
+    name: PHP Code Quality
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.1'
+          tools: composer, cs2pr
+
+      - name: Install PHPCS and WP Standards
+        run: |
+          composer require --dev squizlabs/php_codesniffer wp-coding-standards/wpcs
+          vendor/bin/phpcs --config-set installed_paths vendor/wp-coding-standards/wpcs
+
+      - name: Run PHPCS
+        run: vendor/bin/phpcs --standard=phpcs.xml --report=checkstyle -q | cs2pr
+        continue-on-error: true # Don't fail the build yet, simply report
+
+  # 2. Security Audit (Secrets & Vulnerabilities)
+  security:
+    name: Security Audit
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Secret Scan (Gitleaks)
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        continue-on-error: true # Review failures manually initially
+
+      - name: Check for Dangerous Functions
+        run: |
+           # Simple grep check for dangerous patterns often missed
+           if grep -r "eval(" app/public/wp-content/themes/globalconnect-child; then
+             echo "::error::Found usage of eval() function!"
+             exit 1
+           fi
+           if grep -r "debug" app/public/wp-content/themes/globalconnect-child; then
+              echo "::warning::Found 'debug' keywords, please ensure no debug code is committed."
+           fi
+
+  # 3. Frontend Quality (CSS/JS)
+  frontend-quality:
+    name: Frontend Quality (Mobile/UI/UX)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Install Linters
+        run: npm install stylelint stylelint-config-standard eslint --save-dev
+
+      - name: Run Stylelint (CSS)
+        run: npx stylelint "app/public/wp-content/themes/globalconnect-child/**/*.css" --config .stylelintrc.json
+        continue-on-error: true
+
+      - name: Run ESLint (JS)
+        run: npx eslint "app/public/wp-content/themes/globalconnect-child/**/*.js" --config .eslintrc.json
+        continue-on-error: true
+
+  # 4. SEO & Mobile First Static Checks
+  seo-mobile-checks:
+    name: SEO & Mobile Checks
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Check Mobile Viewport Tag
+        run: |
+          # Recursively search for viewport meta tag in PHP headers
+          if ! grep -r '<meta name="viewport"' app/public/wp-content/themes/globalconnect-child; then
+            echo "::warning::Mobile viewport tag not found in child theme. Ensure it's inherited from parent or added."
+          else
+            echo "Viewport tag found. Mobile-first ready."
+          fi
+
+      - name: Check H1 Usage
+        run: |
+            # Check if H1 tags are used in templates
+            if ! grep -r "<h1" app/public/wp-content/themes/globalconnect-child; then
+                echo "::warning::No <h1> tags found in child theme templates. Ensure proper SEO hierarchy."
+            fi
+
+      - name: Check Image Alt Tags
+        run: |
+            # Rough check for img tags without alt attributes
+            grep -r "<img" app/public/wp-content/themes/globalconnect-child | while read -r line ; do
+                if [[ "$line" != *"alt="* ]]; then
+                    echo "::warning::Possible missing alt tag in image: $line"
+                fi
+            done
