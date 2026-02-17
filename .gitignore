@@ -1,56 +1,93 @@
-# WordPress
+# =============================================================================
+# GlobalConnect — Only track child theme + project config
+# Everything else (WP core, plugins, Divi, uploads) is managed on each environment
+# =============================================================================
+
+# Ignore EVERYTHING by default
+/*
+/app/
+
+# ---- Whitelist: Project config files ----
+!/.gitignore
+!/.eslintrc.json
+!/.stylelintrc.json
+!/phpcs.xml
+!/HANDOVER.md
+!/README.md
+!/.github/
+!/.github/**
+
+# ---- Whitelist: Child theme only ----
+!/app/
+!/app/public/
+!/app/public/wp-content/
+!/app/public/wp-content/themes/
+!/app/public/wp-content/themes/globalconnect-child/
+!/app/public/wp-content/themes/globalconnect-child/**
+
+# ---- Ignore everything else inside app/ ----
+/app/*
+!/app/public/
+/app/public/*
+!/app/public/wp-content/
+/app/public/wp-content/*
+!/app/public/wp-content/themes/
+/app/public/wp-content/themes/*
+!/app/public/wp-content/themes/globalconnect-child/
+
+# ---- Explicit ignores (belt and suspenders) ----
+# WordPress core
+app/public/wp-admin/
+app/public/wp-includes/
 app/public/wp-config.php
+app/public/wp-config-sample.php
+app/public/*.php
+app/public/*.html
+
+# WordPress content (except child theme)
+app/public/wp-content/plugins/
+app/public/wp-content/mu-plugins/
 app/public/wp-content/uploads/
 app/public/wp-content/cache/
 app/public/wp-content/et-cache/
 app/public/wp-content/upgrade/
 app/public/wp-content/upgrade-temp-backup/
+app/public/wp-content/themes/Divi/
 app/public/wp-content/debug.log
+app/public/wp-content/docs/
 app/public/.htaccess
+
+# Python scripts (local dev only)
+app/*.py
 
 # LocalWP
 conf/
 logs/
 app/sql/
-app/public/wp-content/mu-plugins/
 
-# Environment and sensitive
+# Environment and secrets
 .env
-.env.local
 .env.*
+
+# Dev tools (local only)
+.agent/
+.qoder/
+.claude/
 
 # Logs and temp
 *.log
 *.txt
-debug_*.txt
-temp_*.txt
-genai_*.txt
-version_info.txt
+!HANDOVER.md
+!README.md
 
-# Generated Assets (if handled by uploads/ but generated in root)
-*.jpg
-*.png
-
-# Node
+# Node / Composer
 node_modules/
-npm-debug.log
-
-# Composer
 vendor/
+npm-debug.log
 
 # OS
 .DS_Store
 Thumbs.db
-
-# Documentation (user requested to ignore unnecessary doc)
-app/public/wp-content/docs/
-
-# Agent/Tool specific (optional but safer to ignore large internal data)
-.qoder/
-.claude/
-
-# Divi parent theme (installed/updated separately on each environment)
-app/public/wp-content/themes/Divi/
 
 # Windows artifacts
 nul
