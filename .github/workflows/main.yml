@@ -22,6 +22,7 @@ jobs:
 
       - name: Install PHPCS and WP Standards
         run: |
+          composer init --no-interaction --name=globalconnect/quality --description="CI quality tools"
           composer config allow-plugins.dealerdirect/phpcodesniffer-composer-installer true
           composer require --dev squizlabs/php_codesniffer wp-coding-standards/wpcs dealerdirect/phpcodesniffer-composer-installer
           vendor/bin/phpcs --config-set installed_paths vendor/wp-coding-standards/wpcs
