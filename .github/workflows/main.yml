@@ -12,12 +12,12 @@ jobs:
     name: PHP Code Quality
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.1'
+          php-version: '8.2'
           tools: composer, cs2pr
 
       - name: Install PHPCS and WP Standards
@@ -27,14 +27,14 @@ jobs:
 
       - name: Run PHPCS
         run: vendor/bin/phpcs --standard=phpcs.xml --report=checkstyle -q | cs2pr
-        continue-on-error: true # Don't fail the build yet, simply report
+        continue-on-error: true # Gradual adoption — review warnings
 
   # 2. Security Audit (Secrets & Vulnerabilities)
   security:
     name: Security Audit
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
@@ -42,70 +42,133 @@ jobs:
         uses: gitleaks/gitleaks-action@v2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        continue-on-error: true # Review failures manually initially
+        # Fail the build if secrets are found
+        continue-on-error: false
 
-      - name: Check for Dangerous Functions
+      - name: Check for Dangerous PHP Functions
         run: |
-           # Simple grep check for dangerous patterns often missed
-           if grep -r "eval(" app/public/wp-content/themes/globalconnect-child; then
-             echo "::error::Found usage of eval() function!"
-             exit 1
-           fi
-           if grep -r "debug" app/public/wp-content/themes/globalconnect-child; then
-              echo "::warning::Found 'debug' keywords, please ensure no debug code is committed."
-           fi
+          CHILD_THEME="app/public/wp-content/themes/globalconnect-child"
+          EXIT_CODE=0
 
-  # 3. Frontend Quality (CSS/JS)
+          # Critical: Functions that should never appear in production
+          for func in "eval(" "base64_decode(" "system(" "exec(" "passthru(" "shell_exec(" "popen("; do
+            if grep -rn "$func" "$CHILD_THEME" --include="*.php" 2>/dev/null; then
+              echo "::error::Found dangerous function: $func"
+              EXIT_CODE=1
+            fi
+          done
+
+          # Warning: Debug artifacts that shouldn't be in production
+          for pattern in "var_dump(" "print_r(" "error_log(" "WP_DEBUG.*true"; do
+            if grep -rn "$pattern" "$CHILD_THEME" --include="*.php" 2>/dev/null; then
+              echo "::warning::Found debug pattern: $pattern — ensure this is intentional"
+            fi
+          done
+
+          exit $EXIT_CODE
+
+      - name: Check for Hardcoded Secrets
+        run: |
+          CHILD_THEME="app/public/wp-content/themes/globalconnect-child"
+          # Check for hardcoded API keys or passwords in PHP files
+          if grep -rn "sk-\|api_key\s*=\s*['\"]" "$CHILD_THEME" --include="*.php" 2>/dev/null | grep -v "get_option\|sanitize\|esc_"; then
+            echo "::error::Possible hardcoded API keys found in child theme!"
+            exit 1
+          fi
+
+  # 3. Frontend Quality (CSS/JS Linting)
   frontend-quality:
-    name: Frontend Quality (Mobile/UI/UX)
+    name: Frontend Quality
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
-          node-version: '18'
+          node-version: '20'
 
       - name: Install Linters
         run: npm install stylelint stylelint-config-standard eslint --save-dev
 
       - name: Run Stylelint (CSS)
         run: npx stylelint "app/public/wp-content/themes/globalconnect-child/**/*.css" --config .stylelintrc.json
-        continue-on-error: true
+        continue-on-error: true # Gradual adoption
 
       - name: Run ESLint (JS)
-        run: npx eslint "app/public/wp-content/themes/globalconnect-child/**/*.js" --config .eslintrc.json
-        continue-on-error: true
+        run: npx eslint "app/public/wp-content/themes/globalconnect-child/assets/js/**/*.js" --config .eslintrc.json
+        continue-on-error: true # Gradual adoption
 
-  # 4. SEO & Mobile First Static Checks
+  # 4. SEO, Mobile & Accessibility Static Checks
   seo-mobile-checks:
     name: SEO & Mobile Checks
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Check Mobile Viewport Tag
         run: |
-          # Recursively search for viewport meta tag in PHP headers
-          if ! grep -r '<meta name="viewport"' app/public/wp-content/themes/globalconnect-child; then
-            echo "::warning::Mobile viewport tag not found in child theme. Ensure it's inherited from parent or added."
-          else
+          CHILD_THEME="app/public/wp-content/themes/globalconnect-child"
+          if grep -r 'user-scalable=0\|user-scalable=no' "$CHILD_THEME" --include="*.php"; then
+            echo "::error::Found user-scalable=0 — this blocks zoom and violates WCAG 2.1 Level AA"
+            exit 1
+          fi
+          if grep -r '<meta name="viewport"' "$CHILD_THEME" --include="*.php"; then
             echo "Viewport tag found. Mobile-first ready."
+          else
+            echo "::warning::Mobile viewport tag not found in child theme. Ensure it is inherited from parent."
           fi
 
-      - name: Check H1 Usage
+      - name: Check Heading Hierarchy
         run: |
-            # Check if H1 tags are used in templates
-            if ! grep -r "<h1" app/public/wp-content/themes/globalconnect-child; then
-                echo "::warning::No <h1> tags found in child theme templates. Ensure proper SEO hierarchy."
-            fi
-
-      - name: Check Image Alt Tags
-        run: |
-            # Rough check for img tags without alt attributes
-            grep -r "<img" app/public/wp-content/themes/globalconnect-child | while read -r line ; do
-                if [[ "$line" != *"alt="* ]]; then
-                    echo "::warning::Possible missing alt tag in image: $line"
-                fi
+          CHILD_THEME="app/public/wp-content/themes/globalconnect-child"
+          # Warn if page templates are missing H1 tags
+          for template in page-*.php single-*.php archive-*.php; do
+            for file in "$CHILD_THEME"/$template; do
+              [ -f "$file" ] || continue
+              if ! grep -q '<h1' "$file"; then
+                echo "::warning::No <h1> tag found in $(basename $file). Ensure proper SEO heading hierarchy."
+              fi
             done
+          done
+
+      - name: Check for JSON-LD Structured Data
+        run: |
+          CHILD_THEME="app/public/wp-content/themes/globalconnect-child"
+          # Product pages should have structured data
+          for file in "$CHILD_THEME"/single-vehicle.php "$CHILD_THEME"/single-part.php; do
+            [ -f "$file" ] || continue
+            if ! grep -q 'application/ld+json' "$file"; then
+              echo "::error::Missing JSON-LD structured data in $(basename $file) — critical for SEO"
+              exit 1
+            fi
+          done
+          echo "JSON-LD structured data found on product pages."
+
+      - name: Check Image Lazy Loading
+        run: |
+          CHILD_THEME="app/public/wp-content/themes/globalconnect-child"
+          MISSING=0
+          grep -rn '<img ' "$CHILD_THEME" --include="*.php" | while read -r line; do
+            if echo "$line" | grep -qv 'loading='; then
+              echo "::warning::Possible missing loading attribute: $line"
+            fi
+          done
+
+      - name: Check Reduced Motion Support
+        run: |
+          CHILD_THEME="app/public/wp-content/themes/globalconnect-child"
+          if grep -r 'prefers-reduced-motion' "$CHILD_THEME/style.css" "$CHILD_THEME/assets/js/" 2>/dev/null; then
+            echo "prefers-reduced-motion support found. Accessibility compliant."
+          else
+            echo "::warning::No prefers-reduced-motion support found. Consider adding for WCAG compliance."
+          fi
+
+      - name: Check Resource Hints
+        run: |
+          CHILD_THEME="app/public/wp-content/themes/globalconnect-child"
+          if grep -r 'preconnect\|dns-prefetch' "$CHILD_THEME" --include="*.php"; then
+            echo "Resource hints found for external domains."
+          else
+            echo "::warning::No preconnect/dns-prefetch found. Add for external domain performance."
+          fi

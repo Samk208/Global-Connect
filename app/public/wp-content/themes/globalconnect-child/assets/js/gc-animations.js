@@ -5,6 +5,9 @@
 
 document.addEventListener('DOMContentLoaded', () => {
 
+    // Respect prefers-reduced-motion
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
     // 1. Scroll Reveal Observer
     const ObserverOptions = {
         root: null,
@@ -27,41 +30,53 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     // 2. Parallax Effect for Backgrounds & Floating Elements
-    window.addEventListener('scroll', () => {
-        const scrolled = window.pageYOffset;
+    // Only run if user hasn't requested reduced motion
+    if (!prefersReducedMotion) {
+        let scrollTicking = false;
 
-        // Floating elements in Hero
-        document.querySelectorAll('.gc-floating-element').forEach((el, index) => {
-            const speed = (index + 1) * 0.1;
-            el.style.transform = `translateY(${scrolled * speed}px)`;
+        window.addEventListener('scroll', () => {
+            if (!scrollTicking) {
+                requestAnimationFrame(() => {
+                    const scrolled = window.pageYOffset;
+
+                    // Floating elements in Hero
+                    document.querySelectorAll('.gc-floating-element').forEach((el, index) => {
+                        const speed = (index + 1) * 0.1;
+                        el.style.transform = `translateY(${scrolled * speed}px)`;
+                    });
+
+                    // Parallax for China Section Background (if applicable)
+                    const chinaSection = document.querySelector('.gc-china-highlight');
+                    if (chinaSection) {
+                        const offset = chinaSection.offsetTop - scrolled;
+                        chinaSection.style.backgroundPositionY = `${offset * 0.5}px`;
+                    }
+
+                    scrollTicking = false;
+                });
+                scrollTicking = true;
+            }
         });
 
-        // Parallax for China Section Background (if applicable)
-        const chinaSection = document.querySelector('.gc-china-highlight');
-        if (chinaSection) {
-            const offset = chinaSection.offsetTop - scrolled;
-            chinaSection.style.backgroundPositionY = `${offset * 0.5}px`;
-        }
-    });
 
+        // 3. Magnetic Button Effect (Micro-interaction)
+        // Applies a subtle "magnetic" pull to primary buttons on hover
+        const buttons = document.querySelectorAll('.gc-btn-magnetic');
 
-    // 3. Magnetic Button Effect (Micro-interaction)
-    // Applies a subtle "magnetic" pull to primary buttons on hover
-    const buttons = document.querySelectorAll('.gc-btn-magnetic');
+        buttons.forEach(btn => {
+            btn.addEventListener('mousemove', (e) => {
+                const rect = btn.getBoundingClientRect();
+                const x = e.clientX - rect.left - rect.width / 2;
+                const y = e.clientY - rect.top - rect.height / 2;
 
-    buttons.forEach(btn => {
-        btn.addEventListener('mousemove', (e) => {
-            const rect = btn.getBoundingClientRect();
-            const x = e.clientX - rect.left - rect.width / 2;
-            const y = e.clientY - rect.top - rect.height / 2;
+                btn.style.transform = `translate(${x * 0.2}px, ${y * 0.2}px)`;
+            });
 
-            btn.style.transform = `translate(${x * 0.2}px, ${y * 0.2}px)`;
+            btn.addEventListener('mouseleave', () => {
+                btn.style.transform = 'translate(0, 0)';
+            });
         });
-
-        btn.addEventListener('mouseleave', () => {
-            btn.style.transform = 'translate(0, 0)';
-        });
-    });
+    }
 
     // 4. Counter Up Animation for Stats
     // Only runs when stats become visible
@@ -70,6 +85,14 @@ document.addEventListener('DOMContentLoaded', () => {
             if (entry.isIntersecting) {
                 const counter = entry.target;
                 const target = parseInt(counter.getAttribute('data-target'));
+
+                if (prefersReducedMotion) {
+                    // Skip animation, show final value immediately
+                    counter.innerText = target + (counter.getAttribute('data-suffix') || '');
+                    observer.unobserve(counter);
+                    return;
+                }
+
                 const duration = 2000; // 2 seconds
                 const start = 0;
                 const startTime = performance.now();

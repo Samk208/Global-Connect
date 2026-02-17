@@ -144,6 +144,45 @@ get_header();
         </div>
     </div>
 
+    <?php
+    // JSON-LD Structured Data for Vehicle (Product schema)
+    $schema_image = '';
+    if (has_post_thumbnail()) {
+        $schema_image = get_the_post_thumbnail_url(get_the_ID(), 'large');
+    } elseif ($demo_image) {
+        $schema_image = $demo_image;
+    }
+    $schema_price = $price ? str_replace(',', '', $price) : '';
+    $schema_make = strip_tags($make ?: '');
+    $schema_model = strip_tags($model ?: '');
+    ?>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Vehicle",
+        "name": <?php echo wp_json_encode(get_the_title()); ?>,
+        "description": <?php echo wp_json_encode(wp_strip_all_tags(get_the_excerpt() ?: get_the_title())); ?>,
+        <?php if ($schema_image): ?>"image": <?php echo wp_json_encode(esc_url($schema_image)); ?>,<?php endif; ?>
+        <?php if ($schema_make): ?>"brand": {"@type": "Brand", "name": <?php echo wp_json_encode($schema_make); ?>},<?php endif; ?>
+        <?php if ($schema_model): ?>"model": <?php echo wp_json_encode($schema_model); ?>,<?php endif; ?>
+        <?php if ($year): ?>"vehicleModelDate": <?php echo wp_json_encode($year); ?>,<?php endif; ?>
+        <?php if ($mileage): ?>"mileageFromOdometer": {"@type": "QuantitativeValue", "value": <?php echo wp_json_encode($mileage); ?>, "unitCode": "SMI"},<?php endif; ?>
+        <?php if ($vin): ?>"vehicleIdentificationNumber": <?php echo wp_json_encode($vin); ?>,<?php endif; ?>
+        <?php if ($fuel): ?>"fuelType": <?php echo wp_json_encode($fuel); ?>,<?php endif; ?>
+        <?php if ($transmission): ?>"vehicleTransmission": <?php echo wp_json_encode($transmission); ?>,<?php endif; ?>
+        <?php if ($schema_price): ?>
+        "offers": {
+            "@type": "Offer",
+            "price": <?php echo wp_json_encode($schema_price); ?>,
+            "priceCurrency": "USD",
+            "availability": "https://schema.org/InStock",
+            "url": <?php echo wp_json_encode(get_permalink()); ?>
+        },
+        <?php endif; ?>
+        "url": <?php echo wp_json_encode(get_permalink()); ?>
+    }
+    </script>
+
 </div>
 
 <script>

@@ -86,21 +86,22 @@ get_header();
     </section>
 
     <!-- LIVE OPERATION TICKER (Dynamic) -->
-    <div class="gc-marquee-container">
+    <div class="gc-marquee-container" role="marquee" aria-label="Live shipping updates">
         <div class="gc-marquee-content">
             <?php
             $ticker_items = globalconnect_get_ticker_items();
             foreach ($ticker_items as $item):
                 ?>
-                <div class="gc-marquee-item"><span class="gc-live-dot"></span> <?php echo esc_html($item['text']); ?></div>
+                <div class="gc-marquee-item"><span class="gc-live-dot" aria-hidden="true"></span> <?php echo esc_html($item['text']); ?></div>
             <?php endforeach; ?>
             <?php
             // Duplicate for seamless scroll
             foreach ($ticker_items as $item):
                 ?>
-                <div class="gc-marquee-item"><span class="gc-live-dot"></span> <?php echo esc_html($item['text']); ?></div>
+                <div class="gc-marquee-item" aria-hidden="true"><span class="gc-live-dot" aria-hidden="true"></span> <?php echo esc_html($item['text']); ?></div>
             <?php endforeach; ?>
         </div>
+        <button class="gc-marquee-pause" aria-label="Pause ticker" id="gc-ticker-pause">&#10074;&#10074;</button>
     </div>
 
     <!-- 2. PRODUCT CATEGORIES -->

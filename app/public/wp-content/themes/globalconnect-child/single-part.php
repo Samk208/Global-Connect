@@ -144,6 +144,39 @@ $whatsapp = get_option('gc_whatsapp_number', '12672900254');
         </div>
     </div>
 
+    <?php
+    // JSON-LD Structured Data for Part/Machinery (Product schema)
+    $schema_image = '';
+    if (has_post_thumbnail()) {
+        $schema_image = get_the_post_thumbnail_url(get_the_ID(), 'large');
+    } elseif ($demo_image) {
+        $schema_image = $demo_image;
+    }
+    $schema_price = $price ? str_replace(',', '', $price) : '';
+    $schema_category = ($categories && !is_wp_error($categories)) ? $categories[0]->name : 'Part';
+    ?>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Product",
+        "name": <?php echo wp_json_encode(get_the_title()); ?>,
+        "description": <?php echo wp_json_encode(wp_strip_all_tags(get_the_excerpt() ?: get_the_title())); ?>,
+        <?php if ($schema_image): ?>"image": <?php echo wp_json_encode(esc_url($schema_image)); ?>,<?php endif; ?>
+        "category": <?php echo wp_json_encode($schema_category); ?>,
+        <?php if ($condition): ?>"itemCondition": "https://schema.org/<?php echo ($condition === 'New') ? 'NewCondition' : 'UsedCondition'; ?>",<?php endif; ?>
+        <?php if ($schema_price): ?>
+        "offers": {
+            "@type": "Offer",
+            "price": <?php echo wp_json_encode($schema_price); ?>,
+            "priceCurrency": "USD",
+            "availability": "https://schema.org/InStock",
+            "url": <?php echo wp_json_encode(get_permalink()); ?>
+        },
+        <?php endif; ?>
+        "url": <?php echo wp_json_encode(get_permalink()); ?>
+    }
+    </script>
+
 </div>
 
 <style>

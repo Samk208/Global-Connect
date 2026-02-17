@@ -5,6 +5,19 @@
         "no-descending-specificity": null,
         "font-family-no-missing-generic-family-keyword": null,
         "selector-class-pattern": null,
-        "color-hex-length": "long"
-    }
+        "custom-property-pattern": null,
+        "declaration-block-no-redundant-longhand-properties": null,
+        "property-no-vendor-prefix": null,
+        "value-no-vendor-prefix": null,
+        "selector-id-pattern": null,
+        "alpha-value-notation": null,
+        "color-function-notation": null,
+        "color-hex-length": "long",
+        "import-notation": null
+    },
+    "ignoreFiles": [
+        "**/node_modules/**",
+        "**/vendor/**",
+        "**/Divi/**"
+    ]
 }

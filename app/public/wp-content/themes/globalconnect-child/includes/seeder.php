@@ -263,5 +263,52 @@ function globalconnect_seed_demo_content()
         }
         wp_reset_postdata();
     }
+    // 5. Create Core Pages and Assign Templates
+    $pages = array(
+        'home' => array('title' => 'Home', 'template' => 'page-landing.php'),
+        'shop' => array('title' => 'Inventory', 'template' => 'page-shop.php'),
+        'track' => array('title' => 'Track Shipment', 'template' => 'page-track.php'),
+        'about' => array('title' => 'About Us', 'template' => 'page-about.php'),
+        'contact' => array('title' => 'Contact Us', 'template' => 'page-contact.php'),
+        'china-sourcing' => array('title' => 'China Direct', 'template' => 'page-china-sourcing.php'),
+        'dashboard' => array('title' => 'My Dashboard', 'template' => 'page-dashboard.php'),
+        'login' => array('title' => 'Login / Register', 'template' => 'page-login.php'),
+        'how-it-works' => array('title' => 'How It Works', 'template' => 'page-how-it-works.php'),
+    );
+
+    foreach ($pages as $slug => $page_data) {
+        $existing_page = get_page_by_path($slug);
+        if (!$existing_page) {
+            $page_id = wp_insert_post(array(
+                'post_title' => $page_data['title'],
+                'post_name' => $slug,
+                'post_status' => 'publish',
+                'post_type' => 'page',
+                'post_content' => '', // Content is handled by template
+            ));
+
+            if ($page_id && !is_wp_error($page_id)) {
+                update_post_meta($page_id, '_wp_page_template', $page_data['template']);
+
+                // Set Homepage
+                if ($slug === 'home') {
+                    update_option('show_on_front', 'page');
+                    update_option('page_on_front', $page_id);
+                }
+            }
+        } else {
+            // Ensure template is assigned even if page exists
+            $current_template = get_post_meta($existing_page->ID, '_wp_page_template', true);
+            if ($current_template !== $page_data['template']) {
+                update_post_meta($existing_page->ID, '_wp_page_template', $page_data['template']);
+            }
+
+            // Ensure Homepage setting
+            if ($slug === 'home' && get_option('page_on_front') != $existing_page->ID) {
+                update_option('show_on_front', 'page');
+                update_option('page_on_front', $existing_page->ID);
+            }
+        }
+    }
 }
 add_action('init', 'globalconnect_seed_demo_content');

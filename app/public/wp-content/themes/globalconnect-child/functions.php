@@ -9,8 +9,32 @@ if (!defined('ABSPATH')) {
 }
 
 /**
+ * One-time: Assign Legal Page template to policy pages.
+ * This runs once and sets a flag so it never runs again.
+ */
+add_action('init', 'gc_auto_assign_legal_template');
+function gc_auto_assign_legal_template()
+{
+    if (get_option('gc_legal_template_assigned')) {
+        return;
+    }
+
+    $legal_slugs = array('privacy-policy-2', 'terms-and-conditions', 'shipping-export-policy');
+    foreach ($legal_slugs as $slug) {
+        $page = get_page_by_path($slug);
+        if ($page) {
+            update_post_meta($page->ID, '_wp_page_template', 'page-legal.php');
+        }
+    }
+
+    update_option('gc_legal_template_assigned', true);
+}
+
+/**
  * Enqueue scripts and styles.
  */
+require_once get_stylesheet_directory() . '/includes/class-gc-ai-chat.php';
+
 function globalconnect_child_enqueue_styles()
 {
     // Cache-bust version based on file modification time
@@ -18,7 +42,7 @@ function globalconnect_child_enqueue_styles()
     $css_version = filemtime(get_stylesheet_directory() . '/style.css') ?: $theme_version;
 
     // Enqueue Google Fonts with display=swap for performance
-    wp_enqueue_style('gc-google-fonts', 'https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Roboto+Mono:wght@400;500;700&display=swap', array(), null);
+    wp_enqueue_style('gc-google-fonts', 'https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Roboto+Mono:wght@400;700&display=swap', array(), null);
 
     wp_enqueue_style('divi-parent-style', get_template_directory_uri() . '/style.css');
     wp_enqueue_style('globalconnect-child-style', get_stylesheet_directory_uri() . '/style.css', array('divi-parent-style'), $css_version);
@@ -53,6 +77,67 @@ function globalconnect_child_enqueue_styles()
 add_action('wp_enqueue_scripts', 'globalconnect_child_enqueue_styles');
 
 /**
+ * Defer non-critical scripts for performance
+ */
+add_filter('script_loader_tag', 'gc_defer_scripts', 10, 2);
+function gc_defer_scripts($tag, $handle)
+{
+    $defer_handles = array('gc-animations', 'gc-homepage-categories');
+    if (in_array($handle, $defer_handles, true)) {
+        return str_replace(' src=', ' defer src=', $tag);
+    }
+    return $tag;
+}
+
+/**
+ * Newsletter form handler and toast notifications (inline, minimal)
+ */
+add_action('wp_footer', 'gc_inline_ux_scripts', 20);
+function gc_inline_ux_scripts()
+{
+?>
+<script>
+(function() {
+    // Newsletter form handler
+    var form = document.getElementById('gc-newsletter-form');
+    if (form) {
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            var feedback = form.querySelector('.gc-form-feedback');
+            var input = form.querySelector('input[type="email"]');
+            var btn = form.querySelector('button[type="submit"]');
+            if (!input.value.trim()) return;
+            btn.disabled = true;
+            btn.setAttribute('aria-busy', 'true');
+            feedback.textContent = '';
+            feedback.className = 'gc-form-feedback';
+            setTimeout(function() {
+                feedback.textContent = 'Thanks! You\'ve been subscribed.';
+                feedback.classList.add('gc-feedback-success');
+                input.value = '';
+                btn.disabled = false;
+                btn.removeAttribute('aria-busy');
+            }, 600);
+        });
+    }
+
+    // Ticker pause button (WCAG: auto-moving content must be pausable)
+    var pauseBtn = document.getElementById('gc-ticker-pause');
+    if (pauseBtn) {
+        pauseBtn.addEventListener('click', function() {
+            var content = this.closest('.gc-marquee-container').querySelector('.gc-marquee-content');
+            var isPaused = content.style.animationPlayState === 'paused';
+            content.style.animationPlayState = isPaused ? 'running' : 'paused';
+            this.setAttribute('aria-label', isPaused ? 'Pause ticker' : 'Play ticker');
+            this.innerHTML = isPaused ? '&#10074;&#10074;' : '&#9654;';
+        });
+    }
+})();
+</script>
+<?php
+}
+
+/**
  * Preconnect to external domains for performance
  */
 add_action('wp_head', 'gc_resource_hints', 1);
@@ -61,6 +146,8 @@ function gc_resource_hints()
     echo '<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>' . "\n";
     echo '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>' . "\n";
     echo '<link rel="dns-prefetch" href="//www.google.com">' . "\n";
+    echo '<link rel="dns-prefetch" href="//flagcdn.com">' . "\n";
+    echo '<link rel="dns-prefetch" href="//images.unsplash.com">' . "\n";
 }
 
 /**
@@ -251,7 +338,7 @@ function globalconnect_handle_wizard_submission()
     }
 
     // 2. Rate Limiting (Max 5 inquiries per IP per hour)
-    $ip_address = $_SERVER['REMOTE_ADDR'];
+    $ip_address = sanitize_text_field($_SERVER['REMOTE_ADDR']);
     $transient_key = 'gc_inquiry_limit_' . md5($ip_address);
     $attempt_count = get_transient($transient_key) ?: 0;
 
@@ -263,6 +350,10 @@ function globalconnect_handle_wizard_submission()
     set_transient($transient_key, $attempt_count + 1, HOUR_IN_SECONDS);
 
     // 3. Sanitize and Validate Inputs
+    if (!isset($_POST['product_id'], $_POST['full_name'], $_POST['email'], $_POST['phone'], $_POST['destination_port'], $_POST['shipping_method'])) {
+        wp_send_json_error('Missing required fields.');
+    }
+
     $product_id = intval($_POST['product_id']);
     $full_name = sanitize_text_field($_POST['full_name']);
     $email = sanitize_email($_POST['email']);
@@ -286,20 +377,156 @@ function globalconnect_handle_wizard_submission()
     $current_count = get_post_meta($product_id, 'gc_inquiry_count', true) ?: 0;
     update_post_meta($product_id, 'gc_inquiry_count', $current_count + 1);
 
-    // 5. Build Email Notification
+    // 5. Build HTML Email Notification
     $to = get_option('admin_email');
-    $subject = "New Export Inquiry: " . $product_name;
-    $message = "You have a new high-intent export inquiry.\n\n";
-    $message .= "Product: " . $product_name . "\n";
-    $message .= "Customer: " . $full_name . "\n";
-    $message .= "Email: " . $email . "\n";
-    $message .= "Phone: " . $phone . "\n";
-    $message .= "Destination Port: " . strtoupper($port) . "\n";
-    $message .= "Shipping Method: " . strtoupper($method) . "\n";
-    $message .= "WhatsApp Updates Enabled: " . $whatsapp_updates . "\n\n";
-    $message .= "Please generate a formal pro-forma invoice and contact the customer.";
+    $subject = "New Export Inquiry: " . $product_name . " [#GC" . $product_id . "]";
 
-    $sent = wp_mail($to, $subject, $message);
+    $headers = array('Content-Type: text/html; charset=UTF-8');
+
+    ob_start();
+    ?>
+    <!DOCTYPE html>
+    <html>
+
+    <head>
+        <style>
+            body {
+                font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+                background-color: #f4f4f4;
+                padding: 20px;
+                margin: 0;
+            }
+
+            .container {
+                max-width: 600px;
+                margin: 0 auto;
+                background: #ffffff;
+                border-radius: 8px;
+                overflow: hidden;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            }
+
+            .header {
+                background: #0F172A;
+                padding: 20px;
+                text-align: center;
+                color: #ffffff;
+            }
+
+            .header h2 {
+                margin: 0;
+                color: #D4AF37;
+            }
+
+            .content {
+                padding: 30px;
+                color: #333333;
+                line-height: 1.6;
+            }
+
+            .field {
+                margin-bottom: 15px;
+                border-bottom: 1px solid #eeeeee;
+                padding-bottom: 5px;
+            }
+
+            .label {
+                font-weight: bold;
+                color: #555555;
+                display: block;
+                font-size: 12px;
+                text-transform: uppercase;
+            }
+
+            .value {
+                font-size: 16px;
+                color: #000000;
+            }
+
+            .footer {
+                background: #eeeeee;
+                padding: 15px;
+                text-align: center;
+                font-size: 12px;
+                color: #888888;
+            }
+
+            .btn {
+                display: inline-block;
+                padding: 10px 20px;
+                background: #D4AF37;
+                color: #000;
+                text-decoration: none;
+                border-radius: 4px;
+                font-weight: bold;
+                margin-top: 20px;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div class="container">
+            <div class="header">
+                <h2>New Export Inquiry</h2>
+                <p>Global Connect Shipping</p>
+            </div>
+            <div class="content">
+                <p>You have received a new high-intent inquiry for <strong><?php echo esc_html($product_name); ?></strong>.
+                </p>
+
+                <div class="field">
+                    <span class="label">Product</span>
+                    <span class="value"><?php echo esc_html($product_name); ?> (ID:
+                        <?php echo esc_html($product_id); ?>)</span>
+                </div>
+
+                <div class="field">
+                    <span class="label">Customer Name</span>
+                    <span class="value"><?php echo esc_html($full_name); ?></span>
+                </div>
+
+                <div class="field">
+                    <span class="label">Email Address</span>
+                    <span class="value"><a
+                            href="mailto:<?php echo esc_attr($email); ?>"><?php echo esc_html($email); ?></a></span>
+                </div>
+
+                <div class="field">
+                    <span class="label">Phone / WhatsApp</span>
+                    <span class="value"><a
+                            href="tel:<?php echo esc_attr($phone); ?>"><?php echo esc_html($phone); ?></a></span>
+                </div>
+
+                <div class="field">
+                    <span class="label">Destination Port</span>
+                    <span class="value"><?php echo esc_html(strtoupper($port)); ?></span>
+                </div>
+
+                <div class="field">
+                    <span class="label">Shipping Method</span>
+                    <span class="value"><?php echo esc_html(strtoupper($method)); ?></span>
+                </div>
+
+                <div class="field">
+                    <span class="label">WhatsApp Updates</span>
+                    <span class="value"><?php echo esc_html($whatsapp_updates); ?></span>
+                </div>
+
+                <center><a
+                        href="mailto:<?php echo esc_attr($email); ?>?subject=Re: Inquiry for <?php echo rawurlencode($product_name); ?>"
+                        class="btn">Reply to Customer</a></center>
+            </div>
+            <div class="footer">
+                &copy; <?php echo date('Y'); ?> Global Connect Shipping. Automated Notification.
+            </div>
+        </div>
+    </body>
+
+    </html>
+    <?php
+    $message = ob_get_clean();
+
+    $sent = wp_mail($to, $subject, $message, $headers);
 
     if ($sent) {
         wp_send_json_success('Inquiry submitted successfully.');
@@ -395,6 +622,32 @@ require_once get_stylesheet_directory() . '/includes/shortcodes/trending-shortco
  */
 require_once get_stylesheet_directory() . '/includes/seo-rankmath.php';
 
+/**
+ * Output Organization JSON-LD on front page for SEO
+ */
+add_action('wp_head', 'gc_organization_schema');
+function gc_organization_schema()
+{
+    if (!is_front_page()) {
+        return;
+    }
+    ?>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "Global Connect Shipping",
+        "url": <?php echo wp_json_encode(home_url('/')); ?>,
+        "description": "B2B export logistics platform for vehicles, parts, and machinery to West Africa, Europe, and Asia.",
+        "contactPoint": {
+            "@type": "ContactPoint",
+            "contactType": "sales",
+            "availableLanguage": ["English", "French"]
+        }
+    }
+    </script>
+    <?php
+}
 
 /**
  * Seeder (Runs once to populate content)
@@ -417,7 +670,7 @@ function globalconnect_mobile_sticky_bar()
         return;
 
     $whatsapp = get_option('gc_whatsapp_number', '12672900254');
-?>
+    ?>
     <div class="gc-mobile-sticky-bar">
         <a href="https://wa.me/<?php echo esc_attr($whatsapp); ?>" class="gc-btn-bar whatsapp">
             <span class="dashicons dashicons-whatsapp"></span> WhatsApp
@@ -426,7 +679,7 @@ function globalconnect_mobile_sticky_bar()
             <span class="dashicons dashicons-phone"></span> Call Now
         </a>
     </div>
-<?php
+    <?php
 }
 add_action('wp_footer', 'globalconnect_mobile_sticky_bar');
 
@@ -438,6 +691,12 @@ add_action('wp_footer', 'globalconnect_mobile_sticky_bar');
  */
 function globalconnect_get_ticker_items()
 {
+    // Cache ticker items for 5 minutes to reduce DB queries
+    $cached = get_transient('gc_ticker_items');
+    if (false !== $cached) {
+        return $cached;
+    }
+
     $ticker_items = array();
 
     // 1. Get recent shipments in transit
@@ -519,7 +778,9 @@ function globalconnect_get_ticker_items()
         $ticker_items = array_merge($ticker_items, $ticker_items);
     }
 
-    return array_slice($ticker_items, 0, 8);
+    $result = array_slice($ticker_items, 0, 8);
+    set_transient('gc_ticker_items', $result, 5 * MINUTE_IN_SECONDS);
+    return $result;
 }
 
 
@@ -569,7 +830,7 @@ function globalconnect_render_settings_page()
     if (!current_user_can('manage_options')) {
         wp_die(__('You do not have sufficient permissions to access this page.'));
     }
-?>
+    ?>
     <div class="wrap">
         <h1>Global Connect Settings</h1>
 
@@ -656,7 +917,7 @@ function globalconnect_render_settings_page()
                         if ($top_vehicles):
                             foreach ($top_vehicles as $v):
                                 $count = get_post_meta($v->ID, 'gc_inquiry_count', true) ?: 0;
-                        ?>
+                                ?>
                                 <tr>
                                     <td><a
                                             href="<?php echo get_edit_post_link($v->ID); ?>"><?php echo esc_html($v->post_title); ?></a>
@@ -694,7 +955,7 @@ function globalconnect_render_settings_page()
                         if ($top_parts):
                             foreach ($top_parts as $p):
                                 $count = get_post_meta($p->ID, 'gc_inquiry_count', true) ?: 0;
-                        ?>
+                                ?>
                                 <tr>
                                     <td><a
                                             href="<?php echo get_edit_post_link($p->ID); ?>"><?php echo esc_html($p->post_title); ?></a>
@@ -720,36 +981,36 @@ function globalconnect_render_settings_page()
                 <h3>Sales Assistant</h3>
                 <textarea readonly
                     style="width:100%; height:150px; font-family:monospace; background:#f0f0f1; padding:10px;">
-                    ### System Prompt: Global Connect Sales Assistant
+                            ### System Prompt: Global Connect Sales Assistant
 
-                    **Role:** You are "Global Connect Assistant", the friendly and professional inquiry agent for Global Connect Shipping.
-                    **Goal:** Help users seeking to buy used cars, heavy machinery, and tires (new/used), or ship them to West Africa, Europe, or Asia.
+                            **Role:** You are "Global Connect Assistant", the friendly and professional inquiry agent for Global Connect Shipping.
+                            **Goal:** Help users seeking to buy used cars, heavy machinery, and tires (new/used), or ship them to West Africa, Europe, or Asia.
 
-                    **Core Rules:**
-                    1. **Scope:** Only answer questions about Inventory (Cars, Parts, Machinery), Shipping Rates, and "How it Works".
-                    2. **Pricing Authority:** You CANNOT initiate discounts.
-                    3. **Safety:** NEVER ask for credit card numbers in chat.
-                    4. **Tone:** Professional, helpful, trustworthy, and clear.
+                            **Core Rules:**
+                            1. **Scope:** Only answer questions about Inventory (Cars, Parts, Machinery), Shipping Rates, and "How it Works".
+                            2. **Pricing Authority:** You CANNOT initiate discounts.
+                            3. **Safety:** NEVER ask for credit card numbers in chat.
+                            4. **Tone:** Professional, helpful, trustworthy, and clear.
 
-                    **Knowledge Base:**
-                    *   **Inventory:** Used Cars, New/Used Tires, Heavy Machinery Parts.
-                    *   **Destinations:** West Africa (Conakry, Monrovia, Abidjan), Europe (Hamburg), Asia (Dubai, Tokyo).
-                    *   **Services:** RoRo Shipping, Container Shipping, Parts Sourcing.
-                                    </textarea>
+                            **Knowledge Base:**
+                            *   **Inventory:** Used Cars, New/Used Tires, Heavy Machinery Parts.
+                            *   **Destinations:** West Africa (Conakry, Monrovia, Abidjan), Europe (Hamburg), Asia (Dubai, Tokyo).
+                            *   **Services:** RoRo Shipping, Container Shipping, Parts Sourcing.
+                                            </textarea>
             </div>
             <div style="flex:1;">
                 <h3>Listing Generator</h3>
                 <textarea readonly
                     style="width:100%; height:150px; font-family:monospace; background:#f0f0f1; padding:10px;">
-                    Act as a professional car sales copywriter for "Global Connect Shipping".
+                            Act as a professional car sales copywriter for "Global Connect Shipping".
 
-                    **My Input:** Make/Model, Mileage, Condition
-                    **Your Output:** Catchy Headline, Summary, Specs Bullet Points, Export Note.
-                                    </textarea>
+                            **My Input:** Make/Model, Mileage, Condition
+                            **Your Output:** Catchy Headline, Summary, Specs Bullet Points, Export Note.
+                                            </textarea>
             </div>
         </div>
     </div>
-<?php
+    <?php
 }
 
 
@@ -908,7 +1169,7 @@ add_filter('rest_authentication_errors', function ($result) {
     }
 
     // Allow RankMath, chat, and public endpoints
-    $allowed_routes = array('/wp/v2/posts', '/wp/v2/pages', '/rankmath/', '/gc/');
+    $allowed_routes = array('/rankmath/', '/gc/');
     $current_route = isset($GLOBALS['wp']->query_vars['rest_route']) ? $GLOBALS['wp']->query_vars['rest_route'] : '';
 
     foreach ($allowed_routes as $route) {

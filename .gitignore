@@ -12,6 +12,7 @@ app/public/.htaccess
 conf/
 logs/
 app/sql/
+app/public/wp-content/mu-plugins/
 
 # Environment and sensitive
 .env
@@ -46,3 +47,10 @@ app/public/wp-content/docs/
 
 # Agent/Tool specific (optional but safer to ignore large internal data)
 .qoder/
+.claude/
+
+# Divi parent theme (installed/updated separately on each environment)
+app/public/wp-content/themes/Divi/
+
+# Windows artifacts
+nul

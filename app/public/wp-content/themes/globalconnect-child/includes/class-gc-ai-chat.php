@@ -38,6 +38,11 @@ class GC_AI_Chat
         }
 
         $params = $request->get_json_params();
+
+        if (empty($params) || !is_array($params)) {
+            return new WP_Error('invalid_json', 'Invalid JSON body', array('status' => 400));
+        }
+
         $message = isset($params['message']) ? sanitize_text_field($params['message']) : '';
         $history = isset($params['history']) ? $params['history'] : array();
 
