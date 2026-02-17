@@ -16,6 +16,8 @@
 !/README.md
 !/.github/
 !/.github/**
+!/deploy/
+!/deploy/**
 
 # ---- Whitelist: Child theme only ----
 !/app/
