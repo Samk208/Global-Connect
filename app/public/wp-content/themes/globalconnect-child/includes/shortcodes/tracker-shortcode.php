@@ -36,8 +36,8 @@ function globalconnect_tracker_shortcode()
         if (!empty($_GET['track'])) {
             $tracking_number = sanitize_text_field($_GET['track']);
 
-            // Demo Simulation: If user types "DEMO-LIVE", show a live mock shipment
-            if (strtoupper($tracking_number) === 'DEMO-LIVE') {
+            // Demo Simulation: Admin-only (disable for production visitors)
+            if (strtoupper($tracking_number) === 'DEMO-LIVE' && current_user_can('manage_options')) {
                 $status = 'Sailing';
                 $location = 'Mid-Atlantic (En route to Conakry)';
                 $eta = date('Y-m-d', strtotime('+12 days'));

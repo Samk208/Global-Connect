@@ -99,7 +99,7 @@ $whatsapp = get_option('gc_whatsapp_number', '12672900254');
 
                 <!-- Heavy Trucks -->
                 <div class="gc-china-category-card" style="background: white; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.08); transition: transform 0.3s;">
-                    <div style="height: 200px; background: url('https://images.unsplash.com/photo-1586015555751-63cb566087be?auto=format&fit=crop&w=600&q=80') center/cover; position: relative;">
+                    <div style="height: 200px; background: url('<?php echo esc_url(content_url('/uploads/2026/03/heavy-trucks-fleet.jpg')); ?>') center/cover; position: relative;">
                         <div style="position: absolute; top: 15px; left: 15px; background: #DC2626; color: white; padding: 5px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 700;">BEST SELLER</div>
                     </div>
                     <div style="padding: 25px;">
@@ -125,7 +125,7 @@ $whatsapp = get_option('gc_whatsapp_number', '12672900254');
 
                 <!-- Construction Machinery -->
                 <div class="gc-china-category-card" style="background: white; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.08); transition: transform 0.3s;">
-                    <div style="height: 200px; background: url('https://images.unsplash.com/photo-1581094285065-270405c6c213?auto=format&fit=crop&w=600&q=80') center/cover; position: relative;">
+                    <div style="height: 200px; background: url('<?php echo esc_url(content_url('/uploads/2026/03/construction-equipment.jpg')); ?>') center/cover; position: relative;">
                         <div style="position: absolute; top: 15px; left: 15px; background: #F59E0B; color: white; padding: 5px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 700;">HIGH DEMAND</div>
                     </div>
                     <div style="padding: 25px;">
@@ -151,7 +151,7 @@ $whatsapp = get_option('gc_whatsapp_number', '12672900254');
 
                 <!-- Bulk Tires -->
                 <div class="gc-china-category-card" style="background: white; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.08); transition: transform 0.3s;">
-                    <div style="height: 200px; background: url('https://images.unsplash.com/photo-1578844251758-2f71da64522f?auto=format&fit=crop&w=600&q=80') center/cover; position: relative;">
+                    <div style="height: 200px; background: url('<?php echo esc_url(content_url('/uploads/2026/03/tires-warehouse.jpg')); ?>') center/cover; position: relative;">
                         <div style="position: absolute; top: 15px; left: 15px; background: #3B82F6; color: white; padding: 5px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 700;">BULK PRICING</div>
                     </div>
                     <div style="padding: 25px;">

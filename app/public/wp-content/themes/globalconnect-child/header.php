@@ -32,6 +32,7 @@
                         'theme_location' => 'main-menu',
                         'container' => false,
                         'menu_class' => 'gc-nav-menu',
+                        'menu_id' => 'gc-desktop-menu',
                         'fallback_cb' => false,
                     ));
                     ?>
@@ -73,6 +74,7 @@
                     'theme_location' => 'mobile-menu',
                     'container' => false,
                     'menu_class' => 'gc-mobile-nav-list',
+                    'menu_id' => 'gc-mobile-menu',
                     'fallback_cb' => false,
                 ));
                 ?>
@@ -85,4 +87,4 @@
         </header>
 
         <!-- Main Content Area Wrapper -->
-        <div id="et-main-area">
+        <main id="et-main-area" role="main">

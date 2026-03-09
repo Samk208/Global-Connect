@@ -12,7 +12,7 @@ get_header();
 
     <!-- Hero Section -->
     <section class="gc-page-header"
-        style="background: linear-gradient(180deg, rgba(15, 23, 42, 0.9) 0%, #0F172A 100%), url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=1920') no-repeat center center/cover; padding: 100px 0 60px; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.05);">
+        style="background: linear-gradient(180deg, rgba(15, 23, 42, 0.9) 0%, #0F172A 100%), url('<?php echo esc_url(content_url('/uploads/2026/03/tech-global-network.jpg')); ?>') no-repeat center center/cover; padding: 100px 0 60px; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.05);">
         <div class="gc-container">
             <h1 style="color: #ffffff; font-size: 3.5rem; font-weight: 800; letter-spacing: -1px; margin-bottom: 20px;">
                 Connecting the World to <span style="color: var(--gc-gold);">Global Inventory</span></h1>

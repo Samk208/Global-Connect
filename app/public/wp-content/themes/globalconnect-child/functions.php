@@ -41,7 +41,18 @@ function globalconnect_child_enqueue_styles()
     $theme_version = wp_get_theme()->get('Version') ?: '1.0';
     $css_version = filemtime(get_stylesheet_directory() . '/style.css') ?: $theme_version;
 
-    // Enqueue Google Fonts with display=swap for performance
+    // Dequeue Divi's separate Google Font requests (we consolidate below)
+    global $wp_styles;
+    if (isset($wp_styles->registered)) {
+        foreach (array_keys($wp_styles->registered) as $handle) {
+            if (strpos($handle, 'et-gf-') === 0) {
+                wp_dequeue_style($handle);
+                wp_deregister_style($handle);
+            }
+        }
+    }
+
+    // Enqueue Google Fonts with display=swap for performance (single consolidated request)
     wp_enqueue_style('gc-google-fonts', 'https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Roboto+Mono:wght@400;700&display=swap', array(), null);
 
     wp_enqueue_style('divi-parent-style', get_template_directory_uri() . '/style.css');
@@ -147,7 +158,11 @@ function gc_resource_hints()
     echo '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>' . "\n";
     echo '<link rel="dns-prefetch" href="//www.google.com">' . "\n";
     echo '<link rel="dns-prefetch" href="//flagcdn.com">' . "\n";
-    echo '<link rel="dns-prefetch" href="//images.unsplash.com">' . "\n";
+    echo '<link rel="dns-prefetch" href="//videos.pexels.com">' . "\n";
+    // Preload hero video poster image for faster LCP
+    echo '<link rel="preload" as="image" href="' . esc_url(content_url('/uploads/2026/03/cargo-ship-hero.jpg')) . '">' . "\n";
+    // Preload Google Fonts CSS for faster render
+    echo '<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Roboto+Mono:wght@400;700&display=swap" crossorigin>' . "\n";
 }
 
 /**
@@ -160,6 +175,59 @@ function gc_lazy_load_iframes($content)
     // Prevent double loading attribute
     $content = str_replace('loading="lazy" loading="lazy"', 'loading="lazy"', $content);
     return $content;
+}
+
+/**
+ * Add rel="noopener noreferrer" to external links for security
+ */
+add_filter('the_content', 'gc_secure_external_links');
+function gc_secure_external_links($content) {
+    if (empty($content)) {
+        return $content;
+    }
+    $home_url = home_url();
+    $content = preg_replace_callback(
+        '/<a\s([^>]*href=["\']https?:\/\/[^"\']*["\'][^>]*)>/i',
+        function($matches) use ($home_url) {
+            $tag = $matches[0];
+            $href = '';
+            if (preg_match('/href=["\']([^"\']+)["\']/', $tag, $href_match)) {
+                $href = $href_match[1];
+            }
+            // Skip internal links
+            if (strpos($href, $home_url) === 0) {
+                return $tag;
+            }
+            // Already has rel attribute - append if needed
+            if (preg_match('/rel=["\']([^"\']*)["\']/', $tag)) {
+                $tag = preg_replace(
+                    '/rel=["\']([^"\']*)["\']/',
+                    'rel="$1 noopener noreferrer"',
+                    $tag
+                );
+            } else {
+                $tag = str_replace('>', ' rel="noopener noreferrer">', $tag);
+            }
+            return $tag;
+        },
+        $content
+    );
+    return $content;
+}
+
+/**
+ * Add missing width/height attributes to images to prevent CLS
+ */
+add_filter('wp_get_attachment_image_attributes', 'gc_add_image_dimensions', 10, 3);
+function gc_add_image_dimensions($attr, $attachment, $size) {
+    if (empty($attr['width']) || empty($attr['height'])) {
+        $image = wp_get_attachment_image_src($attachment->ID, $size);
+        if ($image) {
+            $attr['width'] = $image[1];
+            $attr['height'] = $image[2];
+        }
+    }
+    return $attr;
 }
 
 /**
@@ -623,30 +691,83 @@ require_once get_stylesheet_directory() . '/includes/shortcodes/trending-shortco
 require_once get_stylesheet_directory() . '/includes/seo-rankmath.php';
 
 /**
- * Output Organization JSON-LD on front page for SEO
+ * Output structured data JSON-LD on front page for SEO
+ * - LocalBusiness schema (replaces basic Organization)
+ * - FAQPage schema (matches FAQ section on landing page)
  */
-add_action('wp_head', 'gc_organization_schema');
-function gc_organization_schema()
+add_action('wp_head', 'gc_frontpage_schema');
+function gc_frontpage_schema()
 {
     if (!is_front_page()) {
         return;
     }
-    ?>
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "Organization",
-        "name": "Global Connect Shipping",
-        "url": <?php echo wp_json_encode(home_url('/')); ?>,
-        "description": "B2B export logistics platform for vehicles, parts, and machinery to West Africa, Europe, and Asia.",
-        "contactPoint": {
-            "@type": "ContactPoint",
-            "contactType": "sales",
-            "availableLanguage": ["English", "French"]
-        }
-    }
-    </script>
-    <?php
+
+    // LocalBusiness schema (more specific than Organization, includes address)
+    $local_business = array(
+        '@context' => 'https://schema.org',
+        '@type'    => 'LocalBusiness',
+        'name'     => 'GlobalConnect Shipping',
+        'url'      => home_url('/'),
+        'description' => 'B2B export logistics platform for vehicles, parts, and machinery to West Africa.',
+        'address'  => array(
+            '@type'           => 'PostalAddress',
+            'streetAddress'   => '5909 Elmwood Avenue',
+            'addressLocality' => 'Philadelphia',
+            'addressRegion'   => 'PA',
+            'postalCode'      => '19143',
+            'addressCountry'  => 'US',
+        ),
+        'contactPoint' => array(
+            '@type'             => 'ContactPoint',
+            'contactType'       => 'sales',
+            'availableLanguage' => array('English', 'French'),
+        ),
+        'sameAs' => array(
+            'https://www.facebook.com/profile.php?id=100071518400878',
+        ),
+        'areaServed' => array(
+            array('@type' => 'Country', 'name' => 'Nigeria'),
+            array('@type' => 'Country', 'name' => 'Ghana'),
+            array('@type' => 'Country', 'name' => 'Senegal'),
+            array('@type' => 'Country', 'name' => 'Guinea'),
+            array('@type' => 'Country', 'name' => 'Gambia'),
+        ),
+    );
+
+    // FAQPage schema (mirrors the 3 FAQ items in the landing page)
+    $faq_page = array(
+        '@context'   => 'https://schema.org',
+        '@type'      => 'FAQPage',
+        'mainEntity' => array(
+            array(
+                '@type' => 'Question',
+                'name'  => 'What vehicles can I get from China?',
+                'acceptedAnswer' => array(
+                    '@type' => 'Answer',
+                    'text'  => 'Heavy commercial trucks only - dump trucks, tractor heads, cargo trucks. For cars and SUVs, we source from USA and Europe.',
+                ),
+            ),
+            array(
+                '@type' => 'Question',
+                'name'  => 'Are Chinese heavy trucks reliable?',
+                'acceptedAnswer' => array(
+                    '@type' => 'Answer',
+                    'text'  => 'Yes, brands like Sinotruk and FAW are proven workhorses used worldwide, especially suited for developing markets and heavy-duty applications.',
+                ),
+            ),
+            array(
+                '@type' => 'Question',
+                'name'  => "What's the advantage of Chinese tires?",
+                'acceptedAnswer' => array(
+                    '@type' => 'Answer',
+                    'text'  => 'Unbeatable wholesale pricing for bulk quantities. Perfect for tire dealers and fleet operators. 40ft container holds 800-1200 tires.',
+                ),
+            ),
+        ),
+    );
+
+    echo '<script type="application/ld+json">' . wp_json_encode($local_business, JSON_UNESCAPED_SLASHES) . '</script>' . "\n";
+    echo '<script type="application/ld+json">' . wp_json_encode($faq_page, JSON_UNESCAPED_SLASHES) . '</script>' . "\n";
 }
 
 /**

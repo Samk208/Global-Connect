@@ -16,7 +16,7 @@ get_header();
         <!-- Video Background -->
         <div class="gc-hero-video-container">
             <video autoplay muted loop playsinline
-                poster="https://images.pexels.com/photos/2022403/pexels-photo-2022403.jpeg?auto=compress&cs=tinysrgb&w=1920">
+                poster="<?php echo esc_url(content_url('/uploads/2026/03/cargo-ship-hero.jpg')); ?>">
                 <!-- Stock Container Ship Video (Pexels) -->
                 <source src="https://videos.pexels.com/video-files/2022403/2022403-hd_1920_1080_30fps.mp4"
                     type="video/mp4">
@@ -41,8 +41,8 @@ get_header();
 
                 <!-- Animated Headline -->
                 <h1>
-                    <span class="gc-headline-line">USA<span class="gc-headline-divider">\\</span>Europe<span
-                            class="gc-headline-divider">\\</span>China</span>
+                    <span class="gc-headline-line">USA<span class="gc-headline-divider" aria-hidden="true">\</span>Europe<span
+                            class="gc-headline-divider" aria-hidden="true">\</span>China</span>
                     <span class="gc-headline-line">Meet Global Markets</span>
                 </h1>
 
@@ -58,7 +58,7 @@ get_header();
                     <a href="#inventory" class="gc-btn gc-btn-primary gc-btn-magnetic">
                         <span class="dashicons dashicons-car"></span> Browse Inventory
                     </a>
-                    <a href="#quote" class="gc-btn gc-btn-gold gc-btn-magnetic">
+                    <a href="<?php echo esc_url(home_url('/contact')); ?>" class="gc-btn gc-btn-gold gc-btn-magnetic">
                         <span class="dashicons dashicons-money-alt"></span> Get Wholesale Quote
                     </a>
                     <a href="#shipping" class="gc-btn gc-btn-glass gc-btn-magnetic">
@@ -68,7 +68,7 @@ get_header();
 
                 <!-- Trust Badges (Bottom) -->
                 <div class="gc-trust-badges-hero">
-                    <span><span class="dashicons dashicons-awards"></span> 25+ Years Experience</span>
+                    <span><span class="dashicons dashicons-awards"></span> 10+ Years Experience</span>
                     <span><span class="dashicons dashicons-globe-alt"></span> 3-Continent Sourcing</span>
                     <span><span class="dashicons dashicons-store"></span> Export to 20+ Countries</span>
                 </div>
@@ -117,7 +117,7 @@ get_header();
                 <span class="gc-header-data"
                     style="color: var(--gc-gold); text-shadow: 0 0 10px rgba(250, 204, 21, 0.3);">INVENTORY +
                     CATEGORIES</span>
-                <h2 class="gc-tech-title" style="color: white; margin-top: 10px;">Browse<span class="gc-tech-divider"
+                <h2 class="gc-tech-title" style="color: white; margin-top: 10px;">Browse<span class="gc-tech-divider" aria-hidden="true"
                         style="opacity:0.6">\</span>by<span class="gc-tech-divider" style="opacity:0.6">\</span>Product
                 </h2>
                 <p style="color: #94a3b8; max-width: 600px; margin: 15px auto 0;">Find exactly what you need for your
@@ -240,8 +240,8 @@ get_header();
         <div class="gc-container">
             <div class="gc-section-header text-center gc-reveal-up" data-target="gc-sourcing-section">
                 <span class="gc-header-data">GLOBAL + LOGISTICS + HUBS</span>
-                <h2 class="gc-tech-title">Global<span class="gc-tech-divider">\</span>Sourcing<span
-                        class="gc-tech-divider">\</span>Network</h2>
+                <h2 class="gc-tech-title">Global<span class="gc-tech-divider" aria-hidden="true">\</span>Sourcing<span
+                        class="gc-tech-divider" aria-hidden="true">\</span>Network</h2>
                 <p>We source directly from the world's biggest automotive hubs.</p>
             </div>
             <div class="gc-card-row gc-stagger-child" data-target="gc-sourcing-section"> <!-- Grid for Sourcing -->
@@ -314,8 +314,8 @@ get_header();
                         <!-- Slide 1: Sinotruk -->
                         <div class="gc-showcase-slide active"
                             style="position:absolute; inset:0; transition: opacity 0.5s ease-in-out; opacity:1;">
-                            <img src="https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?auto=format&fit=crop&w=800&q=80"
-                                alt="Sinotruk" style="width:100%; height:100%; object-fit:cover; opacity:0.6;">
+                            <img src="<?php echo esc_url(content_url('/uploads/2026/03/sinotruk-howo-8x4-slider.jpg')); ?>"
+                                alt="Sinotruk Howo 8x4 dump truck for export to Africa" width="800" height="533" loading="lazy" style="width:100%; height:100%; object-fit:cover; opacity:0.6;">
                             <div class="gc-slide-overlay"
                                 style="position:absolute; bottom:20px; left:20px; right:20px; color:white;">
                                 <div class="gc-tech-badge" style="display:inline-block; margin-bottom:10px;">HEAVY
@@ -336,8 +336,8 @@ get_header();
                         <!-- Slide 2: Excavator -->
                         <div class="gc-showcase-slide"
                             style="position:absolute; inset:0; transition: opacity 0.5s ease-in-out; opacity:0;">
-                            <img src="https://images.unsplash.com/photo-1581094285065-270405c6c213?auto=format&fit=crop&w=800&q=80"
-                                alt="Excavator" style="width:100%; height:100%; object-fit:cover; opacity:0.6;">
+                            <img src="<?php echo esc_url(content_url('/uploads/2026/03/sany-sy215c-excavator-slider.jpg')); ?>"
+                                alt="SANY SY215C excavator for construction export" width="800" height="533" loading="lazy" style="width:100%; height:100%; object-fit:cover; opacity:0.6;">
                             <div class="gc-slide-overlay"
                                 style="position:absolute; bottom:20px; left:20px; right:20px; color:white;">
                                 <div class="gc-tech-badge" style="display:inline-block; margin-bottom:10px;">
@@ -358,8 +358,8 @@ get_header();
                         <!-- Slide 3: Tires -->
                         <div class="gc-showcase-slide"
                             style="position:absolute; inset:0; transition: opacity 0.5s ease-in-out; opacity:0;">
-                            <img src="https://images.unsplash.com/photo-1543465077-db45d34b88a5?auto=format&fit=crop&w=800&q=80"
-                                alt="Tires" style="width:100%; height:100%; object-fit:cover; opacity:0.6;">
+                            <img src="<?php echo esc_url(content_url('/uploads/2026/03/pcr-tbr-tires-slider.jpg')); ?>"
+                                alt="Chinese wholesale tires for export to West Africa" width="800" height="533" loading="lazy" style="width:100%; height:100%; object-fit:cover; opacity:0.6;">
                             <div class="gc-slide-overlay"
                                 style="position:absolute; bottom:20px; left:20px; right:20px; color:white;">
                                 <div class="gc-tech-badge" style="display:inline-block; margin-bottom:10px;">RUBBER &
@@ -401,7 +401,7 @@ get_header();
         <div class="gc-container">
             <div class="gc-section-header">
                 <span class="gc-header-data">LIVE + STOCK + DATA</span>
-                <h2 class="gc-tech-title">Wholesale<span class="gc-tech-divider">\</span>Inventory</h2>
+                <h2 class="gc-tech-title">Wholesale<span class="gc-tech-divider" aria-hidden="true">\</span>Inventory</h2>
             </div>
 
             <!-- Tabs -->
@@ -531,8 +531,8 @@ get_header();
         <div class="gc-container">
             <div class="gc-section-header">
                 <span class="gc-header-data">KNOWLEDGE + BASE</span>
-                <h2 class="gc-tech-title">Frequently<span class="gc-tech-divider">\</span>Asked<span
-                        class="gc-tech-divider">\</span>Questions</h2>
+                <h2 class="gc-tech-title">Frequently<span class="gc-tech-divider" aria-hidden="true">\</span>Asked<span
+                        class="gc-tech-divider" aria-hidden="true">\</span>Questions</h2>
             </div>
             <div style="max-width:800px; margin:0 auto;">
                 <details style="background:white; padding:20px; border-radius:8px; margin-bottom:15px; cursor:pointer;">
@@ -627,7 +627,7 @@ get_header();
                 ">FROM THE FIELD</span>
             <h2
                 style="font-family: 'Outfit', sans-serif; font-size: 2.2rem; font-weight: 800; color: #0F172A; margin: 0;">
-                Real Operations<span class="gc-tech-divider">\</span>Real Results
+                Real Operations<span class="gc-tech-divider" aria-hidden="true">\</span>Real Results
             </h2>
             <p style="color: #64748b; max-width: 500px; margin: 10px auto 0; font-size: 0.95rem;">
                 See our team at work across 3 continents. Every photo is from our actual operations.
@@ -832,7 +832,7 @@ get_header();
                         GLOBALCONNECT</p>
                     <div style="display: flex; gap: 12px; flex-wrap: wrap;">
                         <!-- Facebook (GlobalConnect Page) -->
-                        <a href="https://www.facebook.com/profile.php?id=100071518400878" target="_blank"
+                        <a href="https://www.facebook.com/profile.php?id=100071518400878" target="_blank" rel="noopener noreferrer"
                             title="GlobalConnect on Facebook" style="
                                 width: 45px; height: 45px;
                                 background: #1877F2;
@@ -849,48 +849,42 @@ get_header();
                             </svg>
                         </a>
                         <!-- Instagram -->
-                        <a href="#" target="_blank" title="GlobalConnect on Instagram" style="
+                        <a href="#" target="_blank" rel="noopener noreferrer" title="GlobalConnect on Instagram" style="
                                 width: 45px; height: 45px;
                                 background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
                                 border-radius: 10px;
                                 display: flex; align-items: center; justify-content: center;
                                 color: white;
                                 transition: transform 0.3s, box-shadow 0.3s;
-                            "
-                            onmouseover="this.style.transform='translateY(-3px)';this.style.boxShadow='0 8px 25px rgba(225,48,108,0.5)';"
-                            onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='none';">
+                            ">
                             <svg width="22" height="22" fill="currentColor" viewBox="0 0 24 24">
                                 <path
                                     d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
                             </svg>
                         </a>
                         <!-- X (Twitter) -->
-                        <a href="#" target="_blank" title="GlobalConnect on X" style="
+                        <a href="#" target="_blank" rel="noopener noreferrer" title="GlobalConnect on X" style="
                                 width: 45px; height: 45px;
                                 background: #000000;
                                 border-radius: 10px;
                                 display: flex; align-items: center; justify-content: center;
                                 color: white;
                                 transition: transform 0.3s, box-shadow 0.3s;
-                            "
-                            onmouseover="this.style.transform='translateY(-3px)';this.style.boxShadow='0 8px 25px rgba(0,0,0,0.5)';"
-                            onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='none';">
+                            ">
                             <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
                                 <path
                                     d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
                             </svg>
                         </a>
                         <!-- TikTok -->
-                        <a href="#" target="_blank" title="GlobalConnect on TikTok" style="
+                        <a href="#" target="_blank" rel="noopener noreferrer" title="GlobalConnect on TikTok" style="
                                 width: 45px; height: 45px;
                                 background: #000000;
                                 border-radius: 10px;
                                 display: flex; align-items: center; justify-content: center;
                                 color: white;
                                 transition: transform 0.3s, box-shadow 0.3s;
-                            "
-                            onmouseover="this.style.transform='translateY(-3px)';this.style.boxShadow='0 8px 25px rgba(0,0,0,0.5)';"
-                            onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='none';">
+                            ">
                             <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
                                 <path
                                     d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z" />
@@ -901,7 +895,7 @@ get_header();
 
                 <!-- Action Buttons -->
                 <div style="display: flex; align-items: center; gap: 20px; flex-wrap: wrap;">
-                    <a href="https://www.facebook.com/segbehmadee.konneh" target="_blank" style="
+                    <a href="https://www.facebook.com/segbehmadee.konneh" target="_blank" rel="noopener noreferrer" style="
                             display: inline-flex;
                             align-items: center;
                             gap: 10px;

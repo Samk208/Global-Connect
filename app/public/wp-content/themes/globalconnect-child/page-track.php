@@ -63,13 +63,15 @@ $whatsapp = get_option('gc_whatsapp_number', '12672900254');
                     </div>
                 </div>
 
-                <!-- Demo Tracking Number -->
+                <!-- Demo Tracking Number (admin only in production) -->
+                <?php if (current_user_can('manage_options')): ?>
                 <div style="margin-top: 20px; background: linear-gradient(135deg, #0F172A 0%, #1E3A5F 100%); padding: 20px 25px; border-radius: 12px; color: white;">
                     <p style="margin: 0; font-size: 0.95rem;">
                         <span class="dashicons dashicons-lightbulb" style="color: var(--gc-gold); margin-right: 8px;"></span>
-                        <strong>Try it out:</strong> Enter <code style="background: rgba(255,255,255,0.1); padding: 3px 8px; border-radius: 4px; font-family: var(--gc-font-mono);">DEMO-LIVE</code> to see a sample shipment in transit.
+                        <strong>Admin Demo:</strong> Enter <code style="background: rgba(255,255,255,0.1); padding: 3px 8px; border-radius: 4px; font-family: var(--gc-font-mono);">DEMO-LIVE</code> to see a sample shipment in transit.
                     </p>
                 </div>
+                <?php endif; ?>
 
             </div>
         </div>

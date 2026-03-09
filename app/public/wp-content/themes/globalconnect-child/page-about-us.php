@@ -21,7 +21,7 @@ $mvk_img     = $fb_img_path . '/MVK.jpg';
     position: relative;
     padding: 120px 0 80px;
     background: linear-gradient(180deg, rgba(15,23,42,0.95) 0%, rgba(15,23,42,0.8) 100%),
-                url('https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&q=80&w=1920') no-repeat center center/cover;
+                url('<?php echo esc_url(content_url('/uploads/2026/03/cargo-ship-hero.jpg')); ?>') no-repeat center center/cover;
     text-align: center;
 ">
         <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0;

@@ -50,8 +50,8 @@ $whatsapp = get_option('gc_whatsapp_number', '12672900254');
                         <span class="hiw-badge-label">Select</span>
                     </div>
                     <div class="hiw-img-wrap">
-                        <img src="https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&w=720&q=80"
-                            alt="Browse and choose your export vehicle" loading="lazy">
+                        <img src="<?php echo esc_url(content_url('/uploads/2026/03/suvs-sedans.jpg')); ?>"
+                            alt="Browse and choose your export vehicle" width="720" height="480" loading="lazy">
                         <div class="hiw-img-tag"><span class="dashicons dashicons-car"></span> USA &middot; Europe &middot; China</div>
                     </div>
                 </div>
@@ -75,8 +75,8 @@ $whatsapp = get_option('gc_whatsapp_number', '12672900254');
                         <span class="hiw-badge-label">Ship</span>
                     </div>
                     <div class="hiw-img-wrap">
-                        <img src="https://images.unsplash.com/photo-1578575437130-527eed3abbec?auto=format&fit=crop&w=720&q=80"
-                            alt="Logistics and shipping operations" loading="lazy">
+                        <img src="<?php echo esc_url(content_url('/uploads/2026/03/shipping-container.jpg')); ?>"
+                            alt="Logistics and shipping operations" width="720" height="480" loading="lazy">
                         <div class="hiw-img-tag"><span class="dashicons dashicons-admin-site-alt3"></span> Philadelphia &middot; East Coast</div>
                     </div>
                 </div>
@@ -103,8 +103,8 @@ $whatsapp = get_option('gc_whatsapp_number', '12672900254');
                         <span class="hiw-badge-label">Deliver</span>
                     </div>
                     <div class="hiw-img-wrap">
-                        <img src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=720&q=80"
-                            alt="Vehicle delivery at destination port" loading="lazy">
+                        <img src="<?php echo esc_url(content_url('/uploads/2026/03/cargo-ship-hero.jpg')); ?>"
+                            alt="Vehicle delivery at destination port" width="720" height="480" loading="lazy">
                         <div class="hiw-img-tag"><span class="dashicons dashicons-location"></span> Conakry &middot; Monrovia &middot; Lagos</div>
                     </div>
                 </div>

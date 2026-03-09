@@ -187,7 +187,7 @@ $query = new WP_Query($args);
                         'price' => '28,500', 
                         'badge' => 'CHINA DIRECT',
                         'data' => ['POWER' => '371 HP', 'AXLE' => '6x4', 'FUEL' => 'Diesel'],
-                        'image' => 'https://images.unsplash.com/photo-1586015555751-63cb566087be?auto=format&fit=crop&w=600&q=80',
+                        'image' => content_url('/uploads/2026/03/sinotruk-howo-8x4-slider.jpg'),
                         'status' => 'FACTORY NEW'
                     ],
                      [
@@ -197,7 +197,7 @@ $query = new WP_Query($args);
                         'price' => '14,200', 
                         'badge' => 'USA STOCK',
                         'data' => ['MILEAGE' => '45k mi', 'TITLE' => 'Clean', 'LOC' => 'Newark, NJ'],
-                        'image' => 'https://images.unsplash.com/photo-1621007947382-bb3c3968e3bb?auto=format&fit=crop&w=600&q=80',
+                        'image' => content_url('/uploads/2026/03/suvs-sedans.jpg'),
                         'status' => 'READY TO SHIP'
                     ],
                     [
@@ -207,7 +207,7 @@ $query = new WP_Query($args);
                         'price' => '32,000', 
                         'badge' => 'EUROPE STOCK',
                         'data' => ['YEAR' => '2019', 'AXLE' => '6x2', 'LOC' => 'Antwerp'],
-                        'image' => 'https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?auto=format&fit=crop&w=600&q=80',
+                        'image' => content_url('/uploads/2026/03/heavy-trucks-fleet.jpg'),
                         'status' => 'IN TRANSIT'
                     ],
                     [
@@ -217,7 +217,7 @@ $query = new WP_Query($args);
                         'price' => '41,000', 
                         'badge' => 'HEAVY MACH',
                         'data' => ['HOURS' => '4200h', 'BUCKET' => '1.0m3', 'LOC' => 'Shanghai'],
-                        'image' => 'https://images.unsplash.com/photo-1577724393696-947752e5033c?auto=format&fit=crop&w=600&q=80',
+                        'image' => content_url('/uploads/2026/03/construction-equipment.jpg'),
                         'status' => 'INSPECTION PASSED'
                     ],
                     [
@@ -227,7 +227,7 @@ $query = new WP_Query($args);
                        'price' => '1,850', 
                        'badge' => 'SPARE PART',
                        'data' => ['COND' => 'Rebuilt', 'WARRANTY' => '6 Mo', 'ORIGIN' => 'Japan'],
-                       'image' => 'https://images.unsplash.com/photo-1540822607994-067cd3254350?auto=format&fit=crop&w=600&q=80',
+                       'image' => content_url('/uploads/2026/03/parts-components.jpg'),
                        'status' => 'IN STOCK'
                    ],
                    [
@@ -237,7 +237,7 @@ $query = new WP_Query($args);
                        'price' => '380', 
                        'badge' => 'PREMIUM TIRE',
                        'data' => ['SIZE' => '315/80', 'RATING' => '156/150L', 'PLY' => '18'],
-                       'image' => 'https://images.unsplash.com/photo-1578844251758-2f71da64522f?auto=format&fit=crop&w=600&q=80',
+                       'image' => content_url('/uploads/2026/03/tires-warehouse.jpg'),
                        'status' => 'BULK AVAILABLE'
                    ]
                 ];
