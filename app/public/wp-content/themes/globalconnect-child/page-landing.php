@@ -15,9 +15,9 @@ get_header();
 
         <!-- Video Background -->
         <div class="gc-hero-video-container">
-            <video autoplay muted loop playsinline
+            <video autoplay muted loop playsinline preload="none"
                 poster="<?php echo esc_url(content_url('/uploads/2026/03/cargo-ship-hero.jpg')); ?>">
-                <!-- Stock Container Ship Video (Pexels) -->
+                <!-- Stock Container Ship Video (Pexels) — preload=none for faster initial page load -->
                 <source src="https://videos.pexels.com/video-files/2022403/2022403-hd_1920_1080_30fps.mp4"
                     type="video/mp4">
             </video>

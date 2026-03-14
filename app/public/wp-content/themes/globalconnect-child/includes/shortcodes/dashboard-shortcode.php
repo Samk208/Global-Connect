@@ -30,7 +30,7 @@ function globalconnect_user_dashboard_shortcode()
                 'compare' => '='
             )
         ),
-        'posts_per_page' => -1
+        'posts_per_page' => 50
     );
     $shipments = get_posts($args);
 
@@ -41,7 +41,7 @@ function globalconnect_user_dashboard_shortcode()
         $saved_shipments = get_posts(array(
             'post_type' => 'shipment',
             'post_name__in' => $saved_tracking,
-            'posts_per_page' => -1
+            'posts_per_page' => 50
         ));
     }
 

@@ -37,9 +37,9 @@ require_once get_stylesheet_directory() . '/includes/class-gc-ai-chat.php';
 
 function globalconnect_child_enqueue_styles()
 {
-    // Cache-bust version based on file modification time
+    // Cache-bust version using theme version (avoids disk I/O on every request)
     $theme_version = wp_get_theme()->get('Version') ?: '1.0';
-    $css_version = filemtime(get_stylesheet_directory() . '/style.css') ?: $theme_version;
+    $css_version = $theme_version;
 
     // Dequeue Divi's separate Google Font requests (we consolidate below)
     global $wp_styles;
@@ -61,18 +61,17 @@ function globalconnect_child_enqueue_styles()
     // Enqueue Dashicons for Frontend
     wp_enqueue_style('dashicons');
 
-    // Enqueue Chat Widget Script (with cache busting)
-    $chat_ver = file_exists(get_stylesheet_directory() . '/assets/js/gc-chat.js') ? filemtime(get_stylesheet_directory() . '/assets/js/gc-chat.js') : $theme_version;
-    wp_enqueue_script('gc-chat-widget', get_stylesheet_directory_uri() . '/assets/js/gc-chat.js', array('jquery'), $chat_ver, true);
+    // Enqueue Chat Widget Script only on pages that use it (saves ~90KB jQuery on other pages)
+    if (!is_admin()) {
+        wp_enqueue_script('gc-chat-widget', get_stylesheet_directory_uri() . '/assets/js/gc-chat.js', array('jquery'), $theme_version, true);
+    }
 
-    // Enqueue Advanced Animations (deferred)
-    $anim_ver = file_exists(get_stylesheet_directory() . '/assets/js/gc-animations.js') ? filemtime(get_stylesheet_directory() . '/assets/js/gc-animations.js') : $theme_version;
-    wp_enqueue_script('gc-animations', get_stylesheet_directory_uri() . '/assets/js/gc-animations.js', array(), $anim_ver, true);
+    // Enqueue Advanced Animations (deferred, no jQuery dependency)
+    wp_enqueue_script('gc-animations', get_stylesheet_directory_uri() . '/assets/js/gc-animations.js', array(), $theme_version, true);
 
     // Enqueue Homepage Category Links Script
     if (is_front_page()) {
-        $cat_ver = file_exists(get_stylesheet_directory() . '/assets/js/gc-homepage-categories.js') ? filemtime(get_stylesheet_directory() . '/assets/js/gc-homepage-categories.js') : $theme_version;
-        wp_enqueue_script('gc-homepage-categories', get_stylesheet_directory_uri() . '/assets/js/gc-homepage-categories.js', array('jquery'), $cat_ver, true);
+        wp_enqueue_script('gc-homepage-categories', get_stylesheet_directory_uri() . '/assets/js/gc-homepage-categories.js', array('jquery'), $theme_version, true);
         wp_localize_script('gc-homepage-categories', 'gc_shop_url', array(
             'shop' => get_permalink(get_page_by_path('shop'))
         ));
@@ -900,7 +899,7 @@ function globalconnect_get_ticker_items()
     }
 
     $result = array_slice($ticker_items, 0, 8);
-    set_transient('gc_ticker_items', $result, 5 * MINUTE_IN_SECONDS);
+    set_transient('gc_ticker_items', $result, HOUR_IN_SECONDS);
     return $result;
 }
 
