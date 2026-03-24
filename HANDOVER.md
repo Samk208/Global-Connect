@@ -1,9 +1,88 @@
 # Global Connect — Handover & Task List
 
-**Date:** February 15, 2026
+**Last Updated:** March 25, 2026
 **Site:** http://localhost:10016/
 **Theme:** Divi (parent) + `globalconnect-child` (child theme)
 **Repo:** https://github.com/Samk208/Global-Connect (private)
+
+---
+
+## BLOG CONTENT GENERATION — Session March 25, 2026
+
+### What Was Built
+
+A fully automated blog generation pipeline adapted from the DesignCopy.net workflow:
+
+**Script:** `app/generate_globalconnect_blogs.py`
+
+- Model: `moonshotai/kimi-k2` (primary) → `anthropic/claude-3.5-sonnet` (fallback)
+- Research: Perplexity Sonar API injects live 2026 data before each post
+- Timeout: 360s | max_tokens: 10,000 | Skip logic: skips files already > 8KB
+- Usage: `python generate_globalconnect_blogs.py --priority 1` (or `2`, `3`, `all`)
+- Single post: `python generate_globalconnect_blogs.py --slug roro-vs-container-shipping-africa`
+
+**Key fix applied this session:** Removed full `CONTENT_QUALITY_STANDARDS.md` (20.6KB / ~5,000 tokens) from system prompt — was consuming token budget and causing truncation. Key rules are now embedded inline in the prompt.
+
+### Posts Generated — ALL Files in `app/`
+
+| #   | Slug                                              | Words | Size | Status  |
+| --- | ------------------------------------------------- | ----- | ---- | ------- |
+| P1  | `roro-vs-container-shipping-africa.html`          | 2,062 | 19KB | ✅ Done |
+| P1  | `ship-car-savannah-monrovia-transit-time.html`    | 2,065 | 19KB | ✅ Done |
+| P1  | `consolidate-cargo-vehicles-parts-container.html` | 1,796 | 18KB | ✅ Done |
+| P1  | `track-ocean-freight-global-connect-tracker.html` | 1,123 | 12KB | ✅ Done |
+| P1  | `clear-customs-conakry-guinea-guide.html`         | 2,365 | 22KB | ✅ Done |
+| P1  | `liberia-import-duties-2026-vehicles.html`        | 2,040 | 19KB | ✅ Done |
+| P1  | `export-document-checklist-vehicles-africa.html`  | 1,893 | 15KB | ✅ Done |
+| P2  | `buy-cars-copart-export-africa.html`              | 2,184 | 20KB | ✅ Done |
+
+**Previously existing posts (3):** `import-cars-usa-africa.html`, `buy-chinese-electric-cars-online.html`, `europe-car-exporter.html`
+
+**Total done: 11 posts | Remaining: 14 posts (9 more P2 + 5 P3)**
+
+### NEXT: Continue Priority 2 (9 posts remaining)
+
+```powershell
+cd 'c:\Users\Lenovo\Local Sites\globalconnect\app'
+python generate_globalconnect_blogs.py --priority 2
+```
+
+Posts still pending in Priority 2:
+
+- `reliable-used-suvs-west-africa`
+- `clean-vs-salvage-title-conakry-guinea`
+- `incoterms-cfr-cif-fob-west-africa`
+- `roro-shipment-rejected-port-violations`
+- `ivory-coast-car-import-age-limits`
+- `process-itn-auto-export-usa`
+- `demurrage-detention-fees-west-africa`
+- `start-car-export-business-usa-africa`
+- `west-africa-dealerships-usa-brokers`
+
+After P2 completes, run Priority 3:
+
+```powershell
+python generate_globalconnect_blogs.py --priority 3
+```
+
+### After All Posts Generated — Publish to WordPress
+
+```powershell
+python wp_publisher.py  # Located in C:\Users\Lenovo\Desktop\Design Copy\
+```
+
+WP credentials are in `.env.local` (WP_USER / WP_APP_PASSWORD).
+Set correct WP_BASE to `http://localhost:10016/wp-json/wp/v2` before running.
+
+### Validator
+
+```powershell
+python validate_blog_quality.py roro-vs-container-shipping-africa.html
+```
+
+Main validator warnings: paragraph length (>3 sentences) — minor, not blocking. All posts pass visual density, word count, and banned-word checks.
+
+---
 
 ---
 
@@ -23,6 +102,7 @@
 The imported Divi Marketplace footer is active. The following modules need editing in **Divi Theme Builder > Global Footer** (or via the Visual Builder on any page, scroll to footer, click "Edit With Divi").
 
 ### 1.1 Social Follow Bar (Top colored bar)
+
 - [ ] Verify Facebook link points to: `https://www.facebook.com/profile.php?id=100071518400878`
 - [ ] Update Twitter/X link to your actual profile (or remove if you don't have one)
 - [ ] Update YouTube link to your actual channel (or remove)
@@ -31,22 +111,28 @@ The imported Divi Marketplace footer is active. The following modules need editi
 - [ ] Update Pinterest link to your actual profile (or remove)
 
 ### 1.2 "ABOUT US" Section (Left column — currently placeholder)
+
 Replace the placeholder text:
+
 > "Your content goes here. Edit this text inline or in the module Content settings..."
 
 **Replace with:**
+
 > Global Connect Shipping specializes in exporting quality vehicles, heavy trucks, tires, and machinery parts from the USA and Europe to Africa, Asia, and the Americas. Based in Philadelphia, PA, we are your trusted global wholesale partner.
 
 ### 1.3 "CONTACT US" Section (Middle column)
+
 - [ ] Update "DIRECTIONS" button to link to Google Maps: `https://maps.google.com/?q=5909+Elmwood+Avenue+Philadelphia+PA+19143`
 - [ ] Optionally add contact info text above the button:
   - Phone: +1 (267) 290-0254
   - Email: info@globalconnectshipping.com
 
 ### 1.4 "LINKS" Section (Right column — currently showing Archives/Categories)
+
 The current "Links" section shows default WordPress widgets (Archives: January 2026, Categories: Uncategorized). This is not useful.
 
 **Replace with a manual link list:**
+
 - [ ] Home → `/`
 - [ ] Shop → `/shop`
 - [ ] About Us → `/about-us`
@@ -54,24 +140,30 @@ The current "Links" section shows default WordPress widgets (Archives: January 2
 - [ ] How It Works → `/how-it-works`
 - [ ] Track Shipment → `/track`
 
-*In Divi: Delete the Archives/Categories widgets and replace with a Text module containing manual links, or use a Divi Menu module pointing to your footer-menu.*
+_In Divi: Delete the Archives/Categories widgets and replace with a Text module containing manual links, or use a Divi Menu module pointing to your footer-menu._
 
 ### 1.5 Contact Details Bar (Bottom dark bar — USA & UK)
+
 Currently shows placeholder info for both USA and UK:
+
 - `hello@example.com`
 - `+000-000-0000`
 
 **USA Contact Details — Update to:**
+
 - Email: `info@globalconnectshipping.com`
 - Phone: `+1 (267) 290-0254`
 
 **UK Contact Details:**
+
 - [ ] If you have a UK contact, add real details
 - [ ] If no UK presence, change to **"West Africa Contact Details"** or **"WhatsApp"** and update accordingly
 - [ ] Or remove the UK column entirely and make USA full-width
 
 ### 1.6 Add Legal Links to Footer
+
 In the very bottom of the footer (copyright area), add links to your legal pages:
+
 - [ ] Privacy Policy → `/privacy-policy` (verify the actual slug in Pages)
 - [ ] Terms & Conditions → `/terms-and-conditions` (verify slug)
 - [ ] Shipping & Export Policy → `/shipping-export-policy` (verify slug)
@@ -81,12 +173,15 @@ In the very bottom of the footer (copyright area), add links to your legal pages
 ## PRIORITY 2 — Legal Pages Enhancement
 
 ### 2.1 Find Your Legal Page Slugs
+
 Go to **WP Admin > Pages** and note the exact slugs for:
+
 - Privacy Policy
 - Terms and Conditions
 - Shipping & Export Policy
 
 ### 2.2 Privacy Policy — Content Should Cover:
+
 - [ ] Company name and contact info (data controller)
 - [ ] What data you collect: name, email, phone, WhatsApp, destination port (from inquiry forms)
 - [ ] User registration data (username, email, password)
@@ -101,6 +196,7 @@ Go to **WP Admin > Pages** and note the exact slugs for:
 - [ ] If serving EU customers: GDPR compliance statement
 
 ### 2.3 Terms and Conditions — Content Should Cover:
+
 - [ ] Company identity and registration
 - [ ] Vehicle/parts sold "as-is" or "as-described" disclaimer
 - [ ] Quote validity period (e.g., "Quotes are valid for 7 days")
@@ -116,6 +212,7 @@ Go to **WP Admin > Pages** and note the exact slugs for:
 - [ ] User account responsibilities
 
 ### 2.4 Shipping & Export Policy — Content Should Cover:
+
 - [ ] Shipping methods: RoRo (Roll-on/Roll-off) vs Container shipping
 - [ ] Estimated transit times by destination (West Africa, Europe, Asia)
 - [ ] Ports of loading (US East Coast ports)
@@ -130,7 +227,9 @@ Go to **WP Admin > Pages** and note the exact slugs for:
 - [ ] Damaged goods claim process
 
 ### 2.5 Page Design Recommendations
+
 For each legal page, use a clean layout:
+
 - [ ] Use Divi's "Blank Page" layout or minimal template
 - [ ] Add a simple header with page title
 - [ ] Use an accordion or tabbed layout for long content (makes it scannable)
@@ -142,24 +241,36 @@ For each legal page, use a clean layout:
 ## PRIORITY 3 — Link Legal Pages Everywhere
 
 ### 3.1 Divi Imported Footer
+
 - [ ] Add links to all 3 legal pages in the footer copyright area (see 1.6 above)
 
 ### 3.2 Custom Footer (`footer-gc-custom.php`) — For when/if activated
+
 The file at `globalconnect-child/footer-gc-custom.php` lines 74-77 has placeholder links:
+
 ```php
 <a href="#">Privacy Policy</a>
 <a href="#">Terms of Service</a>
 ```
+
 **Update to actual page URLs** (once you know the slugs).
 
 ### 3.3 Login/Registration Page
+
 The file at `globalconnect-child/page-login.php` line 168 has:
+
 ```html
 <span>I agree to the Terms of Service and Privacy Policy</span>
 ```
+
 **Change to clickable links:**
+
 ```html
-<span>I agree to the <a href="/terms-and-conditions" target="_blank">Terms of Service</a> and <a href="/privacy-policy" target="_blank">Privacy Policy</a></span>
+<span
+  >I agree to the
+  <a href="/terms-and-conditions" target="_blank">Terms of Service</a> and
+  <a href="/privacy-policy" target="_blank">Privacy Policy</a></span
+>
 ```
 
 ---
@@ -167,23 +278,30 @@ The file at `globalconnect-child/page-login.php` line 168 has:
 ## PRIORITY 4 — Code Fixes
 
 ### 4.1 Duplicate Include (functions.php)
+
 `class-gc-ai-chat.php` is included twice:
+
 - Line 14: `require_once get_stylesheet_directory() . '/includes/class-gc-ai-chat.php';`
 - Line 545: `require_once get_stylesheet_directory() . '/includes/class-gc-ai-chat.php';`
 
 **Fix:** Remove line 14 (keep line 545 which is in the proper "Include AI Chatbot" section).
 
 ### 4.2 Use WordPress Date Function (functions.php)
+
 Line 72 in `footer-gc-custom.php`:
+
 ```php
 <?php echo date('Y'); ?>
 ```
+
 **Change to:**
+
 ```php
 <?php echo wp_date('Y'); ?>
 ```
 
 ### 4.3 Duplicate About Page Templates
+
 Both `page-about.php` and `page-about-us.php` exist. Determine which one is in use and delete the other.
 
 ---
@@ -191,9 +309,11 @@ Both `page-about.php` and `page-about-us.php` exist. Determine which one is in u
 ## PRIORITY 5 — GitHub Actions Fixes
 
 ### 5.1 Create Missing Lint Config Files
+
 Create these files in the project root:
 
 **`.stylelintrc.json`:**
+
 ```json
 {
   "extends": "stylelint-config-standard",
@@ -207,6 +327,7 @@ Create these files in the project root:
 ```
 
 **`.eslintrc.json`:**
+
 ```json
 {
   "env": {
@@ -222,14 +343,19 @@ Create these files in the project root:
 ```
 
 ### 5.2 Refine Security Check
+
 The `grep -r "debug"` check in `main.yml` will false-positive on CSS class names and comments. Consider changing to check for `WP_DEBUG` or `console.log` specifically.
 
 ### 5.3 Git Hygiene
+
 The Divi parent theme has 100+ modified files showing in `git status`. Add to `.gitignore`:
+
 ```
 app/public/wp-content/themes/Divi/
 ```
+
 Then remove it from tracking:
+
 ```bash
 git rm -r --cached app/public/wp-content/themes/Divi/
 ```
@@ -248,17 +374,17 @@ Your custom `header.php` and its CSS (style.css lines 3449-3599) are ready but n
 
 ## Quick Reference — Real Business Info
 
-| Field | Value |
-|-------|-------|
-| Company | Global Connect Shipping |
-| Address | 5909 Elmwood Avenue, Philadelphia, PA 19143 |
-| Phone/WhatsApp | +1 (267) 290-0254 |
-| Email | info@globalconnectshipping.com |
-| Facebook | https://www.facebook.com/profile.php?id=100071518400878 |
-| Services | Vehicle export, heavy trucks, tires, machinery parts |
-| Markets | USA, Europe, China → Africa, Asia, Americas |
-| Shipping | RoRo and Container shipping |
+| Field          | Value                                                   |
+| -------------- | ------------------------------------------------------- |
+| Company        | Global Connect Shipping                                 |
+| Address        | 5909 Elmwood Avenue, Philadelphia, PA 19143             |
+| Phone/WhatsApp | +1 (267) 290-0254                                       |
+| Email          | info@globalconnectshipping.com                          |
+| Facebook       | https://www.facebook.com/profile.php?id=100071518400878 |
+| Services       | Vehicle export, heavy trucks, tires, machinery parts    |
+| Markets        | USA, Europe, China → Africa, Asia, Americas             |
+| Shipping       | RoRo and Container shipping                             |
 
 ---
 
-*This handover was generated from a full code review on Feb 15, 2026. Resume with Cursor AI anytime to execute any of these tasks.*
+_This handover was generated from a full code review on Feb 15, 2026. Resume with Cursor AI anytime to execute any of these tasks._

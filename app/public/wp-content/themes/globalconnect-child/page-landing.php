@@ -13,14 +13,13 @@ get_header();
     <!-- 1. ADVANCED HERO SECTION (Glidtech Style) -->
     <section class="gc-hero">
 
-        <!-- Video Background -->
+        <!-- Hero Background Image (replaced video — Pexels blocks hotlinking with 403) -->
         <div class="gc-hero-video-container">
-            <video autoplay muted loop playsinline preload="none"
-                poster="<?php echo esc_url(content_url('/uploads/2026/03/cargo-ship-hero.jpg')); ?>">
-                <!-- Stock Container Ship Video (Pexels) — preload=none for faster initial page load -->
-                <source src="https://videos.pexels.com/video-files/2022403/2022403-hd_1920_1080_30fps.mp4"
-                    type="video/mp4">
-            </video>
+            <img src="<?php echo esc_url(content_url('/uploads/2026/03/cargo-ship-hero.jpg')); ?>"
+                alt="Container ship at port — GlobalConnect logistics"
+                class="gc-hero-bg-image"
+                loading="eager"
+                fetchpriority="high">
         </div>
 
         <!-- Floating Particles Overlay -->

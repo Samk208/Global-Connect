@@ -99,7 +99,8 @@ body {
     z-index: 1;
 }
 
-.gc-hero-video-container video {
+.gc-hero-video-container video,
+.gc-hero-video-container .gc-hero-bg-image {
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -3661,10 +3662,13 @@ body {
     }
 }
 
-/* Hide hero video on mobile to save bandwidth (5-10MB) */
+/* Hide hero video on mobile to save bandwidth (5-10MB); show static image instead */
 @media (max-width: 768px) {
     .gc-hero-video-container video {
         display: none;
+    }
+    .gc-hero-video-container .gc-hero-bg-image {
+        display: block;
     }
 }
 
