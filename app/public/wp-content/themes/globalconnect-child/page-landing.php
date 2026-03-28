@@ -1024,4 +1024,192 @@ get_header();
     }
 </style>
 
+
+<!-- ================================================
+     DESTINATION COUNTRIES — West Africa Focus
+     ================================================ -->
+<section class="gc-section gc-destinations-section" style="background: var(--gc-off-white); padding: 90px 0; position: relative; overflow: hidden;">
+    <!-- Subtle background map texture feel -->
+    <div style="position:absolute;top:0;left:0;width:100%;height:100%;background-image:radial-gradient(circle at 15% 50%, rgba(59,130,246,0.04) 0%, transparent 60%), radial-gradient(circle at 85% 20%, rgba(217,119,6,0.04) 0%, transparent 60%);pointer-events:none;"></div>
+
+    <div class="gc-container" style="position:relative;z-index:2;">
+        <div class="gc-section-header text-center gc-reveal-up" style="text-align:center;margin-bottom:60px;" data-target="gc-destinations-section">
+            <span style="display:inline-block;background:rgba(217,119,6,0.1);color:var(--gc-gold);padding:6px 20px;border-radius:30px;font-size:0.75rem;font-weight:700;letter-spacing:2px;margin-bottom:15px;">WEST AFRICA PORTS</span>
+            <h2 class="gc-tech-title" style="font-family:'Outfit',sans-serif;font-size:2.5rem;font-weight:800;color:var(--gc-blue-primary);margin:0;">We Deliver To Your Port<span class="gc-tech-divider" aria-hidden="true" style="color:var(--gc-gold);margin:0 10px;">›</span>On Time</h2>
+            <p style="color:var(--gc-text-muted);max-width:580px;margin:15px auto 0;font-size:1rem;">Specializing in vehicle and cargo delivery to West Africa's major import hubs. Local expertise at every destination.</p>
+        </div>
+
+        <div class="gc-stagger-child" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:28px;" data-target="gc-destinations-section">
+
+            <!-- Liberia -->
+            <a href="<?php echo esc_url(home_url('/?s=liberia')); ?>" class="gc-dest-card" style="display:block;text-decoration:none;background:white;border-radius:20px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,0.06);border:1px solid var(--gc-gray-border);transition:all 0.4s ease;">
+                <div style="height:8px;background:linear-gradient(90deg,#003F87,#CE1126);"></div>
+                <div style="padding:30px;">
+                    <div style="display:flex;align-items:center;gap:15px;margin-bottom:20px;">
+                        <img src="https://flagcdn.com/w40/lr.png" alt="Liberia flag" style="width:40px;height:auto;border-radius:4px;box-shadow:0 2px 8px rgba(0,0,0,0.15);">
+                        <div>
+                            <h3 style="font-family:'Outfit',sans-serif;font-size:1.3rem;font-weight:700;color:var(--gc-blue-primary);margin:0;">Liberia</h3>
+                            <span style="color:var(--gc-text-muted);font-size:0.85rem;">Freeport of Monrovia</span>
+                        </div>
+                    </div>
+                    <ul style="list-style:none;padding:0;margin:0 0 20px;">
+                        <li style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px dashed #e2e8f0;color:var(--gc-text-dark);font-size:0.9rem;"><span class="dashicons dashicons-clock" style="color:var(--gc-gold);font-size:16px;width:16px;height:16px;"></span> 21–28 days transit from Savannah</li>
+                        <li style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px dashed #e2e8f0;color:var(--gc-text-dark);font-size:0.9rem;"><span class="dashicons dashicons-money-alt" style="color:var(--gc-gold);font-size:16px;width:16px;height:16px;"></span> 15–25% import duty on vehicles</li>
+                        <li style="display:flex;align-items:center;gap:10px;padding:8px 0;color:var(--gc-text-dark);font-size:0.9rem;"><span class="dashicons dashicons-yes-alt" style="color:#059669;font-size:16px;width:16px;height:16px;"></span> RoRo &amp; Container accepted</li>
+                    </ul>
+                    <span style="color:var(--gc-blue-accent);font-weight:600;font-size:0.85rem;display:flex;align-items:center;gap:5px;">Read Liberia Import Guide <span class="dashicons dashicons-arrow-right-alt2" style="font-size:14px;"></span></span>
+                </div>
+            </a>
+
+            <!-- Guinea -->
+            <a href="<?php echo esc_url(home_url('/?s=conakry')); ?>" class="gc-dest-card" style="display:block;text-decoration:none;background:white;border-radius:20px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,0.06);border:1px solid var(--gc-gray-border);transition:all 0.4s ease;">
+                <div style="height:8px;background:linear-gradient(90deg,#CE1126,#FCD116,#009A44);"></div>
+                <div style="padding:30px;">
+                    <div style="display:flex;align-items:center;gap:15px;margin-bottom:20px;">
+                        <img src="https://flagcdn.com/w40/gn.png" alt="Guinea flag" style="width:40px;height:auto;border-radius:4px;box-shadow:0 2px 8px rgba(0,0,0,0.15);">
+                        <div>
+                            <h3 style="font-family:'Outfit',sans-serif;font-size:1.3rem;font-weight:700;color:var(--gc-blue-primary);margin:0;">Guinea</h3>
+                            <span style="color:var(--gc-text-muted);font-size:0.85rem;">Port of Conakry</span>
+                        </div>
+                    </div>
+                    <ul style="list-style:none;padding:0;margin:0 0 20px;">
+                        <li style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px dashed #e2e8f0;color:var(--gc-text-dark);font-size:0.9rem;"><span class="dashicons dashicons-clock" style="color:var(--gc-gold);font-size:16px;width:16px;height:16px;"></span> 18–25 days transit time</li>
+                        <li style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px dashed #e2e8f0;color:var(--gc-text-dark);font-size:0.9rem;"><span class="dashicons dashicons-admin-page" style="color:var(--gc-gold);font-size:16px;width:16px;height:16px;"></span> Clean title required at customs</li>
+                        <li style="display:flex;align-items:center;gap:10px;padding:8px 0;color:var(--gc-text-dark);font-size:0.9rem;"><span class="dashicons dashicons-yes-alt" style="color:#059669;font-size:16px;width:16px;height:16px;"></span> Full customs guidance provided</li>
+                    </ul>
+                    <span style="color:var(--gc-blue-accent);font-weight:600;font-size:0.85rem;display:flex;align-items:center;gap:5px;">Read Conakry Customs Guide <span class="dashicons dashicons-arrow-right-alt2" style="font-size:14px;"></span></span>
+                </div>
+            </a>
+
+            <!-- Ivory Coast -->
+            <a href="<?php echo esc_url(home_url('/?s=ivory+coast')); ?>" class="gc-dest-card" style="display:block;text-decoration:none;background:white;border-radius:20px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,0.06);border:1px solid var(--gc-gray-border);transition:all 0.4s ease;">
+                <div style="height:8px;background:linear-gradient(90deg,#F77F00,#FFFFFF,#009A44);"></div>
+                <div style="padding:30px;">
+                    <div style="display:flex;align-items:center;gap:15px;margin-bottom:20px;">
+                        <img src="https://flagcdn.com/w40/ci.png" alt="Ivory Coast flag" style="width:40px;height:auto;border-radius:4px;box-shadow:0 2px 8px rgba(0,0,0,0.15);">
+                        <div>
+                            <h3 style="font-family:'Outfit',sans-serif;font-size:1.3rem;font-weight:700;color:var(--gc-blue-primary);margin:0;">Ivory Coast</h3>
+                            <span style="color:var(--gc-text-muted);font-size:0.85rem;">Port of Abidjan</span>
+                        </div>
+                    </div>
+                    <ul style="list-style:none;padding:0;margin:0 0 20px;">
+                        <li style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px dashed #e2e8f0;color:var(--gc-text-dark);font-size:0.9rem;"><span class="dashicons dashicons-clock" style="color:var(--gc-gold);font-size:16px;width:16px;height:16px;"></span> 20–30 days transit time</li>
+                        <li style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px dashed #e2e8f0;color:var(--gc-text-dark);font-size:0.9rem;"><span class="dashicons dashicons-warning" style="color:#f59e0b;font-size:16px;width:16px;height:16px;"></span> Max 5-year vehicle age limit</li>
+                        <li style="display:flex;align-items:center;gap:10px;padding:8px 0;color:var(--gc-text-dark);font-size:0.9rem;"><span class="dashicons dashicons-yes-alt" style="color:#059669;font-size:16px;width:16px;height:16px;"></span> Compliant sourcing guaranteed</li>
+                    </ul>
+                    <span style="color:var(--gc-blue-accent);font-weight:600;font-size:0.85rem;display:flex;align-items:center;gap:5px;">Read Abidjan Import Guide <span class="dashicons dashicons-arrow-right-alt2" style="font-size:14px;"></span></span>
+                </div>
+            </a>
+
+        </div><!-- /grid -->
+    </div>
+</section>
+
+<style>
+.gc-dest-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(59,130,246,0.12) !important;
+    border-color: var(--gc-blue-accent) !important;
+}
+</style>
+
+
+<!-- ================================================
+     SHIPPING PROCESS TIMELINE
+     ================================================ -->
+<section class="gc-section gc-process-section" style="background:#0F172A;padding:100px 0;position:relative;overflow:hidden;">
+    <!-- Grid background -->
+    <div style="position:absolute;top:0;left:0;width:100%;height:100%;background-image:linear-gradient(rgba(255,255,255,0.02) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.02) 1px,transparent 1px);background-size:50px 50px;pointer-events:none;"></div>
+
+    <div class="gc-container" style="position:relative;z-index:2;">
+        <div style="text-align:center;margin-bottom:70px;" class="gc-reveal-up" data-target="gc-process-section">
+            <span style="display:inline-block;background:rgba(217,119,6,0.15);color:var(--gc-gold);padding:6px 20px;border-radius:30px;font-size:0.75rem;font-weight:700;letter-spacing:2px;margin-bottom:15px;">HOW IT WORKS</span>
+            <h2 style="font-family:'Outfit',sans-serif;font-size:2.5rem;font-weight:800;color:white;margin:0;">From <span style="color:var(--gc-gold);">Auction</span> to <span style="color:var(--gc-blue-accent);">Your Port</span></h2>
+            <p style="color:#94a3b8;max-width:550px;margin:15px auto 0;">We manage every step of the process. You just confirm the vehicle and destination.</p>
+        </div>
+
+        <!-- Timeline Steps -->
+        <div class="gc-stagger-child" style="display:grid;grid-template-columns:repeat(3,1fr);gap:2px;max-width:1100px;margin:0 auto;" data-target="gc-process-section">
+
+            <?php
+            $steps = [
+                ['num'=>'01','icon'=>'dashicons-search','title'=>'Source Vehicle','time'=>'1–3 days','desc'=>'We access Copart, IAAI &amp; dealer auctions to find your vehicle at the best price.','color'=>'var(--gc-blue-accent)'],
+                ['num'=>'02','icon'=>'dashicons-admin-page','title'=>'Export Docs','time'=>'3–5 days','desc'=>'Title processing, ITN filing, bill of lading &amp; commercial invoice prepared.','color'=>'#8b5cf6'],
+                ['num'=>'03','icon'=>'dashicons-location-alt','title'=>'Port Loading','time'=>'7–14 days','desc'=>'Vehicle delivered to Savannah, Baltimore or NY port. RoRo or container loaded.','color'=>'var(--gc-gold)'],
+                ['num'=>'04','icon'=>'dashicons-admin-site-alt3','title'=>'Ocean Transit','time'=>'21–35 days','desc'=>'Your cargo sails to Monrovia, Conakry, or Abidjan. You receive tracking updates.','color'=>'#06b6d4'],
+                ['num'=>'05','icon'=>'dashicons-clipboard','title'=>'Customs Clearance','time'=>'5–10 days','desc'=>'Duty payment, port inspection, and release handled with your local clearing agent.','color'=>'#10b981'],
+                ['num'=>'06','icon'=>'dashicons-yes-alt','title'=>'Final Delivery','time'=>'1–3 days','desc'=>'Vehicle cleared and delivered to your location. Transaction complete.','color'=>'#f59e0b'],
+            ];
+            foreach ($steps as $i => $step):
+            ?>
+            <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);padding:35px 30px;position:relative;<?php echo ($i === 2) ? 'border-radius:0 12px 0 0;' : ($i === 5 ? 'border-radius:0 0 12px 0;' : ($i === 0 ? 'border-radius:12px 0 0 0;' : ($i === 3 ? 'border-radius:0 0 0 12px;' : ''))); ?>transition:background 0.3s;" onmouseover="this.style.background='rgba(255,255,255,0.06)';" onmouseout="this.style.background='rgba(255,255,255,0.03)';">
+                <div style="display:flex;align-items:flex-start;gap:15px;margin-bottom:20px;">
+                    <div style="width:50px;height:50px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                        <span class="dashicons <?php echo esc_attr($step['icon']); ?>" style="font-size:22px;color:<?php echo $step['color']; ?>;width:22px;height:22px;"></span>
+                    </div>
+                    <div>
+                        <div style="font-size:0.7rem;font-weight:700;letter-spacing:2px;color:<?php echo $step['color']; ?>;margin-bottom:4px;">STEP <?php echo esc_html($step['num']); ?></div>
+                        <h3 style="font-family:'Outfit',sans-serif;font-size:1.1rem;font-weight:700;color:white;margin:0;"><?php echo esc_html($step['title']); ?></h3>
+                    </div>
+                </div>
+                <p style="color:#94a3b8;font-size:0.9rem;line-height:1.6;margin:0 0 15px;"><?php echo $step['desc']; ?></p>
+                <span style="display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,0.05);padding:5px 12px;border-radius:20px;font-size:0.78rem;color:#64748b;"><span class="dashicons dashicons-clock" style="font-size:13px;width:13px;height:13px;color:var(--gc-gold);"></span><?php echo esc_html($step['time']); ?></span>
+            </div>
+            <?php endforeach; ?>
+
+        </div><!-- /grid -->
+
+        <div style="text-align:center;margin-top:50px;">
+            <a href="<?php echo esc_url(home_url('/how-it-works')); ?>" class="gc-btn gc-btn-glass gc-btn-magnetic" style="display:inline-flex;align-items:center;gap:10px;padding:14px 32px;border-radius:8px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);color:white;text-decoration:none;font-weight:600;transition:all 0.3s;" onmouseover="this.style.background='rgba(255,255,255,0.14)';" onmouseout="this.style.background='rgba(255,255,255,0.08)';">
+                See Full How It Works Guide <span class="dashicons dashicons-arrow-right-alt2" style="font-size:16px;"></span>
+            </a>
+        </div>
+
+    </div>
+</section>
+
+<style>
+@media (max-width: 900px) {
+    .gc-process-section .gc-stagger-child {
+        grid-template-columns: 1fr 1fr !important;
+    }
+}
+@media (max-width: 600px) {
+    .gc-process-section .gc-stagger-child {
+        grid-template-columns: 1fr !important;
+    }
+}
+</style>
+
+
+<!-- ================================================
+     FINAL CTA — Above Footer
+     ================================================ -->
+<section class="gc-section gc-final-cta" style="background:linear-gradient(135deg,var(--gc-gold) 0%,#b45309 100%);padding:80px 0;position:relative;overflow:hidden;">
+    <!-- Subtle pattern -->
+    <div style="position:absolute;top:0;left:0;width:100%;height:100%;background-image:radial-gradient(circle, rgba(255,255,255,0.08) 1px, transparent 1px);background-size:30px 30px;pointer-events:none;"></div>
+
+    <div class="gc-container" style="position:relative;z-index:2;text-align:center;">
+        <span style="display:inline-block;background:rgba(0,0,0,0.15);color:rgba(255,255,255,0.9);padding:6px 20px;border-radius:30px;font-size:0.75rem;font-weight:700;letter-spacing:2px;margin-bottom:20px;">START TODAY</span>
+        <h2 style="font-family:'Outfit',sans-serif;font-size:clamp(2rem,5vw,3.5rem);font-weight:800;color:white;line-height:1.15;margin:0 auto 20px;max-width:750px;text-shadow:0 2px 20px rgba(0,0,0,0.2);">Ready to Ship Your Vehicle<br>to West Africa?</h2>
+        <p style="color:rgba(255,255,255,0.85);font-size:1.1rem;max-width:500px;margin:0 auto 40px;">Get a free wholesale quote within 24 hours. No obligation, no pressure — just clarity on cost and process.</p>
+
+        <div style="display:flex;justify-content:center;align-items:center;gap:20px;flex-wrap:wrap;">
+            <a href="<?php echo esc_url(home_url('/contact')); ?>" id="homepage-final-cta-quote" style="display:inline-flex;align-items:center;gap:10px;background:rgba(255,255,255,0.1);border:2.5px solid white;color:white;padding:16px 36px;border-radius:8px;font-family:'Outfit',sans-serif;font-weight:700;font-size:1.05rem;text-decoration:none;transition:all 0.3s;backdrop-filter:blur(5px);" onmouseover="this.style.background='rgba(255,255,255,0.25)';" onmouseout="this.style.background='rgba(255,255,255,0.1)';">
+                <span class="dashicons dashicons-email-alt" style="font-size:20px;width:20px;height:20px;"></span>
+                Get a Free Quote
+            </a>
+            <a href="https://wa.me/<?php echo esc_attr(get_option('globalconnect_whatsapp', '12672900254')); ?>?text=Hi%20GlobalConnect%2C%20I%27d%20like%20a%20shipping%20quote" target="_blank" rel="noopener noreferrer" id="homepage-final-cta-whatsapp" style="display:inline-flex;align-items:center;gap:10px;background:white;color:#0F172A;padding:16px 36px;border-radius:8px;font-family:'Outfit',sans-serif;font-weight:700;font-size:1.05rem;text-decoration:none;transition:all 0.3s;box-shadow:0 8px 30px rgba(0,0,0,0.15);" onmouseover="this.style.transform='translateY(-3px)';this.style.boxShadow='0 15px 40px rgba(0,0,0,0.25)';" onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='0 8px 30px rgba(0,0,0,0.15)';">
+                <!-- WhatsApp icon -->
+                <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24" style="color:#25D366;flex-shrink:0;"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                WhatsApp Us Now
+            </a>
+        </div>
+
+        <p style="color:rgba(255,255,255,0.7);margin-top:30px;font-size:0.9rem;">
+            📍 Based in Philadelphia, PA &nbsp;|&nbsp; 📞 +1 (267) 290-0254 &nbsp;|&nbsp; ✉️ info@globalconnectshipping.com
+        </p>
+    </div>
+</section>
+
 <?php get_footer(); ?>

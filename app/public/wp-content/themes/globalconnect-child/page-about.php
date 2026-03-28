@@ -1,8 +1,8 @@
 <?php
 
 /**
- * Template Name: About Us
- * Description: Custom about page template with Deep Tech styling.
+ * Template Name: About Us (Compact)
+ * Description: Compact about page template. Use page-about-us.php for the full version.
  */
 
 get_header();

@@ -70,11 +70,12 @@
         <div class="gc-container">
             <div class="gc-footer-flex">
                 <p class="gc-copyright">
-                    &copy; <?php echo date('Y'); ?> Global Connect Shipping. All Rights Reserved.
+                    &copy; <?php echo wp_date('Y'); ?> Global Connect Shipping. All Rights Reserved.
                 </p>
                 <div class="gc-legal-links">
-                    <a href="#">Privacy Policy</a>
-                    <a href="#">Terms of Service</a>
+                    <a href="<?php echo esc_url(home_url('/privacy-policy-2/')); ?>">Privacy Policy</a>
+                    <a href="<?php echo esc_url(home_url('/terms-and-conditions/')); ?>">Terms of Service</a>
+                    <a href="<?php echo esc_url(home_url('/shipping-export-policy/')); ?>">Shipping Policy</a>
                 </div>
             </div>
         </div>
