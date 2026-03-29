@@ -1,390 +1,227 @@
-# Global Connect — Handover & Task List
+# Global Connect — Project Handover
 
-**Last Updated:** March 25, 2026
-**Site:** http://localhost:10016/
+**Last Updated:** March 26, 2026 (Session 2)
+**Site (Local):** http://localhost:10016/
+**Site (Production):** https://globalcnx.net *(slow/timeout — do not deploy yet)*
 **Theme:** Divi (parent) + `globalconnect-child` (child theme)
 **Repo:** https://github.com/Samk208/Global-Connect (private)
 
 ---
 
-## BLOG CONTENT GENERATION — Session March 25, 2026
+## 1. Business Context
 
-### What Was Built
+**GlobalConnect** is a vehicle, machinery, and parts export business based in Philadelphia, PA, shipping from the USA, Europe, and China to West African markets.
 
-A fully automated blog generation pipeline adapted from the DesignCopy.net workflow:
+| Field | Value |
+|---|---|
+| Business | Global Connect Shipping |
+| Address | 5909 Elmwood Avenue, Philadelphia, PA 19143 |
+| WhatsApp | +1 (267) 290-0254 |
+| Email | info@globalconnectshipping.com |
+| Founder | MVK / Mr. Konneh |
+| Markets | Liberia (Monrovia), Guinea (Conakry), Ivory Coast (Abidjan) |
 
-**Script:** `app/generate_globalconnect_blogs.py`
+---
 
-- Model: `moonshotai/kimi-k2` (primary) → `anthropic/claude-3.5-sonnet` (fallback)
-- Research: Perplexity Sonar API injects live 2026 data before each post
-- Timeout: 360s | max_tokens: 10,000 | Skip logic: skips files already > 8KB
-- Usage: `python generate_globalconnect_blogs.py --priority 1` (or `2`, `3`, `all`)
-- Single post: `python generate_globalconnect_blogs.py --slug roro-vs-container-shipping-africa`
+## 2. Technology Stack
 
-**Key fix applied this session:** Removed full `CONTENT_QUALITY_STANDARDS.md` (20.6KB / ~5,000 tokens) from system prompt — was consuming token budget and causing truncation. Key rules are now embedded inline in the prompt.
+| Layer | Technology |
+|---|---|
+| CMS | WordPress 6.x on Local by Flywheel (port 10016) |
+| Theme | Divi (parent) + `globalconnect-child` (custom child) |
+| PHP | 8.0+ |
+| Database | MySQL via Local |
+| SEO | RankMath Pro |
+| E-commerce | WooCommerce (minimal — used for inventory/shop) |
+| Version Control | GitHub — `Samk208/Global-Connect` |
 
-### Posts Generated — ALL Files in `app/`
+### Child Theme Key Files
 
-| #   | Slug                                              | Words | Size | Status  |
-| --- | ------------------------------------------------- | ----- | ---- | ------- |
-| P1  | `roro-vs-container-shipping-africa.html`          | 2,062 | 19KB | ✅ Done |
-| P1  | `ship-car-savannah-monrovia-transit-time.html`    | 2,065 | 19KB | ✅ Done |
-| P1  | `consolidate-cargo-vehicles-parts-container.html` | 1,796 | 18KB | ✅ Done |
-| P1  | `track-ocean-freight-global-connect-tracker.html` | 1,123 | 12KB | ✅ Done |
-| P1  | `clear-customs-conakry-guinea-guide.html`         | 2,365 | 22KB | ✅ Done |
-| P1  | `liberia-import-duties-2026-vehicles.html`        | 2,040 | 19KB | ✅ Done |
-| P1  | `export-document-checklist-vehicles-africa.html`  | 1,893 | 15KB | ✅ Done |
-| P2  | `buy-cars-copart-export-africa.html`              | 2,184 | 20KB | ✅ Done |
+| File/Folder | Description |
+|---|---|
+| `style.css` | "Deep Tech" design system — CSS variables, all custom CSS (83KB) |
+| `functions.php` | Core: enqueue, AJAX, CPTs, AI chatbot, shortcodes, security headers |
+| `page-landing.php` | **Homepage template** — all homepage sections live here |
+| `page-shop.php` | WooCommerce shop override |
+| `page-how-it-works.php` | 3-step process + trust bar |
+| `page-contact.php` | Contact & quote form |
+| `page-about-us.php` | Full founder/about page (40KB) — **use this one** |
+| `page-about.php` | Compact about page — renamed to "About Us (Compact)" to avoid duplicate |
+| `page-legal.php` | Legal template — reads WP editor content + auto-generates TOC |
+| `page-china-sourcing.php` | China Direct sourcing page |
+| `footer-gc-custom.php` | **Custom footer — DO NOT EDIT without care** |
+| `header.php` | Custom header — **DO NOT EDIT** |
+| `includes/` | CPTs (vehicle, part, shipment), shortcodes, AI chat, RankMath SEO |
 
-**Previously existing posts (3):** `import-cars-usa-africa.html`, `buy-chinese-electric-cars-online.html`, `europe-car-exporter.html`
+### Design System (CSS Variables in `style.css` `:root`)
 
-**Total done: 11 posts | Remaining: 14 posts (9 more P2 + 5 P3)**
+| Token | Value | Usage |
+|---|---|---|
+| `--gc-blue-primary` | `#0F172A` | Dark backgrounds |
+| `--gc-blue-accent` | `#3B82F6` | Interactive elements |
+| `--gc-gold` | `#D97706` | CTA accents, highlights |
+| `--gc-off-white` | `#F8FAFC` | Light section backgrounds |
+| Font | Outfit (headings) + Inter (body) | Google Fonts |
 
-### NEXT: Continue Priority 2 (9 posts remaining)
+---
 
-```powershell
-cd 'c:\Users\Lenovo\Local Sites\globalconnect\app'
-python generate_globalconnect_blogs.py --priority 2
+## 3. Credentials
+
+All credentials are in `app/.env.local` (not committed to git):
+
+```
+WP_USER=segebeh
+WP_APP_PASSWORD=9xNN Bics Sf6a vUVu QtHR M4vJ   # Application password (REST API)
 ```
 
-Posts still pending in Priority 2:
+**AI APIs:** Gemini, OpenAI, Anthropic, Perplexity, OpenRouter — all in `.env.local`.
 
-- `reliable-used-suvs-west-africa`
-- `clean-vs-salvage-title-conakry-guinea`
+---
+
+## 4. What Has Been Built — Complete Status
+
+### ✅ Session 1 (March 25, 2026) — Blog Content
+
+- **24 blog posts** generated (~48,000 words) using `generate_globalconnect_blogs.py`
+  - Model: `moonshotai/kimi-k2` with Perplexity live data injection
+  - 4 content silos: Shipping & Logistics, Sourcing & Buying, Destination Guides, Business Strategy
+- **24 AI-generated featured images** (Gemini Imagen) uploaded and assigned
+- **~60 tags** added across 20 posts
+- **4 category SEO descriptions** written
+- **28 duplicate posts removed**
+- **Production credentials** configured
+
+### ✅ Session 2 (March 26, 2026) — Homepage & Code Fixes
+
+#### Homepage (`page-landing.php`) — Now Complete
+
+The homepage is a fully-custom PHP template (NOT Divi Visual Builder). All sections:
+
+| Section | Status | Notes |
+|---|---|---|
+| Hero (background image, animated headline) | ✅ | "USA \ Europe \ China Meet Global Markets" |
+| Live operation ticker (marquee) | ✅ | Dynamic from `globalconnect_get_ticker_items()` |
+| Product categories (4 cards) | ✅ | Cars, Machinery, Tires, Auto Parts |
+| Global Sourcing Network (USA/Europe/China) | ✅ | 3-column with feature lists |
+| China Heavy Machinery showcase (slideshow) | ✅ | Sinotruk, SANY, PCR Tires |
+| Featured Inventory (tabbed: USA/Europe/China) | ✅ | Queries `vehicle` CPT |
+| Shipping Calculators | ✅ | `[globalconnect_calculator]` shortcode |
+| FAQ Accordion | ✅ | 3 questions (China-specific) |
+| Photo Trust Gallery | ✅ | Facebook operation photos |
+| Trust Stats Bar | ✅ | 500+ containers, 10+ years, 3 continents, 24/7 |
+| Founder Section (MVK) | ✅ | Photo + social + CTAs |
+| **West Africa Destinations** | ✅ NEW | Liberia, Guinea, Ivory Coast cards with flag stripes |
+| **Shipping Process Timeline** | ✅ NEW | 6-step dark grid (Steps 01–06) |
+| **Final Gold CTA** | ✅ NEW | "Ready to Ship?" + WhatsApp button |
+
+#### RankMath SEO (Homepage — ID 6)
+- Title: "Ship Vehicles from USA to West Africa | Global Connect Shipping"
+- Focus keyword: "ship vehicles USA to West Africa"
+- Meta description: 155 chars optimised
+
+#### Internal Linking
+- `add_internal_links.py` executed — 13 posts cross-linked with 2-3 contextual links each
+
+#### Code Fixes Applied
+| File | Fix |
+|---|---|
+| `footer-gc-custom.php:73` | `date('Y')` → `wp_date('Y')` |
+| `footer-gc-custom.php:75-79` | Dead `#` legal links → real URLs (Privacy, T&C, Shipping Policy) |
+| `page-about.php` | Template name renamed from "About Us" → "About Us (Compact)" |
+
+---
+
+## 5. WordPress Pages — ID Reference
+
+| ID | Slug | Template | Notes |
+|---|---|---|---|
+| 6 | `home` | `page-landing.php` | **Static homepage** |
+| 15 | `how-it-works` | `page-how-it-works.php` | 3-step visual guide |
+| 17 | `about-us` | *(default)* | Older — consider switching to `page-about-us.php` |
+| 19 | `contact-quote` | `page-contact.php` | Main quote form |
+| 25 | `shop` | `page-shop.php` | Inventory browser |
+| 28 | `dashboard` | `page-dashboard.php` | Customer dashboard |
+| 341808 | `contact` | `page-contact.php` | Alias |
+| 341807 | `about` | `page-about.php` | Uses compact template |
+| 341809 | `china-sourcing` | `page-china-sourcing.php` | China Direct page |
+| 341810 | `login` | `page-login.php` | Login/Register |
+| 341853 | `privacy-policy-2` | `page-legal.php` | Privacy Policy |
+| 341913 | `terms-and-conditions` | `page-legal.php` | Terms & Conditions |
+| 341975 | `shipping-export-policy` | `page-legal.php` | Shipping & Export Policy |
+
+---
+
+## 6. Blog Post Slugs — All 28 Published
+
+**Shipping & Logistics (10)**
+- `roro-vs-container-shipping-africa`
+- `roro-vs-container-shipping-africa-full` *(extended version)*
+- `ship-car-savannah-monrovia-transit-time`
+- `consolidate-cargo-vehicles-parts-container`
+- `terminal-handling-charges-usa-ports`
+- `demurrage-detention-fees-west-africa`
 - `incoterms-cfr-cif-fob-west-africa`
 - `roro-shipment-rejected-port-violations`
-- `ivory-coast-car-import-age-limits`
+- `track-ocean-freight-global-connect-tracker`
 - `process-itn-auto-export-usa`
-- `demurrage-detention-fees-west-africa`
+
+**Sourcing & Buying (9)**
+- `export-document-checklist-vehicles-africa`
+- `buy-cars-copart-export-africa`
+- `iaai-auctions-international-importers`
+- `clean-vs-salvage-title-conakry-guinea`
+- `reliable-used-suvs-west-africa`
+- `estimate-preexport-repair-costs-auction-cars`
+- `source-heavy-equipment-usa-export`
+- `import-cars-usa-africa`
+- `europe-car-exporter`
+
+**Destination Guides (6)**
+- `clear-customs-conakry-guinea-guide`
+- `liberia-import-duties-2026-vehicles`
+- `ivory-coast-car-import-age-limits`
+- `trusted-clearing-agent-monrovia-liberia`
+- `electric-vehicles-west-africa-import-laws`
+- `buy-chinese-electric-cars-online`
+
+**Business Strategy (3)**
 - `start-car-export-business-usa-africa`
+- `finance-car-exports-cash-flow-management`
 - `west-africa-dealerships-usa-brokers`
 
-After P2 completes, run Priority 3:
+---
 
-```powershell
-python generate_globalconnect_blogs.py --priority 3
-```
+## 7. Automation Scripts (`app/` directory)
 
-### After All Posts Generated — Publish to WordPress
-
-```powershell
-python wp_publisher.py  # Located in C:\Users\Lenovo\Desktop\Design Copy\
-```
-
-WP credentials are in `.env.local` (WP_USER / WP_APP_PASSWORD).
-Set correct WP_BASE to `http://localhost:10016/wp-json/wp/v2` before running.
-
-### Validator
-
-```powershell
-python validate_blog_quality.py roro-vs-container-shipping-africa.html
-```
-
-Main validator warnings: paragraph length (>3 sentences) — minor, not blocking. All posts pass visual density, word count, and banned-word checks.
+| Script | Purpose |
+|---|---|
+| `generate_globalconnect_blogs.py` | Generate blog posts with AI + Perplexity live data |
+| `add_internal_links.py` | Add 2-3 contextual internal links per post via REST API |
+| `set_homepage_seo.py` | Set RankMath meta on homepage via REST API |
+| `wp_publish_posts.py` | Publish posts to production (`--target prod --status draft`) |
+| `dataforseo_logistics.py` | Keyword research via DataForSEO API |
+| `check_pages.py` | List all WP pages with IDs and content lengths |
+| `check_legal.py` | Preview legal page content |
 
 ---
 
----
+## 8. Critical Rules — DO NOT BREAK
 
-## Current State Summary
-
-- **Header**: Default Divi header is active (custom `header.php` exists but is overridden by Divi Theme Builder)
-- **Footer**: Imported a global footer from Divi Marketplace — it's live on the site but has placeholder content
-- **Legal Pages**: 3 pages created (Privacy Policy, Terms & Conditions, Shipping & Export Policy) — not linked anywhere yet
-- **Menu**: Home, Shop, Contact & Quote, About Us, How It Works, News
-- **GitHub Actions**: Workflow exists but has missing config files
-- **Commits**: Only 2 commits so far
+1. **Footer (`footer-gc-custom.php`):** Legal links now point to real pages. Do not revert to `#`.
+2. **Header (`header.php`):** Custom header. Do not edit structure.
+3. **Homepage:** Built in `page-landing.php` — NOT in Divi Visual Builder. Editing with the Divi front-end builder will overwrite it.
+4. **`page-about-us.php`:** This is the full, 40KB About Us page. `page-about.php` is the compact legacy version — both can coexist.
+5. **Production site (`globalcnx.net`):** Currently slow with timeout issues. **Keep all work on local** (http://localhost:10016) until production is confirmed stable.
+6. **Git:** Divi parent theme should be in `.gitignore`. Run `git rm -r --cached app/public/wp-content/themes/Divi/` before next commit.
 
 ---
 
-## PRIORITY 1 — Imported Divi Footer Customization
-
-The imported Divi Marketplace footer is active. The following modules need editing in **Divi Theme Builder > Global Footer** (or via the Visual Builder on any page, scroll to footer, click "Edit With Divi").
-
-### 1.1 Social Follow Bar (Top colored bar)
-
-- [ ] Verify Facebook link points to: `https://www.facebook.com/profile.php?id=100071518400878`
-- [ ] Update Twitter/X link to your actual profile (or remove if you don't have one)
-- [ ] Update YouTube link to your actual channel (or remove)
-- [ ] Update Instagram link to your actual profile (or remove)
-- [ ] Update LinkedIn link to your actual profile (or remove)
-- [ ] Update Pinterest link to your actual profile (or remove)
-
-### 1.2 "ABOUT US" Section (Left column — currently placeholder)
-
-Replace the placeholder text:
-
-> "Your content goes here. Edit this text inline or in the module Content settings..."
-
-**Replace with:**
-
-> Global Connect Shipping specializes in exporting quality vehicles, heavy trucks, tires, and machinery parts from the USA and Europe to Africa, Asia, and the Americas. Based in Philadelphia, PA, we are your trusted global wholesale partner.
-
-### 1.3 "CONTACT US" Section (Middle column)
-
-- [ ] Update "DIRECTIONS" button to link to Google Maps: `https://maps.google.com/?q=5909+Elmwood+Avenue+Philadelphia+PA+19143`
-- [ ] Optionally add contact info text above the button:
-  - Phone: +1 (267) 290-0254
-  - Email: info@globalconnectshipping.com
-
-### 1.4 "LINKS" Section (Right column — currently showing Archives/Categories)
-
-The current "Links" section shows default WordPress widgets (Archives: January 2026, Categories: Uncategorized). This is not useful.
-
-**Replace with a manual link list:**
-
-- [ ] Home → `/`
-- [ ] Shop → `/shop`
-- [ ] About Us → `/about-us`
-- [ ] Contact & Quote → `/contact`
-- [ ] How It Works → `/how-it-works`
-- [ ] Track Shipment → `/track`
-
-_In Divi: Delete the Archives/Categories widgets and replace with a Text module containing manual links, or use a Divi Menu module pointing to your footer-menu._
-
-### 1.5 Contact Details Bar (Bottom dark bar — USA & UK)
-
-Currently shows placeholder info for both USA and UK:
-
-- `hello@example.com`
-- `+000-000-0000`
-
-**USA Contact Details — Update to:**
-
-- Email: `info@globalconnectshipping.com`
-- Phone: `+1 (267) 290-0254`
-
-**UK Contact Details:**
-
-- [ ] If you have a UK contact, add real details
-- [ ] If no UK presence, change to **"West Africa Contact Details"** or **"WhatsApp"** and update accordingly
-- [ ] Or remove the UK column entirely and make USA full-width
-
-### 1.6 Add Legal Links to Footer
-
-In the very bottom of the footer (copyright area), add links to your legal pages:
-
-- [ ] Privacy Policy → `/privacy-policy` (verify the actual slug in Pages)
-- [ ] Terms & Conditions → `/terms-and-conditions` (verify slug)
-- [ ] Shipping & Export Policy → `/shipping-export-policy` (verify slug)
-
----
-
-## PRIORITY 2 — Legal Pages Enhancement
-
-### 2.1 Find Your Legal Page Slugs
-
-Go to **WP Admin > Pages** and note the exact slugs for:
-
-- Privacy Policy
-- Terms and Conditions
-- Shipping & Export Policy
-
-### 2.2 Privacy Policy — Content Should Cover:
-
-- [ ] Company name and contact info (data controller)
-- [ ] What data you collect: name, email, phone, WhatsApp, destination port (from inquiry forms)
-- [ ] User registration data (username, email, password)
-- [ ] Shipment tracking data
-- [ ] AI Chatbot: conversations are processed via OpenAI API — mention this
-- [ ] Google Maps embed on contact page
-- [ ] Cookies: WordPress login cookies, any analytics
-- [ ] Third-party services: OpenAI, Google Fonts, WhatsApp API
-- [ ] Data retention period
-- [ ] User rights (access, deletion, correction)
-- [ ] How to contact you about data concerns
-- [ ] If serving EU customers: GDPR compliance statement
-
-### 2.3 Terms and Conditions — Content Should Cover:
-
-- [ ] Company identity and registration
-- [ ] Vehicle/parts sold "as-is" or "as-described" disclaimer
-- [ ] Quote validity period (e.g., "Quotes are valid for 7 days")
-- [ ] Payment terms and accepted methods
-- [ ] Shipping liability limitations
-- [ ] Export compliance — buyer responsible for import duties/taxes
-- [ ] Title transfer — when ownership passes to buyer
-- [ ] Inspection period / dispute window
-- [ ] Cancellation and refund policy
-- [ ] Force majeure clause (shipping delays, port closures)
-- [ ] Governing law and jurisdiction (Pennsylvania, USA)
-- [ ] Limitation of liability
-- [ ] User account responsibilities
-
-### 2.4 Shipping & Export Policy — Content Should Cover:
-
-- [ ] Shipping methods: RoRo (Roll-on/Roll-off) vs Container shipping
-- [ ] Estimated transit times by destination (West Africa, Europe, Asia)
-- [ ] Ports of loading (US East Coast ports)
-- [ ] Destination ports served (Conakry, Monrovia, Abidjan, Lagos, etc.)
-- [ ] Documentation required: clean title, bill of lading, commercial invoice
-- [ ] Customs clearance: buyer's responsibility at destination
-- [ ] Insurance options and coverage
-- [ ] Prohibited/restricted items
-- [ ] Container loading and consolidation details
-- [ ] Tracking: how to track shipments on the site
-- [ ] Delays and force majeure
-- [ ] Damaged goods claim process
-
-### 2.5 Page Design Recommendations
-
-For each legal page, use a clean layout:
-
-- [ ] Use Divi's "Blank Page" layout or minimal template
-- [ ] Add a simple header with page title
-- [ ] Use an accordion or tabbed layout for long content (makes it scannable)
-- [ ] Add a "Last Updated: [date]" line at the top
-- [ ] Add a "Questions? Contact us at info@globalconnectshipping.com" CTA at the bottom
-
----
-
-## PRIORITY 3 — Link Legal Pages Everywhere
-
-### 3.1 Divi Imported Footer
-
-- [ ] Add links to all 3 legal pages in the footer copyright area (see 1.6 above)
-
-### 3.2 Custom Footer (`footer-gc-custom.php`) — For when/if activated
-
-The file at `globalconnect-child/footer-gc-custom.php` lines 74-77 has placeholder links:
-
-```php
-<a href="#">Privacy Policy</a>
-<a href="#">Terms of Service</a>
-```
-
-**Update to actual page URLs** (once you know the slugs).
-
-### 3.3 Login/Registration Page
-
-The file at `globalconnect-child/page-login.php` line 168 has:
-
-```html
-<span>I agree to the Terms of Service and Privacy Policy</span>
-```
-
-**Change to clickable links:**
-
-```html
-<span
-  >I agree to the
-  <a href="/terms-and-conditions" target="_blank">Terms of Service</a> and
-  <a href="/privacy-policy" target="_blank">Privacy Policy</a></span
->
-```
-
----
-
-## PRIORITY 4 — Code Fixes
-
-### 4.1 Duplicate Include (functions.php)
-
-`class-gc-ai-chat.php` is included twice:
-
-- Line 14: `require_once get_stylesheet_directory() . '/includes/class-gc-ai-chat.php';`
-- Line 545: `require_once get_stylesheet_directory() . '/includes/class-gc-ai-chat.php';`
-
-**Fix:** Remove line 14 (keep line 545 which is in the proper "Include AI Chatbot" section).
-
-### 4.2 Use WordPress Date Function (functions.php)
-
-Line 72 in `footer-gc-custom.php`:
-
-```php
-<?php echo date('Y'); ?>
-```
-
-**Change to:**
-
-```php
-<?php echo wp_date('Y'); ?>
-```
-
-### 4.3 Duplicate About Page Templates
-
-Both `page-about.php` and `page-about-us.php` exist. Determine which one is in use and delete the other.
-
----
-
-## PRIORITY 5 — GitHub Actions Fixes
-
-### 5.1 Create Missing Lint Config Files
-
-Create these files in the project root:
-
-**`.stylelintrc.json`:**
-
-```json
-{
-  "extends": "stylelint-config-standard",
-  "rules": {
-    "no-descending-specificity": null,
-    "selector-class-pattern": null,
-    "custom-property-pattern": null,
-    "declaration-block-no-redundant-longhand-properties": null
-  }
-}
-```
-
-**`.eslintrc.json`:**
-
-```json
-{
-  "env": {
-    "browser": true,
-    "jquery": true,
-    "es6": true
-  },
-  "rules": {
-    "no-unused-vars": "warn",
-    "no-console": "warn"
-  }
-}
-```
-
-### 5.2 Refine Security Check
-
-The `grep -r "debug"` check in `main.yml` will false-positive on CSS class names and comments. Consider changing to check for `WP_DEBUG` or `console.log` specifically.
-
-### 5.3 Git Hygiene
-
-The Divi parent theme has 100+ modified files showing in `git status`. Add to `.gitignore`:
-
-```
-app/public/wp-content/themes/Divi/
-```
-
-Then remove it from tracking:
-
-```bash
-git rm -r --cached app/public/wp-content/themes/Divi/
-```
-
----
-
-## PRIORITY 6 — Header (Future Task)
-
-Your custom `header.php` and its CSS (style.css lines 3449-3599) are ready but not active because Divi Theme Builder overrides it. Options:
-
-- **Option A:** Go to Divi > Theme Builder, remove the global header assignment, and let `header.php` take over
-- **Option B:** Rebuild the header design in Divi Theme Builder to match what `header.php` does (logo, nav, Get a Quote CTA, Login/Dashboard conditional, mobile menu)
-- **Option C:** Keep the Divi default header and customize it in Theme Builder
-
----
-
-## Quick Reference — Real Business Info
-
-| Field          | Value                                                   |
-| -------------- | ------------------------------------------------------- |
-| Company        | Global Connect Shipping                                 |
-| Address        | 5909 Elmwood Avenue, Philadelphia, PA 19143             |
-| Phone/WhatsApp | +1 (267) 290-0254                                       |
-| Email          | info@globalconnectshipping.com                          |
-| Facebook       | https://www.facebook.com/profile.php?id=100071518400878 |
-| Services       | Vehicle export, heavy trucks, tires, machinery parts    |
-| Markets        | USA, Europe, China → Africa, Asia, Americas             |
-| Shipping       | RoRo and Container shipping                             |
-
----
-
-_This handover was generated from a full code review on Feb 15, 2026. Resume with Cursor AI anytime to execute any of these tasks._
+## 9. Next Session — Resumption Guide
+
+Start by reading `TODO.md`. Priority queue at handover:
+
+1. **Priority 4 — Legal Pages:** Add GDPR, AI chatbot disclosure, payment terms, force majeure, governing law clauses
+2. **Priority 7 — Git Hygiene:** Add Divi to `.gitignore`, commit all session work, push to GitHub
+3. **Priority 5 — Production Deployment:** Once live site is stable, use `wp_publish_posts.py`
+4. **Content:** Review internal links manually, add CTAs to posts, check featured images
+5. **Future:** Featured blog posts section on homepage (skipped this session per user)

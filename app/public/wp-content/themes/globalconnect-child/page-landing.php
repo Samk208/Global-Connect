@@ -90,13 +90,13 @@ get_header();
             <?php
             $ticker_items = globalconnect_get_ticker_items();
             foreach ($ticker_items as $item):
-                ?>
+            ?>
                 <div class="gc-marquee-item"><span class="gc-live-dot" aria-hidden="true"></span> <?php echo esc_html($item['text']); ?></div>
             <?php endforeach; ?>
             <?php
             // Duplicate for seamless scroll
             foreach ($ticker_items as $item):
-                ?>
+            ?>
                 <div class="gc-marquee-item" aria-hidden="true"><span class="gc-live-dot" aria-hidden="true"></span> <?php echo esc_html($item['text']); ?></div>
             <?php endforeach; ?>
         </div>
@@ -607,7 +607,7 @@ get_header();
     showSlide(0);
 </script>
 
-<?php $fb_img_path = content_url('/docs/Images/Facebook%20images/Unsorted'); ?>
+<?php $fb_img_path = content_url('/docs/Images/Facebook_images/Unsorted'); ?>
 
 <!-- FROM THE FIELD - Trust Gallery -->
 <section style="background: #F8FAFC; padding: 70px 0; overflow: hidden;">
@@ -1106,11 +1106,11 @@ get_header();
 </section>
 
 <style>
-.gc-dest-card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 20px 40px rgba(59,130,246,0.12) !important;
-    border-color: var(--gc-blue-accent) !important;
-}
+    .gc-dest-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 20px 40px rgba(59, 130, 246, 0.12) !important;
+        border-color: var(--gc-blue-accent) !important;
+    }
 </style>
 
 
@@ -1133,28 +1133,28 @@ get_header();
 
             <?php
             $steps = [
-                ['num'=>'01','icon'=>'dashicons-search','title'=>'Source Vehicle','time'=>'1–3 days','desc'=>'We access Copart, IAAI &amp; dealer auctions to find your vehicle at the best price.','color'=>'var(--gc-blue-accent)'],
-                ['num'=>'02','icon'=>'dashicons-admin-page','title'=>'Export Docs','time'=>'3–5 days','desc'=>'Title processing, ITN filing, bill of lading &amp; commercial invoice prepared.','color'=>'#8b5cf6'],
-                ['num'=>'03','icon'=>'dashicons-location-alt','title'=>'Port Loading','time'=>'7–14 days','desc'=>'Vehicle delivered to Savannah, Baltimore or NY port. RoRo or container loaded.','color'=>'var(--gc-gold)'],
-                ['num'=>'04','icon'=>'dashicons-admin-site-alt3','title'=>'Ocean Transit','time'=>'21–35 days','desc'=>'Your cargo sails to Monrovia, Conakry, or Abidjan. You receive tracking updates.','color'=>'#06b6d4'],
-                ['num'=>'05','icon'=>'dashicons-clipboard','title'=>'Customs Clearance','time'=>'5–10 days','desc'=>'Duty payment, port inspection, and release handled with your local clearing agent.','color'=>'#10b981'],
-                ['num'=>'06','icon'=>'dashicons-yes-alt','title'=>'Final Delivery','time'=>'1–3 days','desc'=>'Vehicle cleared and delivered to your location. Transaction complete.','color'=>'#f59e0b'],
+                ['num' => '01', 'icon' => 'dashicons-search', 'title' => 'Source Vehicle', 'time' => '1–3 days', 'desc' => 'We access Copart, IAAI &amp; dealer auctions to find your vehicle at the best price.', 'color' => 'var(--gc-blue-accent)'],
+                ['num' => '02', 'icon' => 'dashicons-admin-page', 'title' => 'Export Docs', 'time' => '3–5 days', 'desc' => 'Title processing, ITN filing, bill of lading &amp; commercial invoice prepared.', 'color' => '#8b5cf6'],
+                ['num' => '03', 'icon' => 'dashicons-location-alt', 'title' => 'Port Loading', 'time' => '7–14 days', 'desc' => 'Vehicle delivered to Savannah, Baltimore or NY port. RoRo or container loaded.', 'color' => 'var(--gc-gold)'],
+                ['num' => '04', 'icon' => 'dashicons-admin-site-alt3', 'title' => 'Ocean Transit', 'time' => '21–35 days', 'desc' => 'Your cargo sails to Monrovia, Conakry, or Abidjan. You receive tracking updates.', 'color' => '#06b6d4'],
+                ['num' => '05', 'icon' => 'dashicons-clipboard', 'title' => 'Customs Clearance', 'time' => '5–10 days', 'desc' => 'Duty payment, port inspection, and release handled with your local clearing agent.', 'color' => '#10b981'],
+                ['num' => '06', 'icon' => 'dashicons-yes-alt', 'title' => 'Final Delivery', 'time' => '1–3 days', 'desc' => 'Vehicle cleared and delivered to your location. Transaction complete.', 'color' => '#f59e0b'],
             ];
             foreach ($steps as $i => $step):
             ?>
-            <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);padding:35px 30px;position:relative;<?php echo ($i === 2) ? 'border-radius:0 12px 0 0;' : ($i === 5 ? 'border-radius:0 0 12px 0;' : ($i === 0 ? 'border-radius:12px 0 0 0;' : ($i === 3 ? 'border-radius:0 0 0 12px;' : ''))); ?>transition:background 0.3s;" onmouseover="this.style.background='rgba(255,255,255,0.06)';" onmouseout="this.style.background='rgba(255,255,255,0.03)';">
-                <div style="display:flex;align-items:flex-start;gap:15px;margin-bottom:20px;">
-                    <div style="width:50px;height:50px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-                        <span class="dashicons <?php echo esc_attr($step['icon']); ?>" style="font-size:22px;color:<?php echo $step['color']; ?>;width:22px;height:22px;"></span>
+                <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);padding:35px 30px;position:relative;<?php echo ($i === 2) ? 'border-radius:0 12px 0 0;' : ($i === 5 ? 'border-radius:0 0 12px 0;' : ($i === 0 ? 'border-radius:12px 0 0 0;' : ($i === 3 ? 'border-radius:0 0 0 12px;' : ''))); ?>transition:background 0.3s;" onmouseover="this.style.background='rgba(255,255,255,0.06)';" onmouseout="this.style.background='rgba(255,255,255,0.03)';">
+                    <div style="display:flex;align-items:flex-start;gap:15px;margin-bottom:20px;">
+                        <div style="width:50px;height:50px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                            <span class="dashicons <?php echo esc_attr($step['icon']); ?>" style="font-size:22px;color:<?php echo $step['color']; ?>;width:22px;height:22px;"></span>
+                        </div>
+                        <div>
+                            <div style="font-size:0.7rem;font-weight:700;letter-spacing:2px;color:<?php echo $step['color']; ?>;margin-bottom:4px;">STEP <?php echo esc_html($step['num']); ?></div>
+                            <h3 style="font-family:'Outfit',sans-serif;font-size:1.1rem;font-weight:700;color:white;margin:0;"><?php echo esc_html($step['title']); ?></h3>
+                        </div>
                     </div>
-                    <div>
-                        <div style="font-size:0.7rem;font-weight:700;letter-spacing:2px;color:<?php echo $step['color']; ?>;margin-bottom:4px;">STEP <?php echo esc_html($step['num']); ?></div>
-                        <h3 style="font-family:'Outfit',sans-serif;font-size:1.1rem;font-weight:700;color:white;margin:0;"><?php echo esc_html($step['title']); ?></h3>
-                    </div>
+                    <p style="color:#94a3b8;font-size:0.9rem;line-height:1.6;margin:0 0 15px;"><?php echo $step['desc']; ?></p>
+                    <span style="display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,0.05);padding:5px 12px;border-radius:20px;font-size:0.78rem;color:#64748b;"><span class="dashicons dashicons-clock" style="font-size:13px;width:13px;height:13px;color:var(--gc-gold);"></span><?php echo esc_html($step['time']); ?></span>
                 </div>
-                <p style="color:#94a3b8;font-size:0.9rem;line-height:1.6;margin:0 0 15px;"><?php echo $step['desc']; ?></p>
-                <span style="display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,0.05);padding:5px 12px;border-radius:20px;font-size:0.78rem;color:#64748b;"><span class="dashicons dashicons-clock" style="font-size:13px;width:13px;height:13px;color:var(--gc-gold);"></span><?php echo esc_html($step['time']); ?></span>
-            </div>
             <?php endforeach; ?>
 
         </div><!-- /grid -->
@@ -1169,16 +1169,17 @@ get_header();
 </section>
 
 <style>
-@media (max-width: 900px) {
-    .gc-process-section .gc-stagger-child {
-        grid-template-columns: 1fr 1fr !important;
+    @media (max-width: 900px) {
+        .gc-process-section .gc-stagger-child {
+            grid-template-columns: 1fr 1fr !important;
+        }
     }
-}
-@media (max-width: 600px) {
-    .gc-process-section .gc-stagger-child {
-        grid-template-columns: 1fr !important;
+
+    @media (max-width: 600px) {
+        .gc-process-section .gc-stagger-child {
+            grid-template-columns: 1fr !important;
+        }
     }
-}
 </style>
 
 
@@ -1201,7 +1202,9 @@ get_header();
             </a>
             <a href="https://wa.me/<?php echo esc_attr(get_option('globalconnect_whatsapp', '12672900254')); ?>?text=Hi%20GlobalConnect%2C%20I%27d%20like%20a%20shipping%20quote" target="_blank" rel="noopener noreferrer" id="homepage-final-cta-whatsapp" style="display:inline-flex;align-items:center;gap:10px;background:white;color:#0F172A;padding:16px 36px;border-radius:8px;font-family:'Outfit',sans-serif;font-weight:700;font-size:1.05rem;text-decoration:none;transition:all 0.3s;box-shadow:0 8px 30px rgba(0,0,0,0.15);" onmouseover="this.style.transform='translateY(-3px)';this.style.boxShadow='0 15px 40px rgba(0,0,0,0.25)';" onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='0 8px 30px rgba(0,0,0,0.15)';">
                 <!-- WhatsApp icon -->
-                <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24" style="color:#25D366;flex-shrink:0;"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24" style="color:#25D366;flex-shrink:0;">
+                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+                </svg>
                 WhatsApp Us Now
             </a>
         </div>
