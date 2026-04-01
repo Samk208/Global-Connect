@@ -177,6 +177,9 @@ function gc_custom_schema_markup($data, $jsonld)
                 'postalCode' => '19143',
                 'addressCountry' => 'US'
             ),
+            'telephone' => '+12672900254',
+            'priceRange' => '$$',
+            'image' => content_url('/docs/Images/Facebook_images/Unsorted/MVK.jpg'),
             'sameAs' => array(
                 'https://www.facebook.com/profile.php?id=100071518400878'
             )
@@ -184,6 +187,57 @@ function gc_custom_schema_markup($data, $jsonld)
     }
 
     return $data;
+}
+
+
+/**
+ * ============================================================
+ * 1b. Front Page SEO Title & Description Fallback
+ * ============================================================
+ * Ensures the live site always has a proper title and description
+ * even if RankMath settings aren't configured in WP Admin.
+ */
+add_filter('rank_math/frontend/title', 'gc_front_page_title', 5);
+function gc_front_page_title($title)
+{
+    if (is_front_page() && (empty($title) || $title === 'GlobalConnect |' || strlen($title) < 20)) {
+        return 'GlobalConnect | Wholesale Vehicles, Machinery & Parts Export to West Africa';
+    }
+    return $title;
+}
+
+add_filter('rank_math/frontend/description', 'gc_front_page_description', 5);
+function gc_front_page_description($description)
+{
+    if (is_front_page() && empty($description)) {
+        return 'Export quality vehicles from USA & Europe, heavy trucks, tires & parts from China. Wholesale pricing with direct shipping to Liberia, Guinea, Ivory Coast & West Africa. Get a free quote today.';
+    }
+    return $description;
+}
+
+/**
+ * ============================================================
+ * 1c. Open Graph Tags Fallback for Front Page
+ * ============================================================
+ */
+add_filter('rank_math/opengraph/facebook/og_title', 'gc_og_front_page_title');
+add_filter('rank_math/opengraph/twitter/title', 'gc_og_front_page_title');
+function gc_og_front_page_title($title)
+{
+    if (is_front_page() && (empty($title) || strlen($title) < 20)) {
+        return 'GlobalConnect | Wholesale Vehicle & Machinery Export to West Africa';
+    }
+    return $title;
+}
+
+add_filter('rank_math/opengraph/facebook/og_description', 'gc_og_front_page_desc');
+add_filter('rank_math/opengraph/twitter/description', 'gc_og_front_page_desc');
+function gc_og_front_page_desc($desc)
+{
+    if (is_front_page() && empty($desc)) {
+        return 'Quality vehicles from USA & Europe, heavy trucks & parts from China. Direct wholesale shipping to West Africa.';
+    }
+    return $desc;
 }
 
 

@@ -18,6 +18,7 @@ get_header();
             <img src="<?php echo esc_url(content_url('/uploads/2026/03/cargo-ship-hero.jpg')); ?>"
                 alt="Container ship at port — GlobalConnect logistics"
                 class="gc-hero-bg-image"
+                width="1920" height="1080"
                 loading="eager"
                 fetchpriority="high">
         </div>
@@ -247,7 +248,7 @@ get_header();
 
                 <!-- USA Column -->
                 <div class="gc-source-col usa">
-                    <h3><img src="https://flagcdn.com/w40/us.png" alt="USA"> USA Sourcing</h3>
+                    <h3><img src="https://flagcdn.com/w40/us.png" alt="USA" width="40" height="27" loading="lazy"> USA Sourcing</h3>
                     <ul class="gc-source-list">
                         <li><span class="dashicons dashicons-yes-alt"></span> Clean Title Vehicles</li>
                         <li><span class="dashicons dashicons-yes-alt"></span> Insurance Auto Auctions (IAA)</li>
@@ -258,7 +259,7 @@ get_header();
 
                 <!-- Europe Column -->
                 <div class="gc-source-col europe">
-                    <h3><img src="https://flagcdn.com/w40/eu.png" alt="Europe"> Europe Sourcing</h3>
+                    <h3><img src="https://flagcdn.com/w40/eu.png" alt="Europe" width="40" height="27" loading="lazy"> Europe Sourcing</h3>
                     <ul class="gc-source-list">
                         <li><span class="dashicons dashicons-yes-alt"></span> Diesel Engines (Toyota, Mercedes)</li>
                         <li><span class="dashicons dashicons-yes-alt"></span> Manual Transmission Vans</li>
@@ -269,7 +270,7 @@ get_header();
 
                 <!-- China Column -->
                 <div class="gc-source-col china">
-                    <h3><img src="https://flagcdn.com/w40/cn.png" alt="China"> China Direct</h3>
+                    <h3><img src="https://flagcdn.com/w40/cn.png" alt="China" width="40" height="27" loading="lazy"> China Direct</h3>
                     <ul class="gc-source-list">
                         <li><span class="dashicons dashicons-yes-alt"></span> Brand New Heavy Trucks (Sinotruk)</li>
                         <li><span class="dashicons dashicons-yes-alt"></span> Construction Machinery (SANY, XCMG)</li>
@@ -295,16 +296,16 @@ get_header();
 
                     <div class="gc-china-features">
                         <div class="gc-china-feat">
-                            <h4><span class="dashicons dashicons-performance"></span> Sinotruk Howo</h4>
+                            <h3><span class="dashicons dashicons-performance"></span> Sinotruk Howo</h3>
                             <p>Brand new tractor heads and dump trucks at factory prices.</p>
                         </div>
                         <div class="gc-china-feat">
-                            <h4><span class="dashicons dashicons-category"></span> Bulk Tires</h4>
+                            <h3><span class="dashicons dashicons-category"></span> Bulk Tires</h3>
                             <p>Container loads of truck and PCR tires. Premium brands available.</p>
                         </div>
                     </div>
 
-                    <a href="/china-sourcing" class="gc-btn gc-btn-primary gc-btn-magnetic">Explore China Inventory</a>
+                    <a href="<?php echo esc_url(home_url('/china-sourcing')); ?>" class="gc-btn gc-btn-primary gc-btn-magnetic">Explore China Inventory</a>
                 </div>
                 <div class="gc-china-image gc-reveal-right" data-target="gc-china-highlight">
                     <div class="gc-china-showcase"
@@ -380,12 +381,12 @@ get_header();
                         <!-- Navigation -->
                         <div class="gc-slider-nav"
                             style="position:absolute; bottom:20px; right:20px; display:flex; gap:10px; z-index:10;">
-                            <button onclick="prevSlide()"
-                                style="background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.2); color:white; width:30px; height:30px; border-radius:50%; cursor:pointer; display:flex; align-items:center; justify-content:center;"><span
+                            <button onclick="prevSlide()" aria-label="Previous slide"
+                                style="background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.2); color:white; width:44px; height:44px; border-radius:50%; cursor:pointer; display:flex; align-items:center; justify-content:center;"><span
                                     class="dashicons dashicons-arrow-left-alt2"
                                     style="font-size:14px; width:14px; height:14px;"></span></button>
-                            <button onclick="nextSlide()"
-                                style="background:var(--gc-blue-primary); border:none; color:white; width:30px; height:30px; border-radius:50%; cursor:pointer; display:flex; align-items:center; justify-content:center;"><span
+                            <button onclick="nextSlide()" aria-label="Next slide"
+                                style="background:var(--gc-blue-primary); border:none; color:white; width:44px; height:44px; border-radius:50%; cursor:pointer; display:flex; align-items:center; justify-content:center;"><span
                                     class="dashicons dashicons-arrow-right-alt2"
                                     style="font-size:14px; width:14px; height:14px;"></span></button>
                         </div>
@@ -414,7 +415,7 @@ get_header();
             <!-- Tab Content: USA -->
             <div id="inv-usa" class="gc-inventory-tab" style="display:block;">
                 <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/generated/inventory-usa-header.jpg"
-                    class="gc-tab-header-image" alt="USA Inventory - Ports & Logistics" loading="lazy">
+                    class="gc-tab-header-image" alt="USA Inventory - Ports & Logistics" width="1200" height="300" loading="lazy">
                 <div class="gc-inventory-grid">
                     <?php
                     // Query for USA or Fallback
@@ -444,7 +445,7 @@ get_header();
             <!-- Tab Content: Europe -->
             <div id="inv-europe" class="gc-inventory-tab" style="display:none;">
                 <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/generated/inventory-europe-header.jpg"
-                    class="gc-tab-header-image" alt="Europe Inventory - Premium Sourcing" loading="lazy">
+                    class="gc-tab-header-image" alt="Europe Inventory - Premium Sourcing" width="1200" height="300" loading="lazy">
                 <div class="gc-inventory-grid">
                     <?php
                     $args_eu = array(
@@ -473,7 +474,7 @@ get_header();
             <!-- Tab Content: China (Dynamic) -->
             <div id="inv-china" class="gc-inventory-tab" style="display:none;">
                 <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/generated/inventory-china-header.jpg"
-                    class="gc-tab-header-image" alt="China Direct - Heavy Machinery & Tires" loading="lazy">
+                    class="gc-tab-header-image" alt="China Direct - Heavy Machinery & Tires" width="1200" height="300" loading="lazy">
                 <div class="gc-inventory-grid">
                     <?php
                     $args_cn = array(
@@ -649,7 +650,7 @@ get_header();
                     min-height: 400px;
                 ">
                 <img src="<?php echo esc_url($fb_img_path); ?>/fb_import_20260131_204852_8.jpg"
-                    alt="Jeep Wrangler being loaded for export at our Philadelphia facility" loading="lazy"
+                    alt="Jeep Wrangler being loaded for export at our Philadelphia facility" width="600" height="800" loading="lazy"
                     style="width: 100%; height: 100%; object-fit: cover;">
                 <div style="
                         position: absolute; bottom: 0; left: 0; right: 0;
@@ -671,7 +672,7 @@ get_header();
                     position: relative;
                 ">
                 <img src="<?php echo esc_url($fb_img_path); ?>/fb_import_20260131_204852_10.jpg"
-                    alt="Team loading tires into shipping container" loading="lazy"
+                    alt="Team loading tires into shipping container" width="600" height="400" loading="lazy"
                     style="width: 100%; height: 100%; object-fit: cover; min-height: 190px;">
                 <div style="
                         position: absolute; bottom: 0; left: 0; right: 0;
@@ -692,7 +693,7 @@ get_header();
                     position: relative;
                 ">
                 <img src="<?php echo esc_url($fb_img_path); ?>/fb_import_20260131_204852_9.jpg"
-                    alt="Founder MVK inspecting CAT engines at destination market" loading="lazy"
+                    alt="Founder MVK inspecting CAT engines at destination market" width="600" height="400" loading="lazy"
                     style="width: 100%; height: 100%; object-fit: cover; object-position: center top; min-height: 190px;">
                 <div style="
                         position: absolute; bottom: 0; left: 0; right: 0;
@@ -847,8 +848,8 @@ get_header();
                                     d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
                             </svg>
                         </a>
-                        <!-- Instagram -->
-                        <a href="#" target="_blank" rel="noopener noreferrer" title="GlobalConnect on Instagram" style="
+                        <!-- Instagram (placeholder — update when account is created) -->
+                        <a href="https://www.facebook.com/profile.php?id=100071518400878" target="_blank" rel="noopener noreferrer" title="GlobalConnect on Instagram" style="
                                 width: 45px; height: 45px;
                                 background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
                                 border-radius: 10px;
@@ -861,8 +862,8 @@ get_header();
                                     d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
                             </svg>
                         </a>
-                        <!-- X (Twitter) -->
-                        <a href="#" target="_blank" rel="noopener noreferrer" title="GlobalConnect on X" style="
+                        <!-- X (placeholder — update when account is created) -->
+                        <a href="https://www.facebook.com/profile.php?id=100071518400878" target="_blank" rel="noopener noreferrer" title="GlobalConnect on X" style="
                                 width: 45px; height: 45px;
                                 background: #000000;
                                 border-radius: 10px;
@@ -875,8 +876,8 @@ get_header();
                                     d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
                             </svg>
                         </a>
-                        <!-- TikTok -->
-                        <a href="#" target="_blank" rel="noopener noreferrer" title="GlobalConnect on TikTok" style="
+                        <!-- TikTok (placeholder — update when account is created) -->
+                        <a href="https://www.facebook.com/profile.php?id=100071518400878" target="_blank" rel="noopener noreferrer" title="GlobalConnect on TikTok" style="
                                 width: 45px; height: 45px;
                                 background: #000000;
                                 border-radius: 10px;
@@ -946,7 +947,7 @@ get_header();
                         box-shadow: 0 30px 60px rgba(0,0,0,0.5);
                     ">
                     <img src="<?php echo esc_url(content_url('/docs/Images/Facebook_images/Unsorted/MVK.jpg')); ?>"
-                        alt="MVK - Founder & CEO of GlobalConnect" style="
+                        alt="MVK - Founder & CEO of GlobalConnect" width="400" height="450" loading="lazy" style="
                                 width: 100%;
                                 height: 450px;
                                 object-fit: cover;
@@ -1046,7 +1047,7 @@ get_header();
                 <div style="height:8px;background:linear-gradient(90deg,#003F87,#CE1126);"></div>
                 <div style="padding:30px;">
                     <div style="display:flex;align-items:center;gap:15px;margin-bottom:20px;">
-                        <img src="https://flagcdn.com/w40/lr.png" alt="Liberia flag" style="width:40px;height:auto;border-radius:4px;box-shadow:0 2px 8px rgba(0,0,0,0.15);">
+                        <img src="https://flagcdn.com/w40/lr.png" alt="Liberia flag" width="40" height="27" loading="lazy" style="width:40px;height:auto;border-radius:4px;box-shadow:0 2px 8px rgba(0,0,0,0.15);">
                         <div>
                             <h3 style="font-family:'Outfit',sans-serif;font-size:1.3rem;font-weight:700;color:var(--gc-blue-primary);margin:0;">Liberia</h3>
                             <span style="color:var(--gc-text-muted);font-size:0.85rem;">Freeport of Monrovia</span>
@@ -1066,7 +1067,7 @@ get_header();
                 <div style="height:8px;background:linear-gradient(90deg,#CE1126,#FCD116,#009A44);"></div>
                 <div style="padding:30px;">
                     <div style="display:flex;align-items:center;gap:15px;margin-bottom:20px;">
-                        <img src="https://flagcdn.com/w40/gn.png" alt="Guinea flag" style="width:40px;height:auto;border-radius:4px;box-shadow:0 2px 8px rgba(0,0,0,0.15);">
+                        <img src="https://flagcdn.com/w40/gn.png" alt="Guinea flag" width="40" height="27" loading="lazy" style="width:40px;height:auto;border-radius:4px;box-shadow:0 2px 8px rgba(0,0,0,0.15);">
                         <div>
                             <h3 style="font-family:'Outfit',sans-serif;font-size:1.3rem;font-weight:700;color:var(--gc-blue-primary);margin:0;">Guinea</h3>
                             <span style="color:var(--gc-text-muted);font-size:0.85rem;">Port of Conakry</span>
@@ -1086,7 +1087,7 @@ get_header();
                 <div style="height:8px;background:linear-gradient(90deg,#F77F00,#FFFFFF,#009A44);"></div>
                 <div style="padding:30px;">
                     <div style="display:flex;align-items:center;gap:15px;margin-bottom:20px;">
-                        <img src="https://flagcdn.com/w40/ci.png" alt="Ivory Coast flag" style="width:40px;height:auto;border-radius:4px;box-shadow:0 2px 8px rgba(0,0,0,0.15);">
+                        <img src="https://flagcdn.com/w40/ci.png" alt="Ivory Coast flag" width="40" height="27" loading="lazy" style="width:40px;height:auto;border-radius:4px;box-shadow:0 2px 8px rgba(0,0,0,0.15);">
                         <div>
                             <h3 style="font-family:'Outfit',sans-serif;font-size:1.3rem;font-weight:700;color:var(--gc-blue-primary);margin:0;">Ivory Coast</h3>
                             <span style="color:var(--gc-text-muted);font-size:0.85rem;">Port of Abidjan</span>

@@ -4172,3 +4172,66 @@ body {
         font-size: 0.9rem;
     }
 }
+
+/* ============================================
+   BLOG PAGE STYLES
+   ============================================ */
+
+/* Blog Header Section */
+.gc-blog-header {
+    background: #F8FAFC !important;
+    padding: 60px 0 30px !important;
+    text-align: center;
+}
+
+.gc-blog-header h1,
+.gc-blog-header h2,
+.gc-blog-header h3,
+.gc-blog-header h4 {
+    text-align: center;
+}
+
+/* Blog CTA Section */
+.gc-blog-cta {
+    background: #0F172A !important;
+    padding: 70px 0 !important;
+    text-align: center;
+}
+
+.gc-blog-cta h1,
+.gc-blog-cta h2,
+.gc-blog-cta h3,
+.gc-blog-cta h4 {
+    color: #FFFFFF !important;
+    font-family: 'Outfit', sans-serif;
+    font-weight: 800;
+    text-align: center;
+}
+
+.gc-blog-cta p,
+.gc-blog-cta .et_pb_text_inner,
+.gc-blog-cta [class*="divi-module-text"] {
+    color: #94A3B8 !important;
+    font-size: 1.1rem;
+    text-align: center;
+}
+
+.gc-blog-cta a.et_pb_button,
+.gc-blog-cta [class*="button"] a,
+.gc-blog-cta .et_pb_button_module_wrapper a {
+    background: #D4AF37 !important;
+    color: #0F172A !important;
+    font-weight: 700 !important;
+    padding: 14px 40px !important;
+    border-radius: 8px !important;
+    border: none !important;
+    text-decoration: none;
+    display: inline-block;
+    transition: background 0.3s ease;
+}
+
+.gc-blog-cta a.et_pb_button:hover,
+.gc-blog-cta [class*="button"] a:hover {
+    background: #b8962e !important;
+    color: #0F172A !important;
+}
