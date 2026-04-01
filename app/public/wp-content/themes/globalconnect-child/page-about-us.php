@@ -8,7 +8,7 @@
 get_header();
 
 $whatsapp    = get_option('gc_whatsapp_number', '12672900254');
-$fb_img_path = content_url('/docs/Images/Facebook%20images/Unsorted');
+$fb_img_path = content_url('/docs/Images/Facebook_images/Unsorted');
 $mvk_img     = $fb_img_path . '/MVK.jpg';
 ?>
 

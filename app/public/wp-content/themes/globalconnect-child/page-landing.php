@@ -945,7 +945,7 @@ get_header();
                         overflow: hidden;
                         box-shadow: 0 30px 60px rgba(0,0,0,0.5);
                     ">
-                    <img src="<?php echo get_stylesheet_directory_uri(); ?>/../../docs/Images/Facebook%20images/Unsorted/MVK.jpg"
+                    <img src="<?php echo esc_url(content_url('/docs/Images/Facebook_images/Unsorted/MVK.jpg')); ?>"
                         alt="MVK - Founder & CEO of GlobalConnect" style="
                                 width: 100%;
                                 height: 450px;

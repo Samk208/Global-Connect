@@ -50,7 +50,7 @@ $whatsapp = get_option('gc_whatsapp_number', '12672900254');
         </div>
     </section>
 
-    <?php $fb_img_path = content_url('/docs/Images/Facebook%20images/Unsorted'); ?>
+    <?php $fb_img_path = content_url('/docs/Images/Facebook_images/Unsorted'); ?>
 
     <!-- Factory Presence Banner -->
     <section style="background: #F8FAFC; padding: 0 0 40px;">

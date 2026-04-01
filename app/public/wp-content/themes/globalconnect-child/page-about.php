@@ -97,7 +97,7 @@ get_header();
         </div>
     </section>
 
-    <?php $fb_img_path = content_url('/docs/Images/Facebook%20images/Unsorted'); ?>
+    <?php $fb_img_path = content_url('/docs/Images/Facebook_images/Unsorted'); ?>
 
     <!-- Our Operations Section -->
     <section style="background: #0F172A; padding: 70px 0;">
