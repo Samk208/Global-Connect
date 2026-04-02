@@ -1348,61 +1348,36 @@ add_filter('upload_mimes', function ($mimes) {
 
 /**
  * ============================================================
- * 9. PageSpeed / Accessibility HTML fixes
- *
- * Uses multiple hooks to fix output without conflicting with
- * LiteSpeed Cache's output buffering:
- *   a) Remove Divi's user-scalable=0 viewport meta
- *   b) Force http:// → https:// for internal URLs
- *   c) Convert footer H4 headings to H3
- *   d) Fix #94a3b8 contrast in Divi DB content
+ * 9. Remove Divi's user-scalable=0 viewport meta (accessibility)
+ *    Divi adds it via et_add_viewport_meta() on wp_head
+ *    Ref: https://divilover.com/how-to-fix-the-user-scalableno-accessibility-error-in-divi-one-simple-code-snippet/
  * ============================================================
  */
-
-// (a) Remove Divi's restrictive viewport meta via et_html_main_header filter
-//     or by dequeuing and re-adding in wp_head
-add_action('wp_head', function () {
-    // Remove Divi's viewport meta by filtering the output
-    // Divi adds it via et_add_viewport_meta() on wp_head priority 1
+add_action('init', function () {
     remove_action('wp_head', 'et_add_viewport_meta');
-}, 0);
-
-// Fallback: if et_add_viewport_meta doesn't exist, catch it via ob in wp_head
-add_action('wp_head', function () {
-    ob_start();
-}, 0);
-add_action('wp_head', function () {
-    $head = ob_get_clean();
-    // Remove any viewport with user-scalable
-    $head = preg_replace(
-        '/<meta\s+name="viewport"\s+content="[^"]*user-scalable[^"]*"\s*\/?>\s*/i',
-        '',
-        $head
-    );
-    echo $head;
-}, 999);
-
-// (b) Fix mixed content + (d) Fix contrast color via LiteSpeed buffer
-//     LiteSpeed provides a filter for modifying cached HTML
-add_filter('litespeed_buffer_before', 'gc_fix_html_output');
-// Also hook the_content for Divi builder content
-add_filter('the_content', 'gc_fix_html_output');
-// And a final output buffer as fallback for non-cached pages
-add_action('template_redirect', function () {
-    if (is_admin()) {
-        return;
-    }
-    ob_start('gc_fix_html_output');
 });
 
-function gc_fix_html_output($html) {
-    // Fix mixed content — http → https for internal URLs
+/**
+ * ============================================================
+ * 10. Fix HTML output before LiteSpeed caches it
+ *     Uses litespeed_buffer_before filter (runs once, result is cached)
+ *     Ref: https://docs.litespeedtech.com/lscache/lscwp/api/
+ *
+ *     Fixes:
+ *       a) http:// → https:// for internal URLs (mixed content from DB)
+ *       b) #94a3b8 → #64748b contrast fix (Divi DB content)
+ *       c) Footer H4 → H3 (heading hierarchy)
+ * ============================================================
+ */
+function gc_fix_html_output($html)
+{
+    // (a) Fix mixed content — Divi stores image URLs as http:// in DB
     $html = str_replace('http://globalcnx.net', 'https://globalcnx.net', $html);
 
-    // Fix low-contrast color from Divi builder content
+    // (b) Fix low-contrast color from Divi builder content
     $html = str_replace('#94a3b8', '#64748b', $html);
 
-    // Fix heading hierarchy — footer H4 → H3
+    // (c) Fix heading hierarchy — Divi footer uses H4 under H2 (skips H3)
     $html = preg_replace_callback(
         '/(<footer[^>]*>)(.*?)(<\/footer>)/is',
         function ($matches) {
@@ -1418,6 +1393,8 @@ function gc_fix_html_output($html) {
 
     return $html;
 }
+// LiteSpeed buffer filter — runs before caching, result gets cached
+add_filter('litespeed_buffer_before', 'gc_fix_html_output', 0);
 
 /**
  * ============================================================
