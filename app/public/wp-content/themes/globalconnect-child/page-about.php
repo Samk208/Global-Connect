@@ -36,7 +36,7 @@ get_header();
                             style="font-size: 40px; color: var(--gc-blue-accent); background: rgba(59, 130, 246, 0.1); padding: 15px; border-radius: 50%;"></span>
                     </div>
                     <h3 style="color: white; font-size: 1.5rem; margin-bottom: 15px;">Global Sourcing</h3>
-                    <p style="color: #94a3b8; line-height: 1.6;">We leverage proprietary technology to source vehicles,
+                    <p style="color: #64748b; line-height: 1.6;">We leverage proprietary technology to source vehicles,
                         machinery, and parts from verified suppliers in the USA, Europe, and China.</p>
                 </div>
 
@@ -48,7 +48,7 @@ get_header();
                             style="font-size: 40px; color: var(--gc-gold); background: rgba(217, 119, 6, 0.1); padding: 15px; border-radius: 50%;"></span>
                     </div>
                     <h3 style="color: white; font-size: 1.5rem; margin-bottom: 15px;">Secure Logistics</h3>
-                    <p style="color: #94a3b8; line-height: 1.6;">Our end-to-end logistics platform ensures your cargo is
+                    <p style="color: #64748b; line-height: 1.6;">Our end-to-end logistics platform ensures your cargo is
                         tracked, insured, and delivered safely to ports like Conakry and beyond.</p>
                 </div>
 
@@ -60,7 +60,7 @@ get_header();
                             style="font-size: 40px; color: var(--gc-green-europe); background: rgba(5, 150, 105, 0.1); padding: 15px; border-radius: 50%;"></span>
                     </div>
                     <h3 style="color: white; font-size: 1.5rem; margin-bottom: 15px;">Data-Driven Pricing</h3>
-                    <p style="color: #94a3b8; line-height: 1.6;">We use AI to analyze market trends, ensuring you get
+                    <p style="color: #64748b; line-height: 1.6;">We use AI to analyze market trends, ensuring you get
                         the most competitive prices on vehicles and shipping rates.</p>
                 </div>
 

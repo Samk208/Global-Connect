@@ -120,7 +120,7 @@ get_header();
                 <h2 class="gc-tech-title" style="color: white; margin-top: 10px;">Browse<span class="gc-tech-divider" aria-hidden="true"
                         style="opacity:0.6">\</span>by<span class="gc-tech-divider" style="opacity:0.6">\</span>Product
                 </h2>
-                <p style="color: #94a3b8; max-width: 600px; margin: 15px auto 0;">Find exactly what you need for your
+                <p style="color: #64748b; max-width: 600px; margin: 15px auto 0;">Find exactly what you need for your
                     business in West Africa. Direct from global hubs.</p>
             </div>
 
@@ -143,7 +143,7 @@ get_header();
                         <h3
                             style="color: white; font-family: 'Outfit', sans-serif; font-size: 1.25rem; margin-bottom: 8px;">
                             Cars & SUVs</h3>
-                        <p style="color: #94a3b8; font-size: 0.9rem; line-height: 1.5;">Clean title used vehicles
+                        <p style="color: #64748b; font-size: 0.9rem; line-height: 1.5;">Clean title used vehicles
                             sourced from USA & Europe auctions.</p>
                         <div class="gc-cat-arrow"
                             style="margin-top: 20px; color: var(--gc-gold); font-family: var(--gc-font-mono); font-size: 0.8rem; display: flex; align-items: center; gap: 5px;">
@@ -169,7 +169,7 @@ get_header();
                         <h3
                             style="color: white; font-family: 'Outfit', sans-serif; font-size: 1.25rem; margin-bottom: 8px;">
                             Heavy Machinery</h3>
-                        <p style="color: #94a3b8; font-size: 0.9rem; line-height: 1.5;">Excavators, bulldozers, and
+                        <p style="color: #64748b; font-size: 0.9rem; line-height: 1.5;">Excavators, bulldozers, and
                             cranes direct from China factories.</p>
                         <div class="gc-cat-arrow"
                             style="margin-top: 20px; color: var(--gc-gold); font-family: var(--gc-font-mono); font-size: 0.8rem; display: flex; align-items: center; gap: 5px;">
@@ -195,7 +195,7 @@ get_header();
                         <h3
                             style="color: white; font-family: 'Outfit', sans-serif; font-size: 1.25rem; margin-bottom: 8px;">
                             Bulk Tires</h3>
-                        <p style="color: #94a3b8; font-size: 0.9rem; line-height: 1.5;">New and used tires in bulk
+                        <p style="color: #64748b; font-size: 0.9rem; line-height: 1.5;">New and used tires in bulk
                             quantities. Container load pricing.</p>
                         <div class="gc-cat-arrow"
                             style="margin-top: 20px; color: var(--gc-gold); font-family: var(--gc-font-mono); font-size: 0.8rem; display: flex; align-items: center; gap: 5px;">
@@ -216,12 +216,12 @@ get_header();
                         <div class="gc-cat-icon"
                             style="background: rgba(71, 85, 105, 0.2); width: 60px; height: 60px; border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; border: 1px solid rgba(71, 85, 105, 0.3);">
                             <span class="dashicons dashicons-admin-tools"
-                                style="font-size: 32px; color: #94a3b8; width: 32px; height: 32px;"></span>
+                                style="font-size: 32px; color: #64748b; width: 32px; height: 32px;"></span>
                         </div>
                         <h3
                             style="color: white; font-family: 'Outfit', sans-serif; font-size: 1.25rem; margin-bottom: 8px;">
                             Auto Parts</h3>
-                        <p style="color: #94a3b8; font-size: 0.9rem; line-height: 1.5;">Engines, transmissions, and
+                        <p style="color: #64748b; font-size: 0.9rem; line-height: 1.5;">Engines, transmissions, and
                             spare parts for all major brands.</p>
                         <div class="gc-cat-arrow"
                             style="margin-top: 20px; color: var(--gc-gold); font-family: var(--gc-font-mono); font-size: 0.8rem; display: flex; align-items: center; gap: 5px;">
@@ -325,9 +325,9 @@ get_header();
                                     Sinotruk Howo 8x4</h3>
                                 <div class="gc-tech-grid"
                                     style="margin-top:10px; border-top:1px solid rgba(255,255,255,0.2); padding-top:10px;">
-                                    <div class="gc-tech-data-point"><span style="color:#94a3b8;">PAYLOAD</span><span
+                                    <div class="gc-tech-data-point"><span style="color:#64748b;">PAYLOAD</span><span
                                             style="color:white; font-family:var(--gc-font-mono);">40 Tons</span></div>
-                                    <div class="gc-tech-data-point"><span style="color:#94a3b8;">ENGINE</span><span
+                                    <div class="gc-tech-data-point"><span style="color:#64748b;">ENGINE</span><span
                                             style="color:white; font-family:var(--gc-font-mono);">420 HP</span></div>
                                 </div>
                             </div>
@@ -347,9 +347,9 @@ get_header();
                                     SANY SY215C</h3>
                                 <div class="gc-tech-grid"
                                     style="margin-top:10px; border-top:1px solid rgba(255,255,255,0.2); padding-top:10px;">
-                                    <div class="gc-tech-data-point"><span style="color:#94a3b8;">WEIGHT</span><span
+                                    <div class="gc-tech-data-point"><span style="color:#64748b;">WEIGHT</span><span
                                             style="color:white; font-family:var(--gc-font-mono);">22 Tons</span></div>
-                                    <div class="gc-tech-data-point"><span style="color:#94a3b8;">BUCKET</span><span
+                                    <div class="gc-tech-data-point"><span style="color:#64748b;">BUCKET</span><span
                                             style="color:white; font-family:var(--gc-font-mono);">1.0 m³</span></div>
                                 </div>
                             </div>
@@ -369,10 +369,10 @@ get_header();
                                     PCR & TBR Tires</h3>
                                 <div class="gc-tech-grid"
                                     style="margin-top:10px; border-top:1px solid rgba(255,255,255,0.2); padding-top:10px;">
-                                    <div class="gc-tech-data-point"><span style="color:#94a3b8;">MOQ</span><span
+                                    <div class="gc-tech-data-point"><span style="color:#64748b;">MOQ</span><span
                                             style="color:white; font-family:var(--gc-font-mono);">1 Container</span>
                                     </div>
-                                    <div class="gc-tech-data-point"><span style="color:#94a3b8;">ORIGIN</span><span
+                                    <div class="gc-tech-data-point"><span style="color:#64748b;">ORIGIN</span><span
                                             style="color:white; font-family:var(--gc-font-mono);">Shandong</span></div>
                                 </div>
                             </div>
@@ -1126,7 +1126,7 @@ get_header();
         <div style="text-align:center;margin-bottom:70px;" class="gc-reveal-up" data-target="gc-process-section">
             <span style="display:inline-block;background:rgba(217,119,6,0.15);color:var(--gc-gold);padding:6px 20px;border-radius:30px;font-size:0.75rem;font-weight:700;letter-spacing:2px;margin-bottom:15px;">HOW IT WORKS</span>
             <h2 style="font-family:'Outfit',sans-serif;font-size:2.5rem;font-weight:800;color:white;margin:0;">From <span style="color:var(--gc-gold);">Auction</span> to <span style="color:var(--gc-blue-accent);">Your Port</span></h2>
-            <p style="color:#94a3b8;max-width:550px;margin:15px auto 0;">We manage every step of the process. You just confirm the vehicle and destination.</p>
+            <p style="color:#64748b;max-width:550px;margin:15px auto 0;">We manage every step of the process. You just confirm the vehicle and destination.</p>
         </div>
 
         <!-- Timeline Steps -->
@@ -1153,7 +1153,7 @@ get_header();
                             <h3 style="font-family:'Outfit',sans-serif;font-size:1.1rem;font-weight:700;color:white;margin:0;"><?php echo esc_html($step['title']); ?></h3>
                         </div>
                     </div>
-                    <p style="color:#94a3b8;font-size:0.9rem;line-height:1.6;margin:0 0 15px;"><?php echo $step['desc']; ?></p>
+                    <p style="color:#64748b;font-size:0.9rem;line-height:1.6;margin:0 0 15px;"><?php echo $step['desc']; ?></p>
                     <span style="display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,0.05);padding:5px 12px;border-radius:20px;font-size:0.78rem;color:#64748b;"><span class="dashicons dashicons-clock" style="font-size:13px;width:13px;height:13px;color:var(--gc-gold);"></span><?php echo esc_html($step['time']); ?></span>
                 </div>
             <?php endforeach; ?>

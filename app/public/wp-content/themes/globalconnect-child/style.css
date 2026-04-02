@@ -1122,7 +1122,7 @@ body {
 .gc-typing-dots span {
     width: 6px;
     height: 6px;
-    background: #94a3b8;
+    background: #64748b;
     border-radius: 50%;
     animation: gc-dot-pulse 1.4s infinite ease-in-out both;
 }
@@ -1345,7 +1345,7 @@ body {
 
 .gc-tech-data-point span {
     font-family: var(--gc-font-mono);
-    color: #94a3b8;
+    color: #64748b;
     margin-bottom: 2px;
     font-size: 10px;
 }
@@ -1458,7 +1458,7 @@ body {
 }
 
 #gc-inventory-archive .gc-page-header p {
-    color: #94a3b8;
+    color: #64748b;
     font-size: 1.2rem;
 }
 
@@ -1480,7 +1480,7 @@ body {
 }
 
 #gc-inventory-archive .gc-filter-form label {
-    color: #94a3b8;
+    color: #64748b;
 }
 
 #gc-inventory-archive .gc-filter-form input,
@@ -1527,7 +1527,7 @@ body {
 }
 
 #gc-inventory-archive .spec-item {
-    color: #94a3b8;
+    color: #64748b;
     background: rgba(15, 23, 42, 0.4);
     border: 1px solid rgba(255, 255, 255, 0.05);
 }
@@ -1549,7 +1549,7 @@ body {
 }
 
 #gc-inventory-archive .gc-result-count {
-    color: #94a3b8;
+    color: #64748b;
 }
 
 #gc-inventory-archive .gc-pagination .page-numbers {
@@ -1622,7 +1622,7 @@ body {
 }
 
 #gc-single-vehicle .gc-spec-label {
-    color: #94a3b8;
+    color: #64748b;
     font-weight: 500;
 }
 
@@ -1651,7 +1651,7 @@ body {
 }
 
 #gc-single-vehicle .gc-price-note {
-    color: #94a3b8;
+    color: #64748b;
     margin-bottom: 20px;
 }
 
@@ -1783,7 +1783,7 @@ body {
     right: 20px;
     background: none;
     border: none;
-    color: #94a3b8;
+    color: #64748b;
     font-size: 28px;
     cursor: pointer;
     transition: color 0.2s;
@@ -1895,7 +1895,7 @@ body {
 }
 
 .gc-step-header p {
-    color: #94a3b8;
+    color: #64748b;
     font-size: 0.9rem;
     margin: 0;
 }
@@ -1922,7 +1922,7 @@ body {
 .gc-form-group label {
     font-size: 0.8rem;
     font-weight: 600;
-    color: #94a3b8;
+    color: #64748b;
     text-transform: uppercase;
     letter-spacing: 0.5px;
     margin-bottom: 6px;
@@ -1991,7 +1991,7 @@ body {
 }
 
 .gc-summary-row span {
-    color: #94a3b8;
+    color: #64748b;
 }
 
 .gc-summary-row strong {
@@ -2034,7 +2034,7 @@ body {
     align-items: center;
     gap: 6px;
     font-size: 0.8rem;
-    color: #94a3b8;
+    color: #64748b;
 }
 
 .gc-trust-badges-checkout .gc-badge .dashicons {
@@ -2076,7 +2076,7 @@ body {
 
 .gc-btn-prev {
     background: transparent;
-    color: #94a3b8;
+    color: #64748b;
     border: 1px solid rgba(255, 255, 255, 0.2);
     padding: 12px 20px;
     border-radius: 8px;
@@ -2138,7 +2138,7 @@ body {
 }
 
 #gc-wizard-success .gc-success-content p {
-    color: #94a3b8;
+    color: #64748b;
     margin-bottom: 25px;
 }
 
@@ -2270,7 +2270,7 @@ body {
 
 #gc-single-part .gc-price-box .label {
     display: block;
-    color: #94a3b8;
+    color: #64748b;
     font-size: 0.9rem;
     text-transform: uppercase;
     letter-spacing: 1px;
@@ -2296,7 +2296,7 @@ body {
 }
 
 #gc-single-part .gc-specs-list .spec-label {
-    color: #94a3b8;
+    color: #64748b;
 }
 
 #gc-single-part .gc-specs-list .spec-value {
@@ -3684,6 +3684,43 @@ body {
     min-width: 44px;
 }
 
+/* Mobile sticky bar — ensure contrast for WhatsApp/Call buttons */
+.gc-mobile-sticky-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    z-index: 9999;
+}
+
+.gc-mobile-sticky-bar .gc-btn-bar {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px;
+    color: #ffffff;
+    font-weight: 600;
+    font-size: 0.95rem;
+    text-decoration: none;
+}
+
+.gc-mobile-sticky-bar .gc-btn-bar.whatsapp {
+    background: #25D366;
+}
+
+.gc-mobile-sticky-bar .gc-btn-bar.call {
+    background: var(--gc-blue-primary, #1a1a2e);
+}
+
+@media (min-width: 769px) {
+    .gc-mobile-sticky-bar {
+        display: none;
+    }
+}
+
 /* Tablet breakpoint: stack grids */
 @media (max-width: 768px) {
     /* Override inline 2-col and 3-col grids */
@@ -3891,7 +3928,7 @@ body {
 }
 
 .gc-legal-breadcrumb a {
-    color: #94a3b8;
+    color: #64748b;
     text-decoration: none;
     transition: color 0.2s;
 }
@@ -3918,7 +3955,7 @@ body {
 }
 
 .gc-legal-updated {
-    color: #94a3b8;
+    color: #64748b;
     font-size: 0.9rem;
     margin: 0;
     display: flex;
@@ -3983,7 +4020,7 @@ body {
 .gc-toc-list a:hover {
     color: #1e293b;
     background: #e2e8f0;
-    border-left-color: #94a3b8;
+    border-left-color: #64748b;
 }
 
 .gc-toc-list a.gc-toc-active {
@@ -4083,7 +4120,7 @@ body {
 }
 
 .gc-legal-cta-text p {
-    color: #94a3b8;
+    color: #64748b;
     margin: 0;
     font-size: 0.95rem;
     max-width: 500px;

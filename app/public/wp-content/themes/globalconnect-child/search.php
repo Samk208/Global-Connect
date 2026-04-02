@@ -115,7 +115,7 @@ $search_query = get_search_query();
                             elseif ($demo_image): ?>
                                 <img src="<?php echo esc_url($demo_image); ?>" alt="<?php the_title_attribute(); ?>">
                             <?php else: ?>
-                                <div style="width:100%; height:100%; background:#F1F5F9; display:flex; align-items:center; justify-content:center; flex-direction:column; color:#94a3b8;">
+                                <div style="width:100%; height:100%; background:#F1F5F9; display:flex; align-items:center; justify-content:center; flex-direction:column; color:#64748b;">
                                     <span class="dashicons dashicons-format-image" style="font-size:40px; width:40px; height:40px;"></span>
                                     <span style="font-family:var(--gc-font-mono); font-size:12px; margin-top:10px;">NO_IMAGE</span>
                                 </div>
@@ -177,7 +177,7 @@ $search_query = get_search_query();
 
                 <!-- Suggestions -->
                 <div style="margin-top: 40px; padding-top: 30px; border-top: 1px solid #E2E8F0;">
-                    <p style="color: #94a3b8; font-size: 0.9rem; margin-bottom: 15px;">Popular searches:</p>
+                    <p style="color: #64748b; font-size: 0.9rem; margin-bottom: 15px;">Popular searches:</p>
                     <div style="display: flex; justify-content: center; gap: 10px; flex-wrap: wrap;">
                         <a href="?s=Toyota" style="background: #F1F5F9; padding: 8px 15px; border-radius: 20px; text-decoration: none; color: #334155; font-size: 0.85rem;">Toyota</a>
                         <a href="?s=Honda" style="background: #F1F5F9; padding: 8px 15px; border-radius: 20px; text-decoration: none; color: #334155; font-size: 0.85rem;">Honda</a>
@@ -195,7 +195,7 @@ $search_query = get_search_query();
     <section style="background: #0F172A; padding: 50px 0; text-align: center;">
         <div class="gc-container">
             <h2 style="font-family: 'Outfit', sans-serif; color: white; font-size: 1.5rem; margin-bottom: 15px;">Can't Find What You're Looking For?</h2>
-            <p style="color: #94a3b8; max-width: 500px; margin: 0 auto 20px;">We source vehicles and parts worldwide. Tell us what you need!</p>
+            <p style="color: #64748b; max-width: 500px; margin: 0 auto 20px;">We source vehicles and parts worldwide. Tell us what you need!</p>
             <a href="https://wa.me/<?php echo esc_attr($whatsapp); ?>?text=Hi, I'm looking for: " class="gc-btn gc-btn-gold">
                 <span class="dashicons dashicons-whatsapp"></span> Request Custom Search
             </a>

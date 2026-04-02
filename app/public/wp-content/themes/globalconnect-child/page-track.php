@@ -144,7 +144,7 @@ $whatsapp = get_option('gc_whatsapp_number', '12672900254');
     <section class="gc-cta-banner" style="background: #0F172A; padding: 50px 0; text-align: center;">
         <div class="gc-container">
             <h2 style="font-family: 'Outfit', sans-serif; color: white; font-size: 1.75rem; margin-bottom: 15px;">Need Help With Your Shipment?</h2>
-            <p style="color: #94a3b8; max-width: 500px; margin: 0 auto 25px;">Our team is available 24/7 to assist with tracking updates and delivery questions.</p>
+            <p style="color: #64748b; max-width: 500px; margin: 0 auto 25px;">Our team is available 24/7 to assist with tracking updates and delivery questions.</p>
             <div style="display: flex; justify-content: center; gap: 15px; flex-wrap: wrap;">
                 <a href="https://wa.me/<?php echo esc_attr($whatsapp); ?>?text=Hi, I need help tracking my shipment" class="gc-btn gc-btn-gold">
                     <span class="dashicons dashicons-whatsapp"></span> WhatsApp Support

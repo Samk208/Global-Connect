@@ -245,7 +245,7 @@ $whatsapp = get_option('gc_whatsapp_number', '12672900254');
                     <div style="grid-column: 1/-1; text-align: center; padding: 60px 20px; background: rgba(255,255,255,0.05); border-radius: 12px;">
                         <span class="dashicons dashicons-archive" style="font-size: 48px; color: #64748b; margin-bottom: 15px;"></span>
                         <h3 style="color: white; margin-bottom: 10px;">No China Stock Listed Yet</h3>
-                        <p style="color: #94a3b8; margin-bottom: 20px;">Contact us to request specific items from our China suppliers.</p>
+                        <p style="color: #64748b; margin-bottom: 20px;">Contact us to request specific items from our China suppliers.</p>
                         <a href="https://wa.me/<?php echo esc_attr($whatsapp); ?>?text=Hi, I need a quote for China sourcing" class="gc-btn gc-btn-primary">Request Custom Quote</a>
                     </div>
                 <?php endif; ?>

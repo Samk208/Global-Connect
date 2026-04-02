@@ -54,7 +54,7 @@ if (isset($_GET['register']) && $_GET['register'] == 'failed') {
                         <h2 style="font-family: 'Outfit', sans-serif; font-weight: 800; color: white; font-size: 1.8rem; margin: 0;">
                             GLOBAL<span style="color: var(--gc-gold);">CONNECT</span>
                         </h2>
-                        <p style="color: #94a3b8; font-size: 0.85rem; margin-top: 5px;">Customer Portal</p>
+                        <p style="color: #64748b; font-size: 0.85rem; margin-top: 5px;">Customer Portal</p>
                     </a>
                 </div>
 
@@ -181,7 +181,7 @@ if (isset($_GET['register']) && $_GET['register'] == 'failed') {
 
                 <!-- Help Section -->
                 <div style="text-align: center; margin-top: 30px;">
-                    <p style="color: #94a3b8; font-size: 0.9rem; margin-bottom: 15px;">Need help accessing your account?</p>
+                    <p style="color: #64748b; font-size: 0.9rem; margin-bottom: 15px;">Need help accessing your account?</p>
                     <a href="https://wa.me/<?php echo esc_attr($whatsapp); ?>?text=Hi, I need help with my account"
                         style="display: inline-flex; align-items: center; gap: 8px; color: #25D366; text-decoration: none; font-weight: 600;">
                         <span class="dashicons dashicons-whatsapp"></span> Contact Support via WhatsApp

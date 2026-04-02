@@ -159,7 +159,7 @@ $query = new WP_Query($args);
                 <?php endif; ?>
             </div>
             <div class="gc-sorting-dropdown" style="font-family: var(--gc-font-mono); font-size: 0.9rem;">
-                <label style="color:#94a3b8; margin-right: 10px;">SORT_BY:</label>
+                <label style="color:#64748b; margin-right: 10px;">SORT_BY:</label>
                 <form method="get" style="display:inline-block;">
                     <input type="hidden" name="category" value="<?php echo esc_attr($category); ?>">
                     <select name="orderby" onchange="this.form.submit()"
@@ -308,7 +308,7 @@ $query = new WP_Query($args);
                                     echo '<img src="' . esc_url($demo_image) . '">';
                                 else: ?>
                                     <div
-                                        style="width:100%; height:100%; background:#f1f5f9; display:flex; align-items:center; justify-content:center; flex-direction:column; color:#94a3b8;">
+                                        style="width:100%; height:100%; background:#f1f5f9; display:flex; align-items:center; justify-content:center; flex-direction:column; color:#64748b;">
                                         <span class="dashicons dashicons-format-image"
                                             style="font-size:40px; width:40px; height:40px;"></span>
                                         <span

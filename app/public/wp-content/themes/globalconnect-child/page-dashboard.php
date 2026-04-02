@@ -100,7 +100,7 @@ $whatsapp = get_option('gc_whatsapp_number', '12672900254');
                             </div>
                             <div>
                                 <h4 style="color: white; font-size: 1.1rem; margin-bottom: 3px;">Track New Shipment</h4>
-                                <p style="color: #94a3b8; font-size: 0.85rem; margin: 0;">Enter a tracking number</p>
+                                <p style="color: #64748b; font-size: 0.85rem; margin: 0;">Enter a tracking number</p>
                             </div>
                         </div>
                     </a>
@@ -112,7 +112,7 @@ $whatsapp = get_option('gc_whatsapp_number', '12672900254');
                             </div>
                             <div>
                                 <h4 style="color: white; font-size: 1.1rem; margin-bottom: 3px;">Browse Inventory</h4>
-                                <p style="color: #94a3b8; font-size: 0.85rem; margin: 0;">Find your next vehicle</p>
+                                <p style="color: #64748b; font-size: 0.85rem; margin: 0;">Find your next vehicle</p>
                             </div>
                         </div>
                     </a>
@@ -124,7 +124,7 @@ $whatsapp = get_option('gc_whatsapp_number', '12672900254');
                             </div>
                             <div>
                                 <h4 style="color: white; font-size: 1.1rem; margin-bottom: 3px;">Contact Support</h4>
-                                <p style="color: #94a3b8; font-size: 0.85rem; margin: 0;">Chat on WhatsApp</p>
+                                <p style="color: #64748b; font-size: 0.85rem; margin: 0;">Chat on WhatsApp</p>
                             </div>
                         </div>
                     </a>

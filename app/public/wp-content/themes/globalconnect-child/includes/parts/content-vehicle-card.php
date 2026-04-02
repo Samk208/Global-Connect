@@ -29,11 +29,11 @@ $make_name = $make ? $make[0]->name : '';
         <div class="gc-tech-grid"
             style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 15px; padding-top: 15px; border-top: 1px solid rgba(0,0,0,0.05);">
             <div class="gc-tech-data-point" style="display:flex; flex-direction:column;"><span
-                    style="font-size:10px; color:#94a3b8; letter-spacing:1px;">MILEAGE</span><span
+                    style="font-size:10px; color:#64748b; letter-spacing:1px;">MILEAGE</span><span
                     style="font-family:'Roboto Mono', monospace; font-size:14px; font-weight:500; color:#334155;"><?php echo esc_html($mileage ? number_format(floatval(str_replace(',', '', $mileage))) . ' mi' : 'N/A'); ?></span>
             </div>
             <div class="gc-tech-data-point" style="display:flex; flex-direction:column;"><span
-                    style="font-size:10px; color:#94a3b8; letter-spacing:1px;">PRICE</span><span
+                    style="font-size:10px; color:#64748b; letter-spacing:1px;">PRICE</span><span
                     style="font-family:'Roboto Mono', monospace; font-size:14px; font-weight:700; color:var(--gc-blue-primary, #2563eb);">$<?php echo esc_html($price ? number_format(floatval(str_replace(',', '', $price))) : 'Inquire'); ?></span>
             </div>
         </div>

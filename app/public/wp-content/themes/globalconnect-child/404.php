@@ -66,7 +66,7 @@
     }
 
     .gc-404-text {
-        color: #94a3b8;
+        color: #64748b;
         max-width: 500px;
         margin: 0 auto 40px;
     }

@@ -31,7 +31,7 @@ $whatsapp = get_option('gc_whatsapp_number', '12672900254');
                 if (function_exists('rank_math_the_breadcrumbs')) {
                     rank_math_the_breadcrumbs();
                 } else {
-                    echo '<nav class="gc-breadcrumb" style="margin-bottom: 15px;"><a href="' . home_url() . '" style="color: #94a3b8; text-decoration: none;">Home</a> <span style="color: #64748b; margin: 0 8px;">/</span> <a href="' . site_url('/shop/?category=machines-parts') . '" style="color: #94a3b8; text-decoration: none;">Parts & Machinery</a> <span style="color: #64748b; margin: 0 8px;">/</span> <span style="color: white;">' . get_the_title() . '</span></nav>';
+                    echo '<nav class="gc-breadcrumb" style="margin-bottom: 15px;"><a href="' . home_url() . '" style="color: #64748b; text-decoration: none;">Home</a> <span style="color: #64748b; margin: 0 8px;">/</span> <a href="' . site_url('/shop/?category=machines-parts') . '" style="color: #64748b; text-decoration: none;">Parts & Machinery</a> <span style="color: #64748b; margin: 0 8px;">/</span> <span style="color: white;">' . get_the_title() . '</span></nav>';
                 }
                 ?>
                 <a href="<?php echo esc_url(site_url('/shop/?category=machines-parts')); ?>" class="gc-back-link" style="color: var(--gc-gold); text-decoration: none; font-size: 0.9rem;">&larr; Back to Inventory</a>
@@ -54,7 +54,7 @@ $whatsapp = get_option('gc_whatsapp_number', '12672900254');
                     <?php elseif ($demo_image): ?>
                         <img src="<?php echo esc_url($demo_image); ?>" class="gc-main-image" alt="<?php the_title_attribute(); ?>" style="width: 100%; height: auto; display: block;">
                     <?php else: ?>
-                        <div style="width: 100%; height: 400px; display: flex; align-items: center; justify-content: center; flex-direction: column; color: #94a3b8;">
+                        <div style="width: 100%; height: 400px; display: flex; align-items: center; justify-content: center; flex-direction: column; color: #64748b;">
                             <span class="dashicons dashicons-format-image" style="font-size: 60px; width: 60px; height: 60px;"></span>
                             <span style="margin-top: 15px; font-family: var(--gc-font-mono);">NO IMAGE DATA</span>
                         </div>
@@ -104,7 +104,7 @@ $whatsapp = get_option('gc_whatsapp_number', '12672900254');
                     <div class="gc-price-amount" style="font-size: 2.5rem; font-weight: 800; font-family: 'Outfit', sans-serif; color: var(--gc-gold);">
                         <?php echo $price ? '$' . esc_html(number_format((float)str_replace(',', '', $price))) : 'Contact Us'; ?>
                     </div>
-                    <div class="gc-price-note" style="font-size: 0.85rem; color: #94a3b8; margin-top: 5px;">Excludes Shipping & Customs</div>
+                    <div class="gc-price-note" style="font-size: 0.85rem; color: #64748b; margin-top: 5px;">Excludes Shipping & Customs</div>
                     <a href="javascript:void(0)" class="gc-btn gc-btn-gold gc-btn-block gc-wizard-trigger" style="margin-top: 20px; display: block; text-align: center;">Configure Export & Invoice</a>
                 </div>
 
