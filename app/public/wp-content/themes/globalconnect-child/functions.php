@@ -1288,8 +1288,8 @@ add_filter('rest_authentication_errors', function ($result) {
         return $result;
     }
 
-    // Allow RankMath, chat, and public endpoints
-    $allowed_routes = array('/rankmath/', '/gc/');
+    // Allow RankMath, chat, LiteSpeed/QUIC.cloud, and public endpoints
+    $allowed_routes = array('/rankmath/', '/gc/', '/litespeed/');
     $current_route = isset($GLOBALS['wp']->query_vars['rest_route']) ? $GLOBALS['wp']->query_vars['rest_route'] : '';
 
     foreach ($allowed_routes as $route) {
@@ -1345,3 +1345,66 @@ add_filter('upload_mimes', function ($mimes) {
     unset($mimes['svgz']);
     return $mimes;
 });
+
+/**
+ * ============================================================
+ * 9. PageSpeed / Accessibility HTML fixes (single output buffer)
+ *
+ * Fixes applied to final HTML output:
+ *   a) Remove Divi's user-scalable=0 viewport meta (accessibility)
+ *   b) Force http:// → https:// for internal URLs (mixed content)
+ *   c) Convert footer H4 headings to H3 (heading hierarchy)
+ * ============================================================
+ */
+add_action('template_redirect', function () {
+    if (is_admin()) {
+        return;
+    }
+    ob_start(function ($html) {
+        // (a) Remove Divi's restrictive viewport meta, keep ours from header.php
+        $html = preg_replace(
+            '/<meta\s+name="viewport"\s+content="[^"]*user-scalable[^"]*"\s*\/?>/i',
+            '',
+            $html
+        );
+
+        // (b) Fix mixed content — Divi stores image URLs as http:// in DB
+        $html = str_replace('http://globalcnx.net', 'https://globalcnx.net', $html);
+
+        // (c) Fix heading hierarchy — Divi footer uses H4 under H2 (skips H3)
+        //     Only target H4s inside the footer area
+        $html = preg_replace_callback(
+            '/(<footer[^>]*>)(.*?)(<\/footer>)/is',
+            function ($matches) {
+                $footer = str_replace('<h4', '<h3', $matches[2]);
+                $footer = str_replace('</h4>', '</h3>', $footer);
+                return $matches[1] . $footer . $matches[3];
+            },
+            $html
+        );
+
+        return $html;
+    });
+});
+
+/**
+ * ============================================================
+ * 10. Add aria-label to select elements missing labels
+ * PSI flags: "Select elements do not have associated label elements"
+ * ============================================================
+ */
+add_action('wp_footer', function () {
+    ?>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('select').forEach(function(sel) {
+            if (!sel.getAttribute('aria-label') && !sel.closest('label') &&
+                !(sel.id && document.querySelector('label[for="' + sel.id + '"]'))) {
+                var ph = sel.querySelector('option[value=""]') || sel.querySelector('option:first-child');
+                sel.setAttribute('aria-label', ph ? ph.textContent.trim() : 'Select option');
+            }
+        });
+    });
+    </script>
+    <?php
+}, 99);
