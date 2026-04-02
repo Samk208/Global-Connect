@@ -1354,6 +1354,7 @@ add_filter('upload_mimes', function ($mimes) {
  *   a) Remove Divi's user-scalable=0 viewport meta (accessibility)
  *   b) Force http:// → https:// for internal URLs (mixed content)
  *   c) Convert footer H4 headings to H3 (heading hierarchy)
+ *   d) Fix #94a3b8 contrast in Divi DB content (WCAG AA)
  * ============================================================
  */
 add_action('template_redirect', function () {
@@ -1369,7 +1370,12 @@ add_action('template_redirect', function () {
         );
 
         // (b) Fix mixed content — Divi stores image URLs as http:// in DB
-        $html = str_replace('http://globalcnx.net', 'https://globalcnx.net', $html);
+        //     Also fix low-contrast color from Divi builder content
+        $html = str_replace(
+            array('http://globalcnx.net', '#94a3b8'),
+            array('https://globalcnx.net', '#64748b'),
+            $html
+        );
 
         // (c) Fix heading hierarchy — Divi footer uses H4 under H2 (skips H3)
         //     Only target H4s inside the footer area
