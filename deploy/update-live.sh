@@ -1,24 +1,25 @@
 #!/bin/bash
 # =============================================================================
 # GlobalConnect — Live Site Update Script
-# Syncs child theme changes + new images to VPS (Coolify/Docker)
+# Syncs child theme changes to VPS (CyberPanel + OpenLiteSpeed)
 # =============================================================================
 #
 # USAGE (run ON the VPS as root):
-#   1. SSH into VPS:  ssh root@YOUR_VPS_IP
-#   2. Run this:
-#      curl -sL https://raw.githubusercontent.com/Samk208/Global-Connect/main/deploy/update-live.sh | bash
-#   OR:
-#      cd /tmp/gc-deploy && git pull && bash deploy/update-live.sh
+#   ssh root@194.163.187.54
+#   cd /tmp/gc-deploy && git pull && bash deploy/update-live.sh
 #
-# For first time:
-#      git clone https://github.com/Samk208/Global-Connect.git /tmp/gc-deploy
-#      bash /tmp/gc-deploy/deploy/update-live.sh
+# First time:
+#   git clone https://github.com/Samk208/Global-Connect.git /tmp/gc-deploy
+#   bash /tmp/gc-deploy/deploy/update-live.sh
 # =============================================================================
 
 set -euo pipefail
 
 REPO_PATH="/tmp/gc-deploy"
+SITE_ROOT="/home/globalcnx.net/public_html"
+THEME_DEST="${SITE_ROOT}/wp-content/themes/globalconnect-child"
+THEME_SRC="${REPO_PATH}/app/public/wp-content/themes/globalconnect-child"
+SITE_OWNER="globa8362:globa8362"
 
 echo ""
 echo "============================================"
@@ -42,103 +43,90 @@ fi
 
 echo ""
 
-# --- Discover WordPress container ---
-echo "[1/5] Discovering containers..."
-WP_CONTAINER=$(docker ps --format '{{.Names}}\t{{.Image}}' | grep -i 'wordpress' | head -1 | cut -f1)
-
-if [ -z "$WP_CONTAINER" ]; then
-    echo "  Could not auto-detect WordPress container."
-    echo "  Available containers:"
-    docker ps --format '  {{.Names}} ({{.Image}})' | head -20
-    echo ""
-    read -p "  Enter the WordPress container name: " WP_CONTAINER
-fi
-
-# Detect WordPress path
-WP_PATH=$(docker exec "$WP_CONTAINER" sh -c 'if [ -f /var/www/html/wp-config.php ]; then echo /var/www/html; elif [ -f /app/wp-config.php ]; then echo /app; else find / -name wp-config.php -maxdepth 4 2>/dev/null | head -1 | xargs dirname; fi')
-
-echo "  Container: ${WP_CONTAINER}"
-echo "  WP Path:   ${WP_PATH}"
-
-# --- Step 2: Backup current child theme ---
-echo ""
-echo "[2/5] Backing up current child theme..."
+# --- Step 1: Backup current child theme ---
+echo "[1/5] Backing up current child theme..."
 BACKUP_TAG=$(date +%Y%m%d_%H%M%S)
-THEME_DEST="${WP_PATH}/wp-content/themes/globalconnect-child"
-docker exec "$WP_CONTAINER" sh -c "
-    if [ -d '${THEME_DEST}' ]; then
-        cp -a '${THEME_DEST}' '${THEME_DEST}.bak.${BACKUP_TAG}'
-        echo '  Backup: ${THEME_DEST}.bak.${BACKUP_TAG}'
-    else
-        echo '  No existing theme to backup'
-    fi
-"
-
-# --- Step 3: Deploy child theme ---
-echo ""
-echo "[3/5] Deploying child theme..."
-THEME_SRC="${REPO_PATH}/app/public/wp-content/themes/globalconnect-child"
-
-# Remove old and copy new
-docker exec "$WP_CONTAINER" sh -c "rm -rf '${THEME_DEST}'"
-docker cp "$THEME_SRC" "${WP_CONTAINER}:${WP_PATH}/wp-content/themes/"
-
-# Fix permissions
-docker exec "$WP_CONTAINER" sh -c "
-    chown -R www-data:www-data '${THEME_DEST}' 2>/dev/null || chown -R 33:33 '${THEME_DEST}' 2>/dev/null || true
-    find '${THEME_DEST}' -type d -exec chmod 755 {} \;
-    find '${THEME_DEST}' -type f -exec chmod 644 {} \;
-"
-echo "  Child theme deployed and permissions set"
-
-# --- Step 4: Upload images ---
-echo ""
-echo "[4/5] Uploading generated images..."
-IMAGES_SRC="${REPO_PATH}/deploy/images"
-UPLOADS_DEST="${WP_PATH}/wp-content/uploads/2026/03"
-
-if [ -d "$IMAGES_SRC" ] && [ "$(ls -A $IMAGES_SRC 2>/dev/null)" ]; then
-    # Ensure uploads directory exists
-    docker exec "$WP_CONTAINER" sh -c "mkdir -p '${UPLOADS_DEST}'"
-
-    # Copy each image
-    for img in "$IMAGES_SRC"/*.jpg; do
-        [ -f "$img" ] || continue
-        docker cp "$img" "${WP_CONTAINER}:${UPLOADS_DEST}/$(basename $img)"
-        echo "  Uploaded: $(basename $img)"
-    done
-
-    # Fix permissions on uploads
-    docker exec "$WP_CONTAINER" sh -c "
-        chown -R www-data:www-data '${UPLOADS_DEST}' 2>/dev/null || chown -R 33:33 '${UPLOADS_DEST}' 2>/dev/null || true
-        chmod 644 '${UPLOADS_DEST}'/*.jpg 2>/dev/null || true
-    "
-    echo "  All images uploaded with correct permissions"
+if [ -d "${THEME_DEST}" ]; then
+    cp -a "${THEME_DEST}" "${THEME_DEST}.bak.${BACKUP_TAG}"
+    echo "  Backup: ${THEME_DEST}.bak.${BACKUP_TAG}"
 else
-    echo "  No images found in ${IMAGES_SRC} — skipping"
-    echo "  (To include images, copy them to deploy/images/ before running)"
+    echo "  No existing theme to backup"
 fi
+
+# --- Step 2: Deploy child theme ---
+echo ""
+echo "[2/5] Deploying child theme..."
+rm -rf "${THEME_DEST}"
+cp -a "${THEME_SRC}" "${THEME_DEST}"
+echo "  Child theme copied"
+
+# --- Step 3: Strip dev-only files from deployed theme ---
+echo ""
+echo "[3/5] Removing dev-only files from production..."
+
+# Dev AI skills
+rm -rf "${THEME_DEST}/.qoder"
+echo "  Removed: .qoder/ (AI dev skills)"
+
+# Original uncompressed backup images
+rm -rf "${THEME_DEST}/assets/images/generated/originals_backup"
+echo "  Removed: originals_backup/ (pre-compression backups)"
+
+# Unused footer template (Divi Theme Builder overrides)
+rm -f "${THEME_DEST}/footer-gc-custom.php"
+echo "  Removed: footer-gc-custom.php (unused)"
+
+# Dev data seeder + its require line in functions.php
+if [ -f "${THEME_DEST}/includes/seeder.php" ]; then
+    cp "${THEME_DEST}/functions.php" "${THEME_DEST}/functions.php.bak"
+    sed -i '/require_once.*seeder\.php/d' "${THEME_DEST}/functions.php"
+    sed -i '/Seeder (Runs once to populate content)/d' "${THEME_DEST}/functions.php"
+    # Verify PHP syntax before removing seeder
+    PHP_BIN=$(command -v php || echo "/usr/local/lsws/lsphp83/bin/php")
+    if $PHP_BIN -l "${THEME_DEST}/functions.php" &>/dev/null; then
+        rm -f "${THEME_DEST}/includes/seeder.php"
+        echo "  Removed: seeder.php + require line (syntax verified)"
+    else
+        echo "  WARNING: PHP syntax error after patch — rolling back functions.php"
+        cp "${THEME_DEST}/functions.php.bak" "${THEME_DEST}/functions.php"
+    fi
+fi
+
+# --- Step 4: Fix permissions ---
+echo ""
+echo "[4/5] Fixing permissions..."
+chown -R ${SITE_OWNER} "${THEME_DEST}"
+find "${THEME_DEST}" -type d -exec chmod 755 {} \;
+find "${THEME_DEST}" -type f -exec chmod 644 {} \;
+echo "  Permissions set (${SITE_OWNER}, 755/644)"
 
 # --- Step 5: Flush caches ---
 echo ""
 echo "[5/5] Flushing caches..."
-if docker exec "$WP_CONTAINER" which wp &>/dev/null; then
-    docker exec "$WP_CONTAINER" wp transient delete --all --allow-root --path="${WP_PATH}" 2>/dev/null || true
-    docker exec "$WP_CONTAINER" wp cache flush --allow-root --path="${WP_PATH}" 2>/dev/null || true
-    docker exec "$WP_CONTAINER" wp rewrite flush --allow-root --path="${WP_PATH}" 2>/dev/null || true
-    echo "  WP-CLI: transients, cache, and rewrites flushed"
-else
-    echo "  WP-CLI not available — clear caches from WP Admin"
+
+# Purge LiteSpeed cache
+if [ -d "${SITE_ROOT}/wp-content/cache/litespeed" ]; then
+    rm -rf "${SITE_ROOT}/wp-content/cache/litespeed"/*
+    echo "  LiteSpeed page cache purged"
+fi
+
+# Restart LiteSpeed to clear opcache
+if command -v systemctl &>/dev/null; then
+    killall -9 lsphp 2>/dev/null || true
+    systemctl restart lsws 2>/dev/null || true
+    echo "  LiteSpeed restarted (opcache cleared)"
 fi
 
 echo ""
 echo "============================================"
 echo "  Update complete!"
-echo "  Theme version: $(grep 'Version:' ${THEME_SRC}/style.css | head -1 | awk '{print $2}')"
+echo "  Theme version: $(grep 'Version:' ${THEME_SRC}/style.css 2>/dev/null | head -1 | awk '{print $2}')"
 echo "  Commit: $(cd $REPO_PATH && git log --oneline -1)"
 echo "============================================"
 echo ""
-echo "  Next: Visit your site and verify the changes."
-echo "  If something is wrong, restore the backup:"
-echo "    docker exec $WP_CONTAINER sh -c \"rm -rf ${THEME_DEST} && mv ${THEME_DEST}.bak.${BACKUP_TAG} ${THEME_DEST}\""
+echo "  Verify: curl -sI https://globalcnx.net | head -5"
+echo ""
+echo "  Rollback if needed:"
+echo "    rm -rf ${THEME_DEST} && mv ${THEME_DEST}.bak.${BACKUP_TAG} ${THEME_DEST}"
+echo "    killall -9 lsphp && systemctl restart lsws"
 echo ""
