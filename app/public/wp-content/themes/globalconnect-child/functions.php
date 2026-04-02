@@ -1348,50 +1348,76 @@ add_filter('upload_mimes', function ($mimes) {
 
 /**
  * ============================================================
- * 9. PageSpeed / Accessibility HTML fixes (single output buffer)
+ * 9. PageSpeed / Accessibility HTML fixes
  *
- * Fixes applied to final HTML output:
- *   a) Remove Divi's user-scalable=0 viewport meta (accessibility)
- *   b) Force http:// → https:// for internal URLs (mixed content)
- *   c) Convert footer H4 headings to H3 (heading hierarchy)
- *   d) Fix #94a3b8 contrast in Divi DB content (WCAG AA)
+ * Uses multiple hooks to fix output without conflicting with
+ * LiteSpeed Cache's output buffering:
+ *   a) Remove Divi's user-scalable=0 viewport meta
+ *   b) Force http:// → https:// for internal URLs
+ *   c) Convert footer H4 headings to H3
+ *   d) Fix #94a3b8 contrast in Divi DB content
  * ============================================================
  */
+
+// (a) Remove Divi's restrictive viewport meta via et_html_main_header filter
+//     or by dequeuing and re-adding in wp_head
+add_action('wp_head', function () {
+    // Remove Divi's viewport meta by filtering the output
+    // Divi adds it via et_add_viewport_meta() on wp_head priority 1
+    remove_action('wp_head', 'et_add_viewport_meta');
+}, 0);
+
+// Fallback: if et_add_viewport_meta doesn't exist, catch it via ob in wp_head
+add_action('wp_head', function () {
+    ob_start();
+}, 0);
+add_action('wp_head', function () {
+    $head = ob_get_clean();
+    // Remove any viewport with user-scalable
+    $head = preg_replace(
+        '/<meta\s+name="viewport"\s+content="[^"]*user-scalable[^"]*"\s*\/?>\s*/i',
+        '',
+        $head
+    );
+    echo $head;
+}, 999);
+
+// (b) Fix mixed content + (d) Fix contrast color via LiteSpeed buffer
+//     LiteSpeed provides a filter for modifying cached HTML
+add_filter('litespeed_buffer_before', 'gc_fix_html_output');
+// Also hook the_content for Divi builder content
+add_filter('the_content', 'gc_fix_html_output');
+// And a final output buffer as fallback for non-cached pages
 add_action('template_redirect', function () {
     if (is_admin()) {
         return;
     }
-    ob_start(function ($html) {
-        // (a) Remove Divi's restrictive viewport meta, keep ours from header.php
-        $html = preg_replace(
-            '/<meta\s+name="viewport"\s+content="[^"]*user-scalable[^"]*"\s*\/?>/i',
-            '',
-            $html
-        );
-
-        // (b) Fix mixed content — Divi stores image URLs as http:// in DB
-        //     Also fix low-contrast color from Divi builder content
-        $html = str_replace(
-            array('http://globalcnx.net', '#94a3b8'),
-            array('https://globalcnx.net', '#64748b'),
-            $html
-        );
-
-        // (c) Fix heading hierarchy — Divi footer uses H4 under H2 (skips H3)
-        //     Only target H4s inside the footer area
-        $html = preg_replace_callback(
-            '/(<footer[^>]*>)(.*?)(<\/footer>)/is',
-            function ($matches) {
-                $footer = str_replace('<h4', '<h3', $matches[2]);
-                $footer = str_replace('</h4>', '</h3>', $footer);
-                return $matches[1] . $footer . $matches[3];
-            },
-            $html
-        );
-
-        return $html;
-    });
+    ob_start('gc_fix_html_output');
 });
+
+function gc_fix_html_output($html) {
+    // Fix mixed content — http → https for internal URLs
+    $html = str_replace('http://globalcnx.net', 'https://globalcnx.net', $html);
+
+    // Fix low-contrast color from Divi builder content
+    $html = str_replace('#94a3b8', '#64748b', $html);
+
+    // Fix heading hierarchy — footer H4 → H3
+    $html = preg_replace_callback(
+        '/(<footer[^>]*>)(.*?)(<\/footer>)/is',
+        function ($matches) {
+            $footer = str_replace(
+                array('<h4', '</h4>'),
+                array('<h3', '</h3>'),
+                $matches[2]
+            );
+            return $matches[1] . $footer . $matches[3];
+        },
+        $html
+    );
+
+    return $html;
+}
 
 /**
  * ============================================================
